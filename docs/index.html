@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KIN 100L • Lab Arcade</title>
+  <meta name="description" content="Interactive anatomy practice for KIN 100L (University of Waterloo) — Landmark Laser and Attach & Act." />
+  <link rel="stylesheet" href="./styles/tokens.css">
+  <link rel="stylesheet" href="./styles/app.css">
+</head>
+<body class="theme-dark">
+  <a class="skip-link" href="#app">Skip to content</a>
+  <header class="app-header" role="banner">
+    <div class="brand">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <h1>KIN 100L • Lab Arcade</h1>
+    </div>
+    <div class="header-controls">
+      <label class="toggle" title="High contrast mode">
+        <input id="toggle-contrast" type="checkbox" aria-label="Toggle high contrast mode" />
+        <span>High Contrast</span>
+      </label>
+      <label class="toggle" title="Reduce motion">
+        <input id="toggle-motion" type="checkbox" aria-label="Toggle reduced motion" />
+        <span>Reduce Motion</span>
+      </label>
+    </div>
+  </header>
+
+  <main id="app" class="app-main" tabindex="-1" role="main" aria-live="polite">
+    <!-- App content injected by app.js -->
+  </main>
+
+  <footer class="app-footer" role="contentinfo">
+    <p>Formative practice only. No data leaves your browser.</p>
+    <p><small>© 2025 • KIN 100L (UW) • Built for GitHub Pages</small></p>
+  </footer>
+
+  <script src="./scripts/a11y.js"></script>
+  <script src="./scripts/storage.js"></script>
+  <script src="./scripts/landmark-laser.js"></script>
+  <script src="./scripts/attach-and-act.js"></script>
+  <script src="./scripts/cns-connect.js"></script>
+  <script src="./scripts/app.js"></script>
+</body>
+</html>
