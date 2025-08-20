@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" role="img" aria-labelledby="title desc">
+  <title>Upper limb (proximal) schematic</title>
+  <desc>Simplified scapula (posterior), clavicle (superior), and proximal humerus with labelled hotspot regions for interactive learning.</desc>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="900" height="500" fill="#0a0d14" />
+
+  <!-- Scapula (posterior view simplified) -->
+  <g id="scapula" transform="translate(150,120)">
+    <path d="M 0 200 L 120 0 L 260 160 L 60 260 Z" fill="#1a2332" stroke="#2a3950" stroke-width="2"/>
+    <!-- Spine of scapula -->
+    <rect id="spine_of_scapula" class="hotspot" aria-label="Spine of scapula" x="60" y="120" width="160" height="20" />
+    <!-- Acromion -->
+    <circle id="acromion" class="hotspot" aria-label="Acromion" cx="250" cy="160" r="16"/>
+    <!-- Coracoid (approx anterior) -->
+    <circle id="coracoid" class="hotspot" aria-label="Coracoid process" cx="230" cy="110" r="14"/>
+    <!-- Supraspinous fossa -->
+    <rect id="supraspinous_fossa" class="hotspot" aria-label="Supraspinous fossa" x="70" y="40" width="120" height="70"/>
+    <!-- Infraspinous fossa -->
+    <rect id="infraspinous_fossa" class="hotspot" aria-label="Infraspinous fossa" x="40" y="150" width="170" height="90"/>
+    <!-- Glenoid cavity -->
+    <circle id="glenoid" class="hotspot" aria-label="Glenoid cavity" cx="260" cy="160" r="18"/>
+    <!-- Medial border -->
+    <rect id="medial_border" class="hotspot" aria-label="Medial border" x="0" y="120" width="20" height="120"/>
+    <!-- Inferior angle -->
+    <circle id="inferior_angle" class="hotspot" aria-label="Inferior angle" cx="60" cy="260" r="14"/>
+  </g>
+
+  <!-- Clavicle (superior view simplified) -->
+  <g id="clavicle" transform="translate(260,80)">
+    <path d="M 0 40 C 120 -10, 220 -10, 340 40 C 220 90, 120 90, 0 40 Z" fill="#1a2332" stroke="#2a3950" stroke-width="2"/>
+    <circle id="sternal_end_clavicle" class="hotspot" aria-label="Sternal end of clavicle" cx="10" cy="40" r="14"/>
+    <circle id="acromial_end_clavicle" class="hotspot" aria-label="Acromial end of clavicle" cx="330" cy="40" r="14"/>
+    <circle id="conoid_tubercle" class="hotspot" aria-label="Conoid tubercle" cx="260" cy="58" r="12"/>
+    <circle id="costoclavicular_impression" class="hotspot" aria-label="Costoclavicular impression" cx="80" cy="58" r="12"/>
+  </g>
+
+  <!-- Humerus (proximal) -->
+  <g id="humerus" transform="translate(460,140)">
+    <circle cx="100" cy="120" r="90" fill="#1a2332" stroke="#2a3950" stroke-width="2"/>
+    <circle id="greater_tubercle" class="hotspot" aria-label="Greater tubercle" cx="50" cy="120" r="16"/>
+    <circle id="lesser_tubercle" class="hotspot" aria-label="Lesser tubercle" cx="120" cy="120" r="14"/>
+    <rect id="intertubercular_sulcus" class="hotspot" aria-label="Intertubercular sulcus" x="95" y="70" width="10" height="100"/>
+    <circle id="deltoid_tuberosity" class="hotspot" aria-label="Deltoid tuberosity" cx="170" cy="210" r="14"/>
+  </g>
+
+  <!-- hint style overlay handled by CSS -->
+</svg>

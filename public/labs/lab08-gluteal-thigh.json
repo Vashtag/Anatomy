@@ -1,0 +1,11 @@
+{
+  "views": [
+    {
+      "id": "upper_limb_proximal",
+      "src": "./assets/svg/upper_limb_proximal.svg",
+      "title": "Upper limb (proximal)"
+    }
+  ],
+  "landmarks": [],
+  "muscles": []
+}
