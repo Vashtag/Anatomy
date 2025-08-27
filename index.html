@@ -12,7 +12,7 @@
       --btn-shadow:0 4px 12px rgba(125,92,255,.25);
       --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
-    /* DARK MODE (readable) */
+    /* DARK MODE (readable UI) */
     body.dark{
       --bg:#000; --fg:#fff; --muted:#d0d0d0; --surface:#000; --border:#333;
       --accent:#9a87ff; --accent-2:#ffd166; --ok:#35d07f; --err:#ff6a7a;
@@ -44,21 +44,20 @@
     .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
     body.dark .panel{background:#000;border-color:var(--border);color:#fff}
 
-    /* =============== Flashcards: visual like reference =============== */
+    /* ================= Flashcards (styled like your reference) ================= */
     .flash-wrap{display:grid;gap:14px}
     .card{
       position:relative; padding:18px; border-radius:20px; border:1px solid var(--border);
       background:var(--surface); box-shadow:var(--shadow); overflow:hidden;
     }
-    /* The plate is the white card inside (always white + black text for readability) */
+    /* Inner white card (always white with black text for readability) */
     .plate{
-      --card-accent:#f7c948; /* default; overridden per card */
+      --card-accent:#f7c948; /* default, overridden per card */
       background:#fff; color:#111;
       border:6px solid var(--card-accent);
       border-radius:18px; position:relative; min-height:210px;
       display:block;
     }
-    /* Inner canvas for text (doesn't rotate) */
     .plate .text{
       position:absolute; left:18px; right:18px; top:22px; bottom:64px;
       display:flex; align-items:center; justify-content:center; text-align:center; padding:4px;
@@ -69,7 +68,7 @@
     .card.showBack .text-front{opacity:0}
     .card.showBack .text-back{opacity:1}
     .hint{position:absolute; left:0; right:0; bottom:66px; text-align:center; color:#8a8a8a; font-size:.95rem}
-    /* Label bar like your example */
+    /* Bottom label bar */
     .labelbar{
       position:absolute; left:0; right:0; bottom:0; height:58px;
       border-top:1px solid rgba(0,0,0,.06); background:#fff; border-radius:0 0 12px 12px;
@@ -78,7 +77,7 @@
     }
     .tagdot{display:inline-block; width:.66em; height:.66em; border-radius:999px; margin:0 .25em -.08em 0; background:var(--card-accent)}
 
-    /* Flip animation shell (rotates; content text does not) */
+    /* Flip animation shell (rotates; text cross-fades so it never flips) */
     .flipFx{
       position:absolute; inset:18px; border-radius:18px; pointer-events:none; transform-style:preserve-3d;
     }
@@ -108,7 +107,7 @@
     .barline > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
     body.dark .barline{background:#222}
 
-    /* =============== MCQ =============== */
+    /* ================= MCQ ================= */
     .q-wrap{display:grid;gap:14px}
     .choices{display:grid;gap:8px}
     .choice{
@@ -122,8 +121,8 @@
     body.dark .choice{background:#000;color:#fff;border-color:var(--border)}
     body.dark .rationale{background:#0a0a0a;color:#fff;border-left-color:var(--accent)}
 
-    /* Toast + confetti + shuffle minis are unchanged */
-    .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .25s ease}
+    /* Toast + confetti + shuffle minis */
+    .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .25s ease;z-index:9999}
     .toast.show{opacity:1}
     .confetti{position:fixed;pointer-events:none;inset:0;overflow:hidden;z-index:1000}
     .bit{position:absolute;font-size:18px;animation:fall 900ms ease-out forwards}
@@ -154,7 +153,7 @@
   <header>
     <div class="container">
       <div class="title">KIN 100 Review — Shoulder &amp; Arm</div>
-      <div class="subtitle">Flashcards &amp; MCQ • text‑only v1 (images can be added later)</div>
+      <div class="subtitle">Flashcards &amp; MCQ • text‑only v1</div>
     </div>
   </header>
 
@@ -193,7 +192,7 @@
           <div class="text text-front" id="flashFront">Building deck…</div>
           <div class="text text-back" id="flashBack"></div>
           <div class="hint" id="hint">Press Space or click card to flip</div>
-          <div class="labelbar"><span class="tagdot"></span><span id="labelTxt">shoulder • muscles</span></div>
+          <div class="labelbar"><span class="tagdot"></span><span id="labelTxt">KIN 100</span></div>
         </div>
         <div class="shuffle-overlay" id="shuffleOverlay" aria-hidden="true"></div>
       </div>
@@ -234,15 +233,13 @@
 
       <div id="mcqStatus" class="stats" aria-live="polite"></div>
 
-      <div id="mcqQ" class="panel" style="background:#fff; border-radius:12px; border:1px solid var(--border); box-shadow:var(--shadow)">
+      <div id="mcqQ" class="panel">
         <div id="mcqStem" style="font-size:1.1rem; font-weight:700; margin-bottom:8px">Press Start</div>
         <div id="mcqChoices" class="choices" role="group" aria-label="Choices"></div>
         <div id="mcqRationale" class="rationale hidden"></div>
         <div class="bar" style="justify-content:space-between; margin-top:6px">
           <div><span class="score" id="mcqScore">0/0</span></div>
-          <div>
-            <button class="btn" id="mcqNext" title="N key">Next</button>
-          </div>
+          <div><button class="btn" id="mcqNext" title="N key">Next</button></div>
         </div>
       </div>
     </section>
@@ -252,6 +249,14 @@
   <div class="confetti" id="confetti" aria-hidden="true"></div>
 
   <script>
+    /* Version + global error toast */
+    const BUILD = 'v1.3-flip-shell';
+    window.addEventListener('error', e => {
+      const t = document.getElementById('toast');
+      if (t) { t.textContent = '⚠️ JS error: ' + e.message; t.classList.add('show'); }
+      console.error('Build', BUILD, e.message, e);
+    });
+
     /* =======================
        Data — plain JS array
        ======================= */
@@ -264,35 +269,35 @@
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Subscapularis — action + innervation?",back:"Internal (medial) rotation; upper & lower subscapular nerves."},
       {type:"flash",tags:["shoulder","muscles"],front:"Rotator cuff muscles (SITS)?",back:"Supraspinatus, Infraspinatus, Teres minor, Subscapularis."},
       {type:"flash",tags:["arm","muscles","innervation"],front:"Biceps brachii — major actions + nerve?",back:"Forearm supination; elbow flexion (best when supinated); musculocutaneous nerve (C5–C7)."},
-      {type:"flash",tags:["arm","muscles","innervation"],front:"Brachialis — action + nerve?",back:"Primary elbow flexor in all positions; musculocutaneous nerve (C5–C6)."},
+      {type:"flash",tags:["arm","muscles","innervation"],front:"Brachialis — action + nerve?",back:"Primary elbow flexor; musculocutaneous nerve (C5–C6)."},
       {type:"flash",tags:["arm","muscles","innervation"],front:"Coracobrachialis — action + nerve?",back:"Flexes & adducts shoulder; pierced by musculocutaneous nerve."},
       {type:"flash",tags:["arm","muscles","innervation"],front:"Triceps brachii — action + nerve?",back:"Elbow extension; long head assists shoulder extension/adduction; radial nerve (C6–C8)."},
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Serratus anterior — nerve + key function?",back:"Long thoracic nerve (C5–C7); protracts & upwardly rotates scapula; stabilizes against thorax."},
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Latissimus dorsi — nerve?",back:"Thoracodorsal nerve (C6–C8)."},
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Pectoralis major — nerves?",back:"Medial & lateral pectoral nerves; adducts & internally rotates shoulder."},
-      {type:"flash",tags:["shoulder","muscles","innervation"],front:"Pectoralis minor — attachments + nerve?",back:"Ribs 3–5 to coracoid process; stabilizes scapula; medial pectoral nerve."},
+      {type:"flash",tags:["shoulder","muscles","innervation"],front:"Pectoralis minor — attachments + nerve?",back:"Ribs 3–5 → coracoid; stabilizes scapula; medial pectoral nerve."},
       {type:"flash",tags:["arm","bones"],front:"Deltoid tuberosity — what & where?",back:"Lateral humerus; insertion for deltoid."},
-      {type:"flash",tags:["arm","bones","innervation"],front:"Surgical neck of humerus — clinical relevance?",back:"Fracture risk to axillary nerve & posterior circumflex humeral artery."},
+      {type:"flash",tags:["arm","bones","innervation"],front:"Surgical neck of humerus — clinical relevance?",back:"Risk to axillary nerve & posterior circumflex humeral artery."},
       {type:"flash",tags:["arm","bones","innervation"],front:"Midshaft humerus fracture — key nerve risk?",back:"Radial nerve in radial groove → wrist drop."},
       {type:"flash",tags:["shoulder","bones"],front:"Quadrangular space — contents?",back:"Axillary nerve & posterior circumflex humeral artery."},
       {type:"flash",tags:["arm","bones"],front:"Triangular interval — contents?",back:"Radial nerve & profunda brachii (deep brachial) artery."},
       {type:"flash",tags:["arm","bones"],front:"Intertubercular (bicipital) groove — notable content?",back:"Tendon of long head of biceps brachii."},
       {type:"flash",tags:["shoulder","bones"],front:"Long head of biceps — origin?",back:"Supraglenoid tubercle of scapula."},
       {type:"flash",tags:["shoulder","bones"],front:"Short head of biceps — origin?",back:"Coracoid process of scapula."},
-      {type:"flash",tags":["shoulder","bones"],front:"Long head of triceps — origin?",back:"Infraglenoid tubercle of scapula."},
+      {type:"flash",tags:["shoulder","bones"],front:"Long head of triceps — origin?",back:"Infraglenoid tubercle of scapula."},
       {type:"flash",tags:["arm","innervation"],front:"Musculocutaneous nerve — terminal sensory branch?",back:"Lateral cutaneous nerve of forearm."},
-      {type:"flash",tags:["shoulder","innervation"],front:"Axillary nerve — sensory patch?",back:"‘Regimental badge’ area over lateral deltoid."},
+      {type:"flash",tags:["shoulder","innervation"],front:"Axillary nerve — sensory patch?",back:"“Regimental badge” area over lateral deltoid."},
 
       {type:"mcq",tags:["shoulder","innervation"],stem:"Which nerve innervates the deltoid muscle?",options:["Radial","Axillary","Musculocutaneous","Median"],answerIndex:1,rationale:"Deltoid (and teres minor) receive axillary nerve (C5–C6)."},
       {type:"mcq",tags:["shoulder","muscles"],stem:"Which muscle initiates glenohumeral abduction (0–15°)?",options:["Supraspinatus","Deltoid","Infraspinatus","Subscapularis"],answerIndex:0,rationale:"Supraspinatus initiates abduction before the deltoid becomes more effective."},
-      {type:"mcq",tags:["arm","innervation"],stem:"The anterior compartment of the arm is primarily innervated by which nerve?",options:["Radial","Ulnar","Musculocutaneous","Axillary"],answerIndex:2,rationale:"Biceps brachii, brachialis (primarily), and coracobrachialis are musculocutaneous."},
-      {type:"mcq",tags:["arm","innervation","bones"],stem:"A fracture of the surgical neck of the humerus endangers which nerve?",options:["Radial","Median","Axillary","Ulnar"],answerIndex:2,rationale:"Axillary nerve + posterior circumflex humeral artery wrap around the surgical neck."},
-      {type:"mcq",tags:["arm","innervation","bones"],stem:"A midshaft humeral fracture classically injures which nerve?",options:["Ulnar","Radial","Musculocutaneous","Axillary"],answerIndex:1,rationale:"Radial nerve lies in the radial groove at the humeral shaft — injury → wrist/finger extensor weakness."},
+      {type:"mcq",tags:["arm","innervation"],stem:"The anterior compartment of the arm is primarily innervated by which nerve?",options:["Radial","Ulnar","Musculocutaneous","Axillary"],answerIndex:2,rationale:"Biceps brachii, brachialis, and coracobrachialis are musculocutaneous."},
+      {type:"mcq",tags:["arm","innervation","bones"],stem:"A fracture of the surgical neck of the humerus endangers which nerve?",options:["Radial","Median","Axillary","Ulnar"],answerIndex:2,rationale:"Axillary nerve + posterior circumflex humeral artery wrap the surgical neck."},
+      {type:"mcq",tags:["arm","innervation","bones"],stem:"A midshaft humeral fracture classically injures which nerve?",options:["Ulnar","Radial","Musculocutaneous","Axillary"],answerIndex:1,rationale:"Radial nerve in radial groove → wrist/finger extensor weakness."},
       {type:"mcq",tags:["arm","muscles","bones"],stem:"Which muscle inserts on the deltoid tuberosity?",options:["Deltoid","Teres major","Latissimus dorsi","Pectoralis major"],answerIndex:0,rationale:"Deltoid inserts on the deltoid tuberosity (lateral humerus)."},
       {type:"mcq",tags:["shoulder","bones","innervation"],stem:"Which structure passes through the quadrangular space with the posterior circumflex humeral artery?",options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Ulnar nerve"],answerIndex:1,rationale:"Quadrangular space: axillary nerve + PCHA."},
-      {type:"mcq",tags:["shoulder","innervation","muscles"],stem:"Injury to the long thoracic nerve primarily weakens which muscle?",options:["Rhomboid major","Serratus anterior","Trapezius","Latissimus dorsi"],answerIndex:1,rationale:"Long thoracic → serratus anterior; injury → winged scapula with push‑up motion."},
+      {type:"mcq",tags:["shoulder","innervation","muscles"],stem:"Injury to the long thoracic nerve primarily weakens which muscle?",options:["Rhomboid major","Serratus anterior","Trapezius","Latissimus dorsi"],answerIndex:1,rationale:"Long thoracic → serratus anterior; winged scapula with push‑up motion."},
       {type:"mcq",tags:["shoulder","muscles"],stem:"Which of the following is an external (lateral) rotator of the shoulder?",options:["Subscapularis","Teres major","Infraspinatus","Pectoralis major"],answerIndex:2,rationale:"Infraspinatus (and teres minor) laterally rotate; subscapularis medially rotates."},
-      {type:"mcq",tags:["shoulder","bones","muscles"],stem:"The tendon of which muscle travels in the intertubercular (bicipital) groove?",options:["Biceps brachii long head","Biceps brachii short head","Triceps long head","Brachialis"],answerIndex:0,rationale:"Long head biceps tendon runs in the groove enclosed by the transverse humeral ligament."},
+      {type:"mcq",tags:["shoulder","bones","muscles"],stem:"The tendon of which muscle travels in the intertubercular (bicipital) groove?",options:["Biceps brachii long head","Biceps brachii short head","Triceps long head","Brachialis"],answerIndex:0,rationale:"Long head biceps tendon runs in the groove under the transverse humeral ligament."},
       {type:"mcq",tags:["arm","innervation"],stem:"Innervation of triceps brachii?",options:["Radial","Axillary","Musculocutaneous","Median"],answerIndex:0,rationale:"All heads of triceps are innervated by the radial nerve."},
       {type:"mcq",tags:["arm","bones","innervation"],stem:"Which artery typically accompanies the radial nerve through the triangular interval?",options:["Posterior circumflex humeral","Profunda brachii (deep brachial)","Anterior circumflex humeral","Radial recurrent"],answerIndex:1,rationale:"Triangular interval: radial nerve + profunda brachii artery."},
       {type:"mcq",tags:["shoulder","muscles"],stem:"Actions of latissimus dorsi at the shoulder include all EXCEPT:",options:["Adduction","Internal rotation","Abduction","Extension"],answerIndex:2,rationale:"Lat dorsi adducts, extends, and medially rotates — not abduction."},
@@ -311,10 +316,7 @@
     let activeFilters = new Set([...REGIONS, ...DOMAINS]);
 
     // Accent color per region (for the card border + dot)
-    const ACCENTS = {
-      shoulder:'#f7c948', // warm yellow (like your example)
-      arm:'#f8a3c9'       // soft pink
-    };
+    const ACCENTS = { shoulder:'#f7c948', arm:'#f8a3c9' };
 
     const rnd = n => Math.floor(Math.random()*n);
     const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=rnd(i+1); [a[i],a[j]]=[a[j],a[i]];} return a; };
@@ -415,9 +417,8 @@
 
     function currentFlash(){ return flashDeck[deckIndex] || null; }
     function setAccentFor(item){
-      const isShoulder = (item.tags||[]).includes('shoulder');
-      const isArm = (item.tags||[]).includes('arm');
-      const color = isShoulder ? ACCENTS.shoulder : (isArm ? ACCENTS.arm : '#7d5cff');
+      const tags = item.tags||[];
+      const color = tags.includes('shoulder') ? ACCENTS.shoulder : (tags.includes('arm') ? ACCENTS.arm : '#7d5cff');
       $('#plate').style.setProperty('--card-accent', color);
       $('.tagdot').style.background = color;
     }
@@ -426,7 +427,7 @@
       $('#labelTxt').textContent = tags.join(' • ') || 'KIN 100';
     }
     function updateFlashUI(announce){
-      const front = $('#flashFront'), back = $('#flashBack');
+      const front = $('#flashFront'), back = $('#flashBack'), card = $('#flashCard');
       $('#streak').textContent = String(streak);
       $('#deckCount').textContent = flashDeck.length;
       const remain = flashDeck.length ? (flashDeck.length - deckIndex) : 0;
@@ -434,7 +435,6 @@
       const pct = flashDeck.length ? Math.round((deckIndex/flashDeck.length)*100) : 0;
       $('#progressFill').style.width = pct + '%';
 
-      const card = $('#flashCard');
       if(!flashDeck.length){
         front.innerHTML = "No flashcards match your filters.";
         back.textContent = "";
@@ -487,10 +487,10 @@
       card.classList.add('flip-anim');
       showBack = !showBack;
       updateFlashUI(false);
-      setTimeout(()=> card.classList.remove('flip-anim'), 520); // match animation length
+      setTimeout(()=> card.classList.remove('flip-anim'), 520);
     }
 
-    // Events
+    // Events — Flashcards
     $('#flashCard').addEventListener('click', flipWithFx);
     $('#flashFlip').addEventListener('click', flipWithFx);
     $('#flashShuffle').addEventListener('click', async ()=>{ await animateShuffle(700); refreshFlashDeck(true); });
@@ -573,13 +573,18 @@
     /* =======================
        Init
        ======================= */
-    refreshFlashDeck(true);
-    $('#quizLenWrap').style.visibility = $('#mcqMode').value==='quiz' ? 'visible' : 'hidden';
+    try{
+      refreshFlashDeck(true);
+      $('#quizLenWrap').style.visibility = $('#mcqMode').value==='quiz' ? 'visible' : 'hidden';
+    }catch(err){
+      window.dispatchEvent(new ErrorEvent('error',{message:err.message}));
+    }
   </script>
 
-  <footer>
-    Single‑file app · Modify the <strong>BANK</strong> array in the script to add/edit items.  
-    Dark mode = black background, white UI text; flashcards stay white with black text for maximum legibility.
+  <footer style="text-align:center;color:var(--muted);padding:24px 16px">
+    Single‑file app · Modify the <strong>BANK</strong> array to add/edit items.  
+    Dark mode = black background/white UI text; flashcards stay white with black text for legibility.  
+    <div style="margin-top:6px;opacity:.7">Build: <code>v1.3-flip-shell</code></div>
   </footer>
 </body>
 </html>
