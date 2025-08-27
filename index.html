@@ -12,10 +12,10 @@
       --btn-shadow:0 4px 12px rgba(125,92,255,.25);
       --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
-    /* DARK MODE */
+    /* DARK MODE (readable) */
     body.dark{
-      --bg:#000; --fg:#fff; --muted:#cfcfcf; --surface:#000; --border:#333;
-      --accent:#8f7bff; --accent-2:#ffd166; --ok:#2e7d32; --err:#ff5c6c;
+      --bg:#000; --fg:#fff; --muted:#d0d0d0; --surface:#000; --border:#333;
+      --accent:#9a87ff; --accent-2:#ffd166; --ok:#35d07f; --err:#ff6a7a;
     }
 
     *{box-sizing:border-box} html,body{height:100%}
@@ -44,29 +44,54 @@
     .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
     body.dark .panel{background:#000;border-color:var(--border);color:#fff}
 
-    /* Flashcards (flipper) */
+    /* =============== Flashcards: visual like reference =============== */
     .flash-wrap{display:grid;gap:14px}
     .card{
-      position:relative; min-height:200px; text-align:center;
-      border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:var(--shadow);
-      perspective:1000px; /* for 3D flip */
+      position:relative; padding:18px; border-radius:20px; border:1px solid var(--border);
+      background:var(--surface); box-shadow:var(--shadow); overflow:hidden;
     }
-    body.dark .card{background:#000;color:#fff;border-color:var(--border)}
-    .card .inner{
-      position:relative; width:100%; height:100%;
-      transform-style:preserve-3d; transition:transform .45s ease;
+    /* The plate is the white card inside (always white + black text for readability) */
+    .plate{
+      --card-accent:#f7c948; /* default; overridden per card */
+      background:#fff; color:#111;
+      border:6px solid var(--card-accent);
+      border-radius:18px; position:relative; min-height:210px;
       display:block;
     }
-    body.reduced-motion .card .inner{transition:none}
-    .card.flipped .inner{ transform:rotateY(180deg); }
-    .face{
-      position:absolute; inset:0; display:grid; place-items:center; padding:24px;
-      font-size:1.15rem;
-      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    /* Inner canvas for text (doesn't rotate) */
+    .plate .text{
+      position:absolute; left:18px; right:18px; top:22px; bottom:64px;
+      display:flex; align-items:center; justify-content:center; text-align:center; padding:4px;
+      font-size:1.1rem; line-height:1.45; transition:opacity .28s ease;
     }
-    .face small{display:block;color:var(--muted)}
-    .face.back{ transform:rotateY(180deg); } /* prepares readable back */
-    body.dark .face{color:#fff}
+    .text-front{opacity:1}
+    .text-back{opacity:0}
+    .card.showBack .text-front{opacity:0}
+    .card.showBack .text-back{opacity:1}
+    .hint{position:absolute; left:0; right:0; bottom:66px; text-align:center; color:#8a8a8a; font-size:.95rem}
+    /* Label bar like your example */
+    .labelbar{
+      position:absolute; left:0; right:0; bottom:0; height:58px;
+      border-top:1px solid rgba(0,0,0,.06); background:#fff; border-radius:0 0 12px 12px;
+      display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.05rem;
+      color:#111;
+    }
+    .tagdot{display:inline-block; width:.66em; height:.66em; border-radius:999px; margin:0 .25em -.08em 0; background:var(--card-accent)}
+
+    /* Flip animation shell (rotates; content text does not) */
+    .flipFx{
+      position:absolute; inset:18px; border-radius:18px; pointer-events:none; transform-style:preserve-3d;
+    }
+    .flipFx::before{
+      content:""; position:absolute; inset:0; background:#fff; border:6px solid var(--card-accent); border-radius:18px;
+      transform-origin:center; transform:rotateY(0); opacity:0;
+    }
+    .card.flip-anim .flipFx::before{ animation:flipShell .5s ease both }
+    @keyframes flipShell{
+      0%{transform:rotateY(0); opacity:.15}
+      45%{opacity:.45}
+      100%{transform:rotateY(180deg); opacity:0}
+    }
 
     .flash-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
     .btn{border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:650;background:#f3f0ff;color:#3a2c90}
@@ -83,7 +108,7 @@
     .barline > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
     body.dark .barline{background:#222}
 
-    /* MCQ */
+    /* =============== MCQ =============== */
     .q-wrap{display:grid;gap:14px}
     .choices{display:grid;gap:8px}
     .choice{
@@ -97,20 +122,15 @@
     body.dark .choice{background:#000;color:#fff;border-color:var(--border)}
     body.dark .rationale{background:#0a0a0a;color:#fff;border-left-color:var(--accent)}
 
-    footer{color:var(--muted);font-size:.85rem;padding:28px 16px;text-align:center}
+    /* Toast + confetti + shuffle minis are unchanged */
     .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .25s ease}
     .toast.show{opacity:1}
-
-    /* Confetti (emoji) */
     .confetti{position:fixed;pointer-events:none;inset:0;overflow:hidden;z-index:1000}
     .bit{position:absolute;font-size:18px;animation:fall 900ms ease-out forwards}
     @keyframes fall{from{transform:translateY(0) rotate(0deg);opacity:1}to{transform:translateY(120vh) rotate(540deg);opacity:0}}
     body.reduced-motion .bit{animation:none;opacity:0}
 
-    /* Shuffle animation overlay */
-    .shuffle-overlay{
-      position:absolute; inset:0; pointer-events:none; display:none; z-index:5;
-    }
+    .shuffle-overlay{position:absolute; inset:0; pointer-events:none; display:none; z-index:5;}
     .shuffle-overlay.show{ display:block; }
     .mini-card{
       position:absolute; width:64px; height:42px; border-radius:8px; background:#fff;
@@ -168,9 +188,12 @@
       </div>
 
       <div class="card" id="flashCard" aria-live="polite" aria-atomic="true">
-        <div class="inner" id="flashInner">
-          <div class="face front" id="flashFront">Building deck…</div>
-          <div class="face back" id="flashBack"></div>
+        <div class="flipFx" id="flipFx" aria-hidden="true"></div>
+        <div class="plate" id="plate">
+          <div class="text text-front" id="flashFront">Building deck…</div>
+          <div class="text text-back" id="flashBack"></div>
+          <div class="hint" id="hint">Press Space or click card to flip</div>
+          <div class="labelbar"><span class="tagdot"></span><span id="labelTxt">shoulder • muscles</span></div>
         </div>
         <div class="shuffle-overlay" id="shuffleOverlay" aria-hidden="true"></div>
       </div>
@@ -256,7 +279,7 @@
       {type:"flash",tags:["arm","bones"],front:"Intertubercular (bicipital) groove — notable content?",back:"Tendon of long head of biceps brachii."},
       {type:"flash",tags:["shoulder","bones"],front:"Long head of biceps — origin?",back:"Supraglenoid tubercle of scapula."},
       {type:"flash",tags:["shoulder","bones"],front:"Short head of biceps — origin?",back:"Coracoid process of scapula."},
-      {type:"flash",tags:["shoulder","bones"],front:"Long head of triceps — origin?",back:"Infraglenoid tubercle of scapula."},
+      {type:"flash",tags":["shoulder","bones"],front:"Long head of triceps — origin?",back:"Infraglenoid tubercle of scapula."},
       {type:"flash",tags:["arm","innervation"],front:"Musculocutaneous nerve — terminal sensory branch?",back:"Lateral cutaneous nerve of forearm."},
       {type:"flash",tags:["shoulder","innervation"],front:"Axillary nerve — sensory patch?",back:"‘Regimental badge’ area over lateral deltoid."},
 
@@ -264,9 +287,9 @@
       {type:"mcq",tags:["shoulder","muscles"],stem:"Which muscle initiates glenohumeral abduction (0–15°)?",options:["Supraspinatus","Deltoid","Infraspinatus","Subscapularis"],answerIndex:0,rationale:"Supraspinatus initiates abduction before the deltoid becomes more effective."},
       {type:"mcq",tags:["arm","innervation"],stem:"The anterior compartment of the arm is primarily innervated by which nerve?",options:["Radial","Ulnar","Musculocutaneous","Axillary"],answerIndex:2,rationale:"Biceps brachii, brachialis (primarily), and coracobrachialis are musculocutaneous."},
       {type:"mcq",tags:["arm","innervation","bones"],stem:"A fracture of the surgical neck of the humerus endangers which nerve?",options:["Radial","Median","Axillary","Ulnar"],answerIndex:2,rationale:"Axillary nerve + posterior circumflex humeral artery wrap around the surgical neck."},
-      {type:"mcq",tags:["arm","innervation","bones"],stem:"A midshaft humeral fracture classically injures which nerve?",options:["Ulnar","Radial","Musculocutaneous","Axillary"],answerIndex:1,rationale:"The radial nerve lies in the radial groove at the humeral shaft — injury → wrist/finger extensor weakness."},
-      {type:"mcq",tags:["arm","muscles","bones"],stem:"Which muscle inserts on the deltoid tuberosity?",options:["Deltoid","Teres major","Latissimus dorsi","Pectoralis major"],answerIndex:0,rationale:"The deltoid inserts on the deltoid tuberosity (lateral humerus)."},
-      {type:"mcq",tags:["shoulder","bones","innervation"],stem:"Which structure passes through the quadrangular space along with the posterior circumflex humeral artery?",options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Ulnar nerve"],answerIndex:1,rationale:"Quadrangular space: axillary nerve + PCHA."},
+      {type:"mcq",tags:["arm","innervation","bones"],stem:"A midshaft humeral fracture classically injures which nerve?",options:["Ulnar","Radial","Musculocutaneous","Axillary"],answerIndex:1,rationale:"Radial nerve lies in the radial groove at the humeral shaft — injury → wrist/finger extensor weakness."},
+      {type:"mcq",tags:["arm","muscles","bones"],stem:"Which muscle inserts on the deltoid tuberosity?",options:["Deltoid","Teres major","Latissimus dorsi","Pectoralis major"],answerIndex:0,rationale:"Deltoid inserts on the deltoid tuberosity (lateral humerus)."},
+      {type:"mcq",tags:["shoulder","bones","innervation"],stem:"Which structure passes through the quadrangular space with the posterior circumflex humeral artery?",options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Ulnar nerve"],answerIndex:1,rationale:"Quadrangular space: axillary nerve + PCHA."},
       {type:"mcq",tags:["shoulder","innervation","muscles"],stem:"Injury to the long thoracic nerve primarily weakens which muscle?",options:["Rhomboid major","Serratus anterior","Trapezius","Latissimus dorsi"],answerIndex:1,rationale:"Long thoracic → serratus anterior; injury → winged scapula with push‑up motion."},
       {type:"mcq",tags:["shoulder","muscles"],stem:"Which of the following is an external (lateral) rotator of the shoulder?",options:["Subscapularis","Teres major","Infraspinatus","Pectoralis major"],answerIndex:2,rationale:"Infraspinatus (and teres minor) laterally rotate; subscapularis medially rotates."},
       {type:"mcq",tags:["shoulder","bones","muscles"],stem:"The tendon of which muscle travels in the intertubercular (bicipital) groove?",options:["Biceps brachii long head","Biceps brachii short head","Triceps long head","Brachialis"],answerIndex:0,rationale:"Long head biceps tendon runs in the groove enclosed by the transverse humeral ligament."},
@@ -286,6 +309,12 @@
     const REGIONS = ['shoulder','arm'];
     const DOMAINS = ['muscles','bones','innervation'];
     let activeFilters = new Set([...REGIONS, ...DOMAINS]);
+
+    // Accent color per region (for the card border + dot)
+    const ACCENTS = {
+      shoulder:'#f7c948', // warm yellow (like your example)
+      arm:'#f8a3c9'       // soft pink
+    };
 
     const rnd = n => Math.floor(Math.random()*n);
     const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=rnd(i+1); [a[i],a[j]]=[a[j],a[i]];} return a; };
@@ -385,8 +414,19 @@
     let streak = 0;
 
     function currentFlash(){ return flashDeck[deckIndex] || null; }
+    function setAccentFor(item){
+      const isShoulder = (item.tags||[]).includes('shoulder');
+      const isArm = (item.tags||[]).includes('arm');
+      const color = isShoulder ? ACCENTS.shoulder : (isArm ? ACCENTS.arm : '#7d5cff');
+      $('#plate').style.setProperty('--card-accent', color);
+      $('.tagdot').style.background = color;
+    }
+    function setLabel(item){
+      const tags = (item.tags||[]).filter(t=>REGIONS.includes(t) || DOMAINS.includes(t));
+      $('#labelTxt').textContent = tags.join(' • ') || 'KIN 100';
+    }
     function updateFlashUI(announce){
-      const front = $('#flashFront'), back = $('#flashBack'), card = $('#flashCard'), inner = $('#flashInner');
+      const front = $('#flashFront'), back = $('#flashBack');
       $('#streak').textContent = String(streak);
       $('#deckCount').textContent = flashDeck.length;
       const remain = flashDeck.length ? (flashDeck.length - deckIndex) : 0;
@@ -394,23 +434,18 @@
       const pct = flashDeck.length ? Math.round((deckIndex/flashDeck.length)*100) : 0;
       $('#progressFill').style.width = pct + '%';
 
+      const card = $('#flashCard');
       if(!flashDeck.length){
-        front.innerHTML = "No flashcards match your filters.<br><small>Toggle filters above (Shoulder/Arm/Muscles/Bones/Innervation).</small>";
+        front.innerHTML = "No flashcards match your filters.";
         back.textContent = "";
-        $('#flashFlip').disabled = true; $('#flashAgain').disabled = true; $('#flashGot').disabled = true;
-        card.classList.remove('flipped'); return;
+        setLabel({tags:[]});
+        card.classList.remove('showBack'); return;
       }
-      $('#flashFlip').disabled = false; $('#flashAgain').disabled = false; $('#flashGot').disabled = false;
-
       const item = currentFlash();
-      if(!item){
-        front.textContent = "Deck complete. Shuffle or reset to go again.";
-        back.textContent = "";
-        card.classList.remove('flipped'); return;
-      }
-      front.innerHTML = item.front + '<br><small>Press Space or click card to flip</small>';
+      front.innerHTML = item.front;
       back.textContent = item.back;
-      card.classList.toggle('flipped', showBack);
+      setAccentFor(item); setLabel(item);
+      card.classList.toggle('showBack', showBack);
       if(announce) say("Deck ready · " + flashDeck.length + " cards");
     }
     function buildDeck(){
@@ -424,8 +459,8 @@
     function nextFlash(){
       deckIndex++; showBack = false;
       if(deckIndex >= flashDeck.length){
-        $('#flashFront').innerHTML = "🎯 Deck complete — smooth work.<br><small>Shuffle or reset to run it back.</small>";
-        $('#flashBack').textContent = ""; $('#flashCard').classList.remove('flipped'); confettiBurst(); return;
+        $('#flashFront').innerHTML = "🎯 Deck complete — smooth work.";
+        $('#flashBack').textContent = ""; $('#flashCard').classList.remove('showBack'); confettiBurst(); return;
       }
       updateFlashUI(false);
     }
@@ -441,22 +476,31 @@
       streak++; if(streak>0 && streak % 5 === 0) confettiBurst();
       say("Nice rep."); updateFlashUI(false);
       if(deckIndex >= flashDeck.length){
-        $('#flashFront').innerHTML = "🎯 Deck complete — clean set.<br><small>Shuffle or reset to continue.</small>";
-        $('#flashBack').textContent = ""; $('#flashCard').classList.remove('flipped');
+        $('#flashFront').innerHTML = "🎯 Deck complete — clean set.";
+        $('#flashBack').textContent = ""; $('#flashCard').classList.remove('showBack');
       }
     }
 
+    // Flip animation trigger (shell rotates; text cross-fades)
+    function flipWithFx(){
+      const card = $('#flashCard');
+      card.classList.add('flip-anim');
+      showBack = !showBack;
+      updateFlashUI(false);
+      setTimeout(()=> card.classList.remove('flip-anim'), 520); // match animation length
+    }
+
     // Events
-    $('#flashCard').addEventListener('click', ()=>{ showBack = !showBack; updateFlashUI(false); });
+    $('#flashCard').addEventListener('click', flipWithFx);
+    $('#flashFlip').addEventListener('click', flipWithFx);
     $('#flashShuffle').addEventListener('click', async ()=>{ await animateShuffle(700); refreshFlashDeck(true); });
     $('#flashReset').addEventListener('click', async ()=>{ await animateShuffle(700); refreshFlashDeck(true); });
-    $('#flashFlip').addEventListener('click', ()=>{ showBack = !showBack; updateFlashUI(false); });
     $('#flashAgain').addEventListener('click', againFlash);
     $('#flashGot').addEventListener('click', gotFlash);
     document.addEventListener('keydown', (e)=>{
-      const flashActive = tabs.flash.btn.getAttribute('aria-selected') === 'true';
+      const flashActive = $('#tab-flash').getAttribute('aria-selected') === 'true';
       if(!flashActive) return;
-      if(e.key===' '){ e.preventDefault(); $('#flashFlip').click(); }
+      if(e.key===' '){ e.preventDefault(); flipWithFx(); }
       if(e.key.toLowerCase()==='a'){ $('#flashAgain').click(); }
       if(e.key.toLowerCase()==='g'){ $('#flashGot').click(); }
       if(e.key==='ArrowRight'){ nextFlash(); }
@@ -535,7 +579,7 @@
 
   <footer>
     Single‑file app · Modify the <strong>BANK</strong> array in the script to add/edit items.  
-    Dark mode switches to black background with white text throughout.
+    Dark mode = black background, white UI text; flashcards stay white with black text for maximum legibility.
   </footer>
 </body>
 </html>
