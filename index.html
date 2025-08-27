@@ -6,118 +6,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg:#fafafa;
-      --fg:#161616;
-      --muted:#6b6b6b;
-      --surface:#ffffff;
-      --border:#e6e6e6;
-      --accent:#7d5cff; /* playful but calm */
-      --accent-2:#ffd166; /* warm pop */
-      --ok:#2e7d32;
-      --err:#b00020;
-      --focus: 2px solid #7d5cff;
-      --radius:14px;
-      --shadow: 0 8px 24px rgba(0,0,0,.08);
-      --btn-shadow: 0 4px 12px rgba(125,92,255,.25);
-      --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --bg:#fafafa; --fg:#161616; --muted:#6b6b6b; --surface:#ffffff; --border:#e6e6e6;
+      --accent:#7d5cff; --accent-2:#ffd166; --ok:#2e7d32; --err:#b00020;
+      --focus:2px solid #7d5cff; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.08);
+      --btn-shadow:0 4px 12px rgba(125,92,255,.25);
+      --font:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
     }
     body.high-contrast{
-      --bg:#000;
-      --fg:#fff;
-      --muted:#eaeaea;
-      --surface:#000;
-      --border:#fff;
-      --accent:#00e5ff;
-      --accent-2:#ffea00;
-      --ok:#00e676;
-      --err:#ff5252;
+      --bg:#000; --fg:#fff; --muted:#eaeaea; --surface:#000; --border:#fff;
+      --accent:#00e5ff; --accent-2:#ffea00; --ok:#00e676; --err:#ff5252;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:var(--bg); color:var(--fg); font-family:var(--font); line-height:1.5;
-    }
-    .skip{position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;}
-    .skip:focus{left:16px; top:16px; width:auto; height:auto; background:var(--accent); color:#fff; padding:8px 12px; border-radius:8px}
-    header{
-      position:sticky; top:0; z-index:3;
-      background:linear-gradient(90deg,var(--surface), #f6f3ff);
-      border-bottom:1px solid var(--border);
-      padding:14px 16px;
-    }
-    header .title{font-weight:700; font-size:1.1rem}
-    header .subtitle{color:var(--muted); font-size:.95rem}
-    .container{max-width:980px; margin:16px auto; padding:0 16px}
-    .bar{
-      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin:12px 0 18px;
-    }
-    .tabs[role="tablist"]{display:flex; gap:6px; padding:6px; background:var(--surface); border:1px solid var(--border); border-radius:999px}
-    .tabs button{
-      border:0; background:none; padding:10px 14px; border-radius:999px; cursor:pointer; color:var(--muted); font-weight:600;
-    }
-    .tabs button[aria-selected="true"]{background:var(--accent); color:#fff; box-shadow:var(--btn-shadow)}
-    .filters, .toggles, .session{
-      display:flex; flex-wrap:wrap; gap:8px; align-items:center;
-    }
-    fieldset{border:1px dashed var(--border); border-radius:12px; padding:8px 10px}
-    legend{padding:0 6px; color:var(--muted); font-size:.9rem}
-    label{display:inline-flex; gap:8px; align-items:center; font-size:.95rem}
-    input[type="checkbox"], input[type="radio"]{width:18px; height:18px}
-    .panel{
-      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow);
-    }
-    /* Flashcards */
-    .flash-wrap{display:grid; gap:14px}
-    .card{
-      position:relative;
-      min-height:180px; display:grid; place-items:center; text-align:center;
-      padding:24px; border:1px solid var(--border); border-radius:18px; background:#fff; box-shadow:var(--shadow);
-      transition: transform .4s ease;
-    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.5}
+    .skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+    .skip:focus{left:16px;top:16px;width:auto;height:auto;background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px}
+    header{position:sticky;top:0;z-index:3;background:linear-gradient(90deg,var(--surface),#f6f3ff);border-bottom:1px solid var(--border);padding:14px 16px}
+    header .title{font-weight:700;font-size:1.1rem} header .subtitle{color:var(--muted);font-size:.95rem}
+    .container{max-width:980px;margin:16px auto;padding:0 16px}
+    .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:12px 0 18px}
+    .tabs[role="tablist"]{display:flex;gap:6px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:999px}
+    .tabs button{border:0;background:none;padding:10px 14px;border-radius:999px;cursor:pointer;color:var(--muted);font-weight:600}
+    .tabs button[aria-selected="true"]{background:var(--accent);color:#fff;box-shadow:var(--btn-shadow)}
+    .filters,.session{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+    fieldset{border:1px dashed var(--border);border-radius:12px;padding:8px 10px}
+    legend{padding:0 6px;color:var(--muted);font-size:.9rem}
+    label{display:inline-flex;gap:8px;align-items:center;font-size:.95rem}
+    input[type="checkbox"],input[type="radio"]{width:18px;height:18px}
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+    .flash-wrap{display:grid;gap:14px}
+    .card{position:relative;min-height:180px;display:grid;place-items:center;text-align:center;padding:24px;border:1px solid var(--border);border-radius:18px;background:#fff;box-shadow:var(--shadow);transition:transform .4s ease}
     body.reduced-motion .card{transition:none}
-    .card .face{font-size:1.15rem}
-    .card .face small{display:block; color:var(--muted)}
-    .flash-actions{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
-    .btn{
-      border:0; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:650; background:#f3f0ff; color:#3a2c90;
-    }
-    .btn.primary{background:var(--accent); color:#fff; box-shadow:var(--btn-shadow)}
-    .btn.ghost{background:#f8f8f8; color:#333}
-    .btn.good{background:#e8f5e9; color:var(--ok)}
-    .btn.bad{background:#ffebee; color:var(--err)}
-    .stats{display:flex; gap:12px; justify-content:center; color:var(--muted); font-size:.95rem}
-    .barline{height:10px; background:#f0f0f6; border-radius:999px; overflow:hidden}
-    .barline > span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--accent), var(--accent-2))}
-    /* MCQ */
-    .q-wrap{display:grid; gap:14px}
-    .choices{display:grid; gap:8px}
-    .choice{
-      display:flex; gap:10px; align-items:flex-start;
-      border:1px solid var(--border); border-radius:12px; padding:10px 12px; cursor:pointer; background:#fff;
-    }
-    .choice[data-state="correct"]{border-color:var(--ok); box-shadow:0 0 0 2px rgba(46,125,50,.2) inset}
-    .choice[data-state="wrong"]{border-color:var(--err); box-shadow:0 0 0 2px rgba(176,0,32,.15) inset}
+    .card .face{font-size:1.15rem} .card .face small{display:block;color:var(--muted)}
+    .flash-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+    .btn{border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:650;background:#f3f0ff;color:#3a2c90}
+    .btn.primary{background:var(--accent);color:#fff;box-shadow:var(--btn-shadow)}
+    .btn.ghost{background:#f8f8f8;color:#333}
+    .btn.good{background:#e8f5e9;color:var(--ok)} .btn.bad{background:#ffebee;color:var(--err)}
+    .stats{display:flex;gap:12px;justify-content:center;color:var(--muted);font-size:.95rem}
+    .barline{height:10px;background:#f0f0f6;border-radius:999px;overflow:hidden}
+    .barline>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .q-wrap{display:grid;gap:14px}
+    .choices{display:grid;gap:8px}
+    .choice{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff}
+    .choice[data-state="correct"]{border-color:var(--ok);box-shadow:0 0 0 2px rgba(46,125,50,.2) inset}
+    .choice[data-state="wrong"]{border-color:var(--err);box-shadow:0 0 0 2px rgba(176,0,32,.15) inset}
     .choice input{margin-top:3px}
-    .rationale{border-left:4px solid var(--accent); padding:10px 12px; background:#fbfbff; border-radius:10px}
-    .score{font-weight:700}
-    footer{color:var(--muted); font-size:.85rem; padding:28px 16px; text-align:center}
-    .toast{position:fixed; bottom:16px; left:50%; transform:translateX(-50%); background:#111; color:#fff; padding:8px 12px; border-radius:999px; font-size:.9rem; opacity:0; transition:opacity .25s ease}
+    .rationale{border-left:4px solid var(--accent);padding:10px 12px;background:#fbfbff;border-radius:10px}
+    .score{font-weight:700} footer{color:var(--muted);font-size:.85rem;padding:28px 16px;text-align:center}
+    .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .25s ease}
     .toast.show{opacity:1}
-    /* Confetti (emoji) */
-    .confetti{
-      position:fixed; pointer-events:none; inset:0; overflow:hidden; z-index:1000;
-    }
-    .bit{position:absolute; font-size:18px; animation:fall 900ms ease-out forwards}
-    @keyframes fall{
-      from{transform:translateY(0) rotate(0deg); opacity:1}
-      to{transform:translateY(120vh) rotate(540deg); opacity:0}
-    }
-    body.reduced-motion .bit{animation:none; opacity:0}
-    /* Buttons */
+    .confetti{position:fixed;pointer-events:none;inset:0;overflow:hidden;z-index:1000}
+    .bit{position:absolute;font-size:18px;animation:fall 900ms ease-out forwards}
+    @keyframes fall{from{transform:translateY(0) rotate(0deg);opacity:1}to{transform:translateY(120vh) rotate(540deg);opacity:0}}
+    body.reduced-motion .bit{animation:none;opacity:0}
     .session .btn{padding:8px 12px}
     .hidden{display:none !important}
-    /* Focus outlines */
-    :focus-visible{outline:var(--focus); outline-offset:2px}
+    :focus-visible{outline:var(--focus);outline-offset:2px}
   </style>
 </head>
 <body>
@@ -125,11 +69,11 @@
   <header>
     <div class="container">
       <div class="title">KIN 100 Review — Shoulder &amp; Arm</div>
-      <div class="subtitle">Flashcards &amp; MCQ • text‑only v1 (images can be added later)</div>
+      <div class="subtitle">Flashcards &amp; MCQ • text-only v1 (images can be added later)</div>
     </div>
   </header>
 
-  <div class="container">
+  <div class="container" id="main">
     <div class="bar">
       <div class="tabs" role="tablist" aria-label="Mode">
         <button id="tab-flash" role="tab" aria-selected="true" aria-controls="flashcardsPanel">Flashcards</button>
@@ -215,11 +159,10 @@
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
   <div class="confetti" id="confetti" aria-hidden="true"></div>
 
-  <!-- ===== Question Bank (Edit Inside) ===== -->
+  <!-- ===== Question Bank (VALID JSON — no comments) ===== -->
   <script type="application/json" id="question-bank">
   {
-    "items":[
-      /* ---------- FLASHCARDS (shoulder/arm, muscles/bones/innervation) ---------- */
+    "items": [
       {"type":"flash","tags":["shoulder","muscles","innervation"],"front":"Deltoid — innervation?","back":"Axillary nerve (C5–C6)."},
       {"type":"flash","tags":["shoulder","muscles"],"front":"Deltoid (middle fibers) — primary action?","back":"Shoulder abduction (~15–90°)."},
       {"type":"flash","tags":["shoulder","muscles","innervation"],"front":"Teres minor — action + innervation?","back":"External (lateral) rotation; axillary nerve."},
@@ -247,7 +190,6 @@
       {"type":"flash","tags":["arm","innervation"],"front":"Musculocutaneous nerve — terminal sensory branch?","back":"Lateral cutaneous nerve of forearm."},
       {"type":"flash","tags":["shoulder","innervation"],"front":"Axillary nerve — sensory patch?","back":"‘Regimental badge’ area over lateral deltoid."},
 
-      /* ---------- MCQ ---------- */
       {"type":"mcq","tags":["shoulder","innervation"],"stem":"Which nerve innervates the deltoid muscle?","options":["Radial","Axillary","Musculocutaneous","Median"],"answerIndex":1,"rationale":"Deltoid (and teres minor) receive axillary nerve (C5–C6)."},
       {"type":"mcq","tags":["shoulder","muscles"],"stem":"Which muscle initiates glenohumeral abduction (0–15°)?","options":["Supraspinatus","Deltoid","Infraspinatus","Subscapularis"],"answerIndex":0,"rationale":"Supraspinatus initiates abduction before the deltoid becomes more effective."},
       {"type":"mcq","tags":["arm","innervation"],"stem":"The anterior compartment of the arm is primarily innervated by which nerve?","options":["Radial","Ulnar","Musculocutaneous","Axillary"],"answerIndex":2,"rationale":"Biceps brachii, brachialis (primarily), and coracobrachialis are musculocutaneous."},
@@ -255,7 +197,7 @@
       {"type":"mcq","tags":["arm","innervation","bones"],"stem":"A midshaft humeral fracture classically injures which nerve?","options":["Ulnar","Radial","Musculocutaneous","Axillary"],"answerIndex":1,"rationale":"The radial nerve lies in the radial groove at the humeral shaft—injury → wrist/finger extensor weakness."},
       {"type":"mcq","tags":["arm","muscles","bones"],"stem":"Which muscle inserts on the deltoid tuberosity?","options":["Deltoid","Teres major","Latissimus dorsi","Pectoralis major"],"answerIndex":0,"rationale":"The deltoid inserts on the deltoid tuberosity (lateral humerus)."},
       {"type":"mcq","tags":["shoulder","bones","innervation"],"stem":"Which structure passes through the quadrangular space along with the posterior circumflex humeral artery?","options":["Radial nerve","Axillary nerve","Musculocutaneous nerve","Ulnar nerve"],"answerIndex":1,"rationale":"Quadrangular space contents: axillary nerve and posterior circumflex humeral artery."},
-      {"type":"mcq","tags":["shoulder","innervation","muscles"],"stem":"Injury to the long thoracic nerve primarily weakens which muscle?","options":["Rhomboid major","Serratus anterior","Trapezius","Latissimus dorsi"],"answerIndex":1,"rationale":"Long thoracic → serratus anterior; injury → winged scapula with push‑up motion."},
+      {"type":"mcq","tags":["shoulder","innervation","muscles"],"stem":"Injury to the long thoracic nerve primarily weakens which muscle?","options":["Rhomboid major","Serratus anterior","Trapezius","Latissimus dorsi"],"answerIndex":1,"rationale":"Long thoracic → serratus anterior; injury → winged scapula with push-up motion."},
       {"type":"mcq","tags":["shoulder","muscles"],"stem":"Which of the following is an external (lateral) rotator of the shoulder?","options":["Subscapularis","Teres major","Infraspinatus","Pectoralis major"],"answerIndex":2,"rationale":"Infraspinatus (and teres minor) laterally rotate the humerus; subscapularis is a medial rotator."},
       {"type":"mcq","tags":["shoulder","bones","muscles"],"stem":"The tendon of which muscle travels in the intertubercular (bicipital) groove?","options":["Biceps brachii long head","Biceps brachii short head","Triceps long head","Brachialis"],"answerIndex":0,"rationale":"The long head biceps tendon runs in the groove enclosed by the transverse humeral ligament."},
       {"type":"mcq","tags":["arm","innervation"],"stem":"Innervation of triceps brachii?","options":["Radial","Axillary","Musculocutaneous","Median"],"answerIndex":0,"rationale":"All heads of triceps are innervated by the radial nerve."},
@@ -269,21 +211,32 @@
   </script>
 
   <script>
+    // ===== Safe JSON load with error surfacing =====
+    function loadBank(){
+      try{
+        const raw = document.getElementById('question-bank').textContent.trim();
+        const data = JSON.parse(raw);
+        if(!data || !Array.isArray(data.items)) throw new Error("No 'items' array found.");
+        return data.items;
+      }catch(err){
+        console.error(err);
+        say("⚠️ Problem reading question bank. See console.");
+        return [];
+      }
+    }
+
     // ===== Utility =====
     const $ = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
-    const bank = JSON.parse(document.getElementById('question-bank').textContent).items;
+    let bank = loadBank();
+
     const REGIONS = ['shoulder','arm'];
     const DOMAINS = ['muscles','bones','innervation'];
     let activeFilters = new Set([...REGIONS, ...DOMAINS]);
 
     const rnd = (n) => Math.floor(Math.random()*n);
-    const shuffle = arr => {
-      const a = [...arr];
-      for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];}
-      return a;
-    };
-    const intersects = (a, b) => a.some(x => b.includes(x));
+    const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; };
+    const intersects = (a,b) => a.some(x => b.includes(x));
     const matchesFilters = (item) => {
       const itemTags = item.tags||[];
       const selRegions = REGIONS.filter(t => activeFilters.has(t));
@@ -295,7 +248,7 @@
       return regionOK && domainOK;
     };
 
-    const tone = 1.5; // micro-copy dial (0-3). User asked for ~1.5
+    const tone = 1.5;
     function say(msg){
       const t = $('#toast');
       t.textContent = msg;
@@ -303,20 +256,9 @@
       clearTimeout(say._t);
       say._t = setTimeout(()=>t.classList.remove('show'), 1300);
     }
-    function micro(type){
-      const lines = {
-        flip: ["Flip it & rip it.","Quick peek unlocked.","Let’s see the other side."],
-        got: ["Nice rep!","Clean form.","Smooth move."],
-        again: ["No worries—one more rep.","We grow on the reps.","Reload & try again."]
-      }[type] || [];
-      if(!lines.length) return "";
-      const pick = lines[rnd(lines.length)];
-      // soften tone when dial < 2
-      return tone < 2 ? pick.replace(/!$/,'').replace('rip','check') : pick;
-    }
     function confettiBurst(){
       if(document.body.classList.contains('reduced-motion')) return;
-      const ems = ['🎉','💪','🏋️','🦴','⭐','🔥'];
+      const ems = ['🎉','💪','🦴','⭐','🔥'];
       const c = $('#confetti');
       for(let i=0;i<22;i++){
         const b = document.createElement('span');
@@ -333,18 +275,13 @@
     // ===== Filters / Toggles =====
     $$('.filters input[type="checkbox"]').forEach(cb=>{
       cb.addEventListener('change', ()=>{
-        if(cb.checked) activeFilters.add(cb.dataset.filter);
-        else activeFilters.delete(cb.dataset.filter);
+        if(cb.checked) activeFilters.add(cb.dataset.filter); else activeFilters.delete(cb.dataset.filter);
         refreshFlashDeck(true);
         mcqStop();
       });
     });
-    $('#hcToggle').addEventListener('change', (e)=> {
-      document.body.classList.toggle('high-contrast', e.target.checked);
-    });
-    $('#rmToggle').addEventListener('change', (e)=> {
-      document.body.classList.toggle('reduced-motion', e.target.checked);
-    });
+    $('#hcToggle').addEventListener('change', (e)=> document.body.classList.toggle('high-contrast', e.target.checked));
+    $('#rmToggle').addEventListener('change', (e)=> document.body.classList.toggle('reduced-motion', e.target.checked));
 
     // ===== Tabs =====
     const tabs = {
@@ -366,9 +303,7 @@
     let showBack = false;
     let streak = 0;
 
-    function currentFlash(){
-      return flashDeck[deckIndex] || null;
-    }
+    function currentFlash(){ return flashDeck[deckIndex] || null; }
     function refreshFlashDeck(announce){
       const pool = bank.filter(it => it.type==='flash' && matchesFilters(it));
       flashDeck = shuffle(pool);
@@ -376,13 +311,12 @@
       updateFlashUI(announce);
     }
     function updateFlashUI(announce){
-      const face = $('#flashFace');
-      const card = $('#flashCard');
+      const face = $('#flashFace'); const card = $('#flashCard');
       $('#streak').textContent = String(streak);
       $('#deckCount').textContent = flashDeck.length;
       const remain = flashDeck.length ? (flashDeck.length - deckIndex) : 0;
       $('#deckRemaining').textContent = String(remain);
-      const pct = flashDeck.length ? Math.round( (deckIndex/flashDeck.length)*100) : 0;
+      const pct = flashDeck.length ? Math.round((deckIndex/flashDeck.length)*100) : 0;
       $('#progressFill').style.width = pct + '%';
 
       if(!flashDeck.length){
@@ -403,46 +337,33 @@
       showBack = false;
       if(deckIndex >= flashDeck.length){
         $('#flashFace').innerHTML = "🎯 Deck complete — smooth work.<br><small>Shuffle or reset to run it back.</small>";
-        confettiBurst();
-        return;
+        confettiBurst(); return;
       }
       updateFlashUI(false);
     }
     function againFlash(){
-      const item = currentFlash();
-      if(!item) return;
-      // Reinsert current card later in the deck
+      const item = currentFlash(); if(!item) return;
       const insertAt = Math.min(flashDeck.length, deckIndex + 3 + rnd(3));
       flashDeck.splice(insertAt, 0, item);
-      deckIndex++; // move past current
-      streak = 0;
-      say(micro('again'));
-      updateFlashUI(false);
+      deckIndex++; streak = 0;
+      say("One more rep."); updateFlashUI(false);
     }
     function gotFlash(){
-      const item = currentFlash();
-      if(!item) return;
-      // Remove current card
+      const item = currentFlash(); if(!item) return;
       flashDeck.splice(deckIndex, 1);
-      streak++;
-      if(streak>0 && streak % 5 === 0) confettiBurst();
-      say(micro('got'));
+      streak++; if(streak>0 && streak % 5 === 0) confettiBurst();
+      say("Nice rep."); updateFlashUI(false);
       if(deckIndex >= flashDeck.length){
         $('#flashFace').innerHTML = "🎯 Deck complete — clean set.<br><small>Shuffle or reset to continue.</small>";
         updateFlashUI(false);
-        return;
       }
-      updateFlashUI(false);
     }
 
-    // Flash events
-    $('#flashShuffle').addEventListener('click', ()=>{ refreshFlashDeck(true); });
-    $('#flashReset').addEventListener('click', ()=>{ refreshFlashDeck(true); });
-    $('#flashFlip').addEventListener('click', ()=>{ showBack = !showBack; say(micro('flip')); updateFlashUI(false); });
+    $('#flashShuffle').addEventListener('click', ()=> refreshFlashDeck(true));
+    $('#flashReset').addEventListener('click', ()=> refreshFlashDeck(true));
+    $('#flashFlip').addEventListener('click', ()=> { showBack = !showBack; updateFlashUI(false); });
     $('#flashAgain').addEventListener('click', againFlash);
     $('#flashGot').addEventListener('click', gotFlash);
-
-    // Keyboard shortcuts (Flashcards)
     document.addEventListener('keydown', (e)=>{
       const flashActive = tabs.flash.btn.getAttribute('aria-selected') === 'true';
       if(!flashActive) return;
@@ -453,7 +374,7 @@
     });
 
     // ===== MCQ =====
-    let mcqSession = null; // {mode, list, idx, score, total}
+    let mcqSession = null;
     const qStem = $('#mcqStem'), qChoices = $('#mcqChoices'), qRat = $('#mcqRationale'), qScore = $('#mcqScore'), qStatus = $('#mcqStatus');
 
     function mcqStart(){
@@ -470,51 +391,33 @@
       renderMCQ();
     }
     function mcqStop(){
-      mcqSession = null;
-      qStem.textContent = "Press Start";
-      qChoices.innerHTML = '';
-      qRat.classList.add('hidden');
-      qScore.textContent = "0/0";
-      qStatus.textContent = "";
+      mcqSession = null; qStem.textContent = "Press Start"; qChoices.innerHTML = '';
+      qRat.classList.add('hidden'); qScore.textContent = "0/0"; qStatus.textContent = "";
     }
     function renderMCQ(){
       if(!mcqSession) return;
       const {list, idx, score, total} = mcqSession;
       if(idx >= list.length){
         qStem.innerHTML = "🎉 Session complete.";
-        qChoices.innerHTML = '';
-        qRat.classList.add('hidden');
-        qScore.textContent = `${score}/${total}`;
-        qStatus.textContent = "Nice pace — feel free to run another set.";
-        confettiBurst();
-        return;
+        qChoices.innerHTML = ''; qRat.classList.add('hidden'); qScore.textContent = `${score}/${total}`;
+        qStatus.textContent = "Nice pace — run another set."; confettiBurst(); return;
       }
-      const item = list[idx];
-      mcqSession.answered = false;
-      qStem.textContent = item.stem;
-      qChoices.innerHTML = '';
+      const item = list[idx]; mcqSession.answered = false;
+      qStem.textContent = item.stem; qChoices.innerHTML = '';
       const shuffled = shuffle(item.options.map((opt,i)=>({opt, i})));
       qRat.textContent = item.rationale||""; qRat.classList.add('hidden');
 
       shuffled.forEach((o, k)=>{
         const id = `opt-${idx}-${k}`;
         const wrap = document.createElement('label');
-        wrap.className = 'choice';
-        wrap.setAttribute('data-state','idle');
-        wrap.innerHTML = `
-          <input type="radio" name="mcq" id="${id}" value="${o.i}">
-          <div><strong>${k+1}.</strong> <span>${o.opt}</span></div>
-        `;
-        wrap.addEventListener('click', (ev)=>{
-          // Prevent double answering
+        wrap.className = 'choice'; wrap.setAttribute('data-state','idle');
+        wrap.innerHTML = `<input type="radio" name="mcq" id="${id}" value="${o.i}"><div><strong>${k+1}.</strong> <span>${o.opt}</span></div>`;
+        wrap.addEventListener('click', ()=>{
           if(mcqSession.answered) return;
           const chosen = parseInt(wrap.querySelector('input').value,10);
-          mcqSession.answered = true;
-          const correct = chosen === item.answerIndex;
-          mcqSession.total++;
-          if(correct){ mcqSession.score++; wrap.dataset.state='correct'; say("Correct."); }
+          mcqSession.answered = true; const correct = chosen === item.answerIndex;
+          mcqSession.total++; if(correct){ mcqSession.score++; wrap.dataset.state='correct'; say("Correct."); }
           else{ wrap.dataset.state='wrong'; say("Not quite."); }
-          // mark the correct one
           $$('#mcqChoices .choice').forEach(ch=>{
             const val = parseInt(ch.querySelector('input').value,10);
             if(val === item.answerIndex){ ch.dataset.state='correct'; }
@@ -522,32 +425,15 @@
           });
           qRat.classList.remove('hidden');
           qScore.textContent = `${mcqSession.score}/${mcqSession.total}`;
-        }, {once:false});
+        });
         qChoices.appendChild(wrap);
       });
       qStatus.textContent = `Q ${idx+1} of ${list.length}`;
     }
-    $('#mcqNext').addEventListener('click', ()=>{
-      if(!mcqSession) return;
-      mcqSession.idx++;
-      renderMCQ();
-    });
+    $('#mcqNext').addEventListener('click', ()=>{ if(!mcqSession) return; mcqSession.idx++; renderMCQ(); });
     $('#mcqStart').addEventListener('click', mcqStart);
     $('#mcqStop').addEventListener('click', mcqStop);
-    $('#mcqMode').addEventListener('change', (e)=>{
-      $('#quizLenWrap').style.visibility = e.target.value==='quiz' ? 'visible' : 'hidden';
-    });
-    document.addEventListener('keydown', (e)=>{
-      const mcqActive = tabs.mcq.btn.getAttribute('aria-selected') === 'true';
-      if(!mcqActive || !mcqSession) return;
-      if(e.key.toLowerCase()==='n'){ $('#mcqNext').click(); }
-      // Number keys choose options
-      const num = parseInt(e.key,10);
-      if(!isNaN(num) && num>=1 && num<=9){
-        const nth = $(`#mcqChoices .choice:nth-child(${num})`);
-        if(nth){ nth.click(); }
-      }
-    });
+    $('#mcqMode').addEventListener('change', (e)=> $('#quizLenWrap').style.visibility = e.target.value==='quiz' ? 'visible' : 'hidden');
 
     // Init
     refreshFlashDeck(true);
@@ -555,8 +441,8 @@
   </script>
 
   <footer>
-    Single‑file app · Edit the <strong>question‑bank</strong> JSON above to add/modify items.
-    <br/>When you’re ready for diagrams, add <code>"image":"path-or-url","alt":"desc"</code> to any item (we’ll wire display later).
+    Single-file app · Edit the <strong>question-bank</strong> JSON above to add/modify items.  
+    When you’re ready for diagrams, add <code>"image":"path-or-url","alt":"desc"</code> to any item (we’ll wire display later).
   </footer>
 </body>
 </html>
