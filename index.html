@@ -11,11 +11,13 @@
       --focus:2px solid #7d5cff; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.08);
       --btn-shadow:0 4px 12px rgba(125,92,255,.25);
       --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --btn:#f3f0ff; --btn-ghost:#f8f8f8; --btn-good:#e8f5e9; --btn-bad:#ffebee; --btn-text:#3a2c90;
     }
-    /* DARK MODE (readable UI) */
+    /* DARK MODE (readable; high-contrast buttons) */
     body.dark{
       --bg:#000; --fg:#fff; --muted:#d0d0d0; --surface:#000; --border:#333;
       --accent:#9a87ff; --accent-2:#ffd166; --ok:#35d07f; --err:#ff6a7a;
+      --btn:#2a235a; --btn-ghost:#1a1a1a; --btn-good:#114a2e; --btn-bad:#5b1b27; --btn-text:#ffffff;
     }
 
     *{box-sizing:border-box} html,body{height:100%}
@@ -50,9 +52,9 @@
       position:relative; padding:18px; border-radius:20px; border:1px solid var(--border);
       background:var(--surface); box-shadow:var(--shadow); overflow:hidden;
     }
-    /* Inner white card (always white with black text for readability) */
+    /* Inner white card (always white & black text) */
     .plate{
-      --card-accent:#f7c948; /* default, overridden per card */
+      --card-accent:#f7c948; /* overridden per card */
       background:#fff; color:#111;
       border:6px solid var(--card-accent);
       border-radius:18px; position:relative; min-height:210px;
@@ -61,7 +63,7 @@
     .plate .text{
       position:absolute; left:18px; right:18px; top:22px; bottom:64px;
       display:flex; align-items:center; justify-content:center; text-align:center; padding:4px;
-      font-size:1.1rem; line-height:1.45; transition:opacity .28s ease;
+      font-size:1.12rem; line-height:1.45; transition:opacity .28s ease;
     }
     .text-front{opacity:1}
     .text-back{opacity:0}
@@ -77,10 +79,8 @@
     }
     .tagdot{display:inline-block; width:.66em; height:.66em; border-radius:999px; margin:0 .25em -.08em 0; background:var(--card-accent)}
 
-    /* Flip animation shell (rotates; text cross-fades so it never flips) */
-    .flipFx{
-      position:absolute; inset:18px; border-radius:18px; pointer-events:none; transform-style:preserve-3d;
-    }
+    /* Flip animation shell (rotates; text cross-fades so it never rotates) */
+    .flipFx{ position:absolute; inset:18px; border-radius:18px; pointer-events:none; transform-style:preserve-3d; }
     .flipFx::before{
       content:""; position:absolute; inset:0; background:#fff; border:6px solid var(--card-accent); border-radius:18px;
       transform-origin:center; transform:rotateY(0); opacity:0;
@@ -93,14 +93,11 @@
     }
 
     .flash-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-    .btn{border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:650;background:#f3f0ff;color:#3a2c90}
+    .btn{border:0;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:650;background:var(--btn);color:var(--btn-text)}
     .btn.primary{background:var(--accent);color:#fff;box-shadow:var(--btn-shadow)}
-    .btn.ghost{background:#f8f8f8;color:#333}
-    .btn.good{background:#e8f5e9;color:var(--ok)}
-    .btn.bad{background:#ffebee;color:#b00020}
-    body.dark .btn{color:#fff}
-    body.dark .btn.ghost{background:#111;color:#fff}
-    body.dark .btn.good, body.dark .btn.bad{color:#fff}
+    .btn.ghost{background:var(--btn-ghost);color:var(--fg)}
+    .btn.good{background:var(--btn-good);color:#fff}
+    .btn.bad{background:var(--btn-bad);color:#fff}
 
     .stats{display:flex;gap:12px;justify-content:center;color:var(--muted);font-size:.95rem}
     .barline{height:10px;background:#f0f0f6;border-radius:999px;overflow:hidden}
@@ -146,6 +143,21 @@
     .session .btn{padding:8px 12px}
     .hidden{display:none !important}
     :focus-visible{outline:var(--focus);outline-offset:2px}
+
+    /* ================= Modals ================= */
+    .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.4); z-index:2000}
+    .modal.show{display:grid}
+    .modal .box{
+      width:min(560px,92vw); background:var(--surface); color:var(--fg); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow);
+      padding:18px 16px 14px;
+    }
+    .modal h2{margin:6px 0 10px}
+    .modal .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);cursor:pointer;background:#fff}
+    .chip input{width:18px;height:18px}
+    body.dark .modal .box{background:#0b0b0b;color:#fff;border-color:#333}
+    body.dark .chip{background:#111;color:#fff;border-color:#333}
+    .modal .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
   </style>
 </head>
 <body>
@@ -170,12 +182,15 @@
         <label><input type="checkbox" data-filter="arm" checked> Arm</label>
         <label><input type="checkbox" data-filter="muscles" checked> Muscles</label>
         <label><input type="checkbox" data-filter="bones" checked> Bones</label>
-        <label><input type="checkbox" data-filter="innervation" checked> Innervation</label>
+        <label><input type="checkbox" data-filter="innervation" checked> Nerves</label>
+        <label><input type="checkbox" data-filter="blood" checked> Blood supply</label>
       </fieldset>
 
       <div class="session">
-        <label title="Dark mode"><input type="checkbox" id="darkToggle"> Dark mode</label>
-        <label title="Reduce animations"><input type="checkbox" id="rmToggle"> Reduced motion</label>
+        <label><input type="checkbox" id="darkToggle"> Dark mode</label>
+        <label><input type="checkbox" id="rmToggle"> Reduced motion</label>
+        <button class="btn ghost" id="changeTopics">Change topics</button>
+        <label><input type="checkbox" id="soundToggle" checked> Sound</label>
       </div>
     </div>
 
@@ -245,12 +260,43 @@
     </section>
   </div>
 
+  <!-- On‑launch modal (two steps) -->
+  <div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="box">
+      <h2 id="modalTitle">What would you like to study?</h2>
+
+      <div id="step1">
+        <strong>Step 1 — Region(s)</strong>
+        <div class="row">
+          <label class="chip"><input type="checkbox" data-choice="region" value="shoulder" checked>Shoulder</label>
+          <label class="chip"><input type="checkbox" data-choice="region" value="arm" checked>Arm</label>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="toStep2">Next</button>
+        </div>
+      </div>
+
+      <div id="step2" class="hidden">
+        <strong>Step 2 — Topic(s)</strong>
+        <div class="row">
+          <label class="chip"><input type="checkbox" data-choice="domain" value="bones" checked>Bones</label>
+          <label class="chip"><input type="checkbox" data-choice="domain" value="muscles" checked>Muscles</label>
+          <label class="chip"><input type="checkbox" data-choice="domain" value="innervation" checked>Nerves</label>
+          <label class="chip"><input type="checkbox" data-choice="domain" value="blood" checked>Blood supply</label>
+        </div>
+        <div class="actions">
+          <button class="btn" id="backTo1">Back</button>
+          <button class="btn primary" id="startStudy">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
   <div class="confetti" id="confetti" aria-hidden="true"></div>
 
   <script>
-    /* Version + global error toast */
-    const BUILD = 'v1.3-flip-shell';
+    const BUILD = 'v1.4-dark-contrast-modal-audio';
     window.addEventListener('error', e => {
       const t = document.getElementById('toast');
       if (t) { t.textContent = '⚠️ JS error: ' + e.message; t.classList.add('show'); }
@@ -261,6 +307,7 @@
        Data — plain JS array
        ======================= */
     const BANK = [
+      // FLASH (added "blood" tags where relevant)
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Deltoid — innervation?",back:"Axillary nerve (C5–C6)."},
       {type:"flash",tags:["shoulder","muscles"],front:"Deltoid (middle fibers) — primary action?",back:"Shoulder abduction (~15–90°)."},
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Teres minor — action + innervation?",back:"External (lateral) rotation; axillary nerve."},
@@ -277,29 +324,31 @@
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Pectoralis major — nerves?",back:"Medial & lateral pectoral nerves; adducts & internally rotates shoulder."},
       {type:"flash",tags:["shoulder","muscles","innervation"],front:"Pectoralis minor — attachments + nerve?",back:"Ribs 3–5 → coracoid; stabilizes scapula; medial pectoral nerve."},
       {type:"flash",tags:["arm","bones"],front:"Deltoid tuberosity — what & where?",back:"Lateral humerus; insertion for deltoid."},
-      {type:"flash",tags:["arm","bones","innervation"],front:"Surgical neck of humerus — clinical relevance?",back:"Risk to axillary nerve & posterior circumflex humeral artery."},
+      {type:"flash",tags:["arm","bones","innervation"],front:"Surgical neck of humerus — clinical relevance?",back:"Risk to axillary nerve & posterior circumflex humeral artery.",},
       {type:"flash",tags:["arm","bones","innervation"],front:"Midshaft humerus fracture — key nerve risk?",back:"Radial nerve in radial groove → wrist drop."},
-      {type:"flash",tags:["shoulder","bones"],front:"Quadrangular space — contents?",back:"Axillary nerve & posterior circumflex humeral artery."},
-      {type:"flash",tags:["arm","bones"],front:"Triangular interval — contents?",back:"Radial nerve & profunda brachii (deep brachial) artery."},
+      {type:"flash",tags:["shoulder","bones","blood"],front:"Quadrangular space — contents?",back:"Axillary nerve & posterior circumflex humeral artery."},
+      {type:"flash",tags:["arm","bones","blood"],front:"Triangular interval — contents?",back:"Radial nerve & profunda brachii (deep brachial) artery."},
       {type:"flash",tags:["arm","bones"],front:"Intertubercular (bicipital) groove — notable content?",back:"Tendon of long head of biceps brachii."},
       {type:"flash",tags:["shoulder","bones"],front:"Long head of biceps — origin?",back:"Supraglenoid tubercle of scapula."},
       {type:"flash",tags:["shoulder","bones"],front:"Short head of biceps — origin?",back:"Coracoid process of scapula."},
       {type:"flash",tags:["shoulder","bones"],front:"Long head of triceps — origin?",back:"Infraglenoid tubercle of scapula."},
       {type:"flash",tags:["arm","innervation"],front:"Musculocutaneous nerve — terminal sensory branch?",back:"Lateral cutaneous nerve of forearm."},
       {type:"flash",tags:["shoulder","innervation"],front:"Axillary nerve — sensory patch?",back:"“Regimental badge” area over lateral deltoid."},
+      {type:"flash",tags:["arm","blood"],front:"Main artery of the posterior compartment of the arm?",back:"Profunda brachii (deep brachial) artery via the radial collateral branches."},
 
+      // MCQ (added "blood" where relevant)
       {type:"mcq",tags:["shoulder","innervation"],stem:"Which nerve innervates the deltoid muscle?",options:["Radial","Axillary","Musculocutaneous","Median"],answerIndex:1,rationale:"Deltoid (and teres minor) receive axillary nerve (C5–C6)."},
       {type:"mcq",tags:["shoulder","muscles"],stem:"Which muscle initiates glenohumeral abduction (0–15°)?",options:["Supraspinatus","Deltoid","Infraspinatus","Subscapularis"],answerIndex:0,rationale:"Supraspinatus initiates abduction before the deltoid becomes more effective."},
       {type:"mcq",tags:["arm","innervation"],stem:"The anterior compartment of the arm is primarily innervated by which nerve?",options:["Radial","Ulnar","Musculocutaneous","Axillary"],answerIndex:2,rationale:"Biceps brachii, brachialis, and coracobrachialis are musculocutaneous."},
       {type:"mcq",tags:["arm","innervation","bones"],stem:"A fracture of the surgical neck of the humerus endangers which nerve?",options:["Radial","Median","Axillary","Ulnar"],answerIndex:2,rationale:"Axillary nerve + posterior circumflex humeral artery wrap the surgical neck."},
       {type:"mcq",tags:["arm","innervation","bones"],stem:"A midshaft humeral fracture classically injures which nerve?",options:["Ulnar","Radial","Musculocutaneous","Axillary"],answerIndex:1,rationale:"Radial nerve in radial groove → wrist/finger extensor weakness."},
       {type:"mcq",tags:["arm","muscles","bones"],stem:"Which muscle inserts on the deltoid tuberosity?",options:["Deltoid","Teres major","Latissimus dorsi","Pectoralis major"],answerIndex:0,rationale:"Deltoid inserts on the deltoid tuberosity (lateral humerus)."},
-      {type:"mcq",tags:["shoulder","bones","innervation"],stem:"Which structure passes through the quadrangular space with the posterior circumflex humeral artery?",options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Ulnar nerve"],answerIndex:1,rationale:"Quadrangular space: axillary nerve + PCHA."},
+      {type:"mcq",tags:["shoulder","bones","blood"],stem:"Which structure passes through the quadrangular space with the posterior circumflex humeral artery?",options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Ulnar nerve"],answerIndex:1,rationale:"Quadrangular space: axillary nerve + PCHA."},
       {type:"mcq",tags:["shoulder","innervation","muscles"],stem:"Injury to the long thoracic nerve primarily weakens which muscle?",options:["Rhomboid major","Serratus anterior","Trapezius","Latissimus dorsi"],answerIndex:1,rationale:"Long thoracic → serratus anterior; winged scapula with push‑up motion."},
       {type:"mcq",tags:["shoulder","muscles"],stem:"Which of the following is an external (lateral) rotator of the shoulder?",options:["Subscapularis","Teres major","Infraspinatus","Pectoralis major"],answerIndex:2,rationale:"Infraspinatus (and teres minor) laterally rotate; subscapularis medially rotates."},
       {type:"mcq",tags:["shoulder","bones","muscles"],stem:"The tendon of which muscle travels in the intertubercular (bicipital) groove?",options:["Biceps brachii long head","Biceps brachii short head","Triceps long head","Brachialis"],answerIndex:0,rationale:"Long head biceps tendon runs in the groove under the transverse humeral ligament."},
       {type:"mcq",tags:["arm","innervation"],stem:"Innervation of triceps brachii?",options:["Radial","Axillary","Musculocutaneous","Median"],answerIndex:0,rationale:"All heads of triceps are innervated by the radial nerve."},
-      {type:"mcq",tags:["arm","bones","innervation"],stem:"Which artery typically accompanies the radial nerve through the triangular interval?",options:["Posterior circumflex humeral","Profunda brachii (deep brachial)","Anterior circumflex humeral","Radial recurrent"],answerIndex:1,rationale:"Triangular interval: radial nerve + profunda brachii artery."},
+      {type:"mcq",tags:["arm","bones","blood"],stem:"Which artery typically accompanies the radial nerve through the triangular interval?",options:["Posterior circumflex humeral","Profunda brachii (deep brachial)","Anterior circumflex humeral","Radial recurrent"],answerIndex:1,rationale:"Triangular interval: radial nerve + profunda brachii artery."},
       {type:"mcq",tags:["shoulder","muscles"],stem:"Actions of latissimus dorsi at the shoulder include all EXCEPT:",options:["Adduction","Internal rotation","Abduction","Extension"],answerIndex:2,rationale:"Lat dorsi adducts, extends, and medially rotates — not abduction."},
       {type:"mcq",tags:["shoulder","innervation"],stem:"Cutaneous sensation over the lateral deltoid (\"regimental badge\" area) is supplied by:",options:["Radial nerve","Axillary nerve","Suprascapular nerve","Lateral pectoral nerve"],answerIndex:1,rationale:"Superior lateral cutaneous nerve of the arm is a branch of axillary."},
       {type:"mcq",tags:["shoulder","bones","innervation"],stem:"The axillary nerve is a branch of which cord of the brachial plexus?",options:["Lateral","Medial","Posterior","Superior trunk"],answerIndex:2,rationale:"Axillary and radial nerves arise from the posterior cord."},
@@ -312,7 +361,7 @@
     const $ = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
     const REGIONS = ['shoulder','arm'];
-    const DOMAINS = ['muscles','bones','innervation'];
+    const DOMAINS = ['muscles','bones','innervation','blood'];
     let activeFilters = new Set([...REGIONS, ...DOMAINS]);
 
     // Accent color per region (for the card border + dot)
@@ -337,7 +386,7 @@
       t.textContent = msg;
       t.classList.add('show');
       clearTimeout(say._t);
-      say._t = setTimeout(()=>t.classList.remove('show'), 1200);
+      say._t = setTimeout(()=>t.classList.remove('show'), 1400);
     }
     function confettiBurst(){
       if(document.body.classList.contains('reduced-motion')) return;
@@ -353,6 +402,30 @@
         c.appendChild(b);
         setTimeout(()=>b.remove(), 1000);
       }
+    }
+
+    /* =======================
+       Simple audio (Web Audio API)
+       ======================= */
+    let soundOn = true;
+    let actx = null;
+    function getCtx(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+    function playShuffleSound(){
+      if(!soundOn) return;
+      const ctx = getCtx();
+      const now = ctx.currentTime;
+      // white noise buffer
+      const dur = .35, frames = Math.floor(ctx.sampleRate*dur);
+      const buf = ctx.createBuffer(1, frames, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for(let i=0;i<frames;i++){ data[i] = (Math.random()*2-1)*0.6; }
+      const src = ctx.createBufferSource(); src.buffer = buf;
+      const bp = ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=900; bp.Q.value=0.7;
+      const g = ctx.createGain(); g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(0.9, now + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+      src.connect(bp).connect(g).connect(ctx.destination);
+      src.start(now);
     }
 
     /* =======================
@@ -391,6 +464,8 @@
     });
     $('#darkToggle').addEventListener('change', (e)=> document.body.classList.toggle('dark', e.target.checked));
     $('#rmToggle').addEventListener('change', (e)=> document.body.classList.toggle('reduced-motion', e.target.checked));
+    $('#soundToggle').addEventListener('change', (e)=> soundOn = e.target.checked);
+    $('#changeTopics').addEventListener('click', ()=> openModal(1));
 
     /* =======================
        Tabs
@@ -493,8 +568,16 @@
     // Events — Flashcards
     $('#flashCard').addEventListener('click', flipWithFx);
     $('#flashFlip').addEventListener('click', flipWithFx);
-    $('#flashShuffle').addEventListener('click', async ()=>{ await animateShuffle(700); refreshFlashDeck(true); });
-    $('#flashReset').addEventListener('click', async ()=>{ await animateShuffle(700); refreshFlashDeck(true); });
+    $('#flashShuffle').addEventListener('click', async ()=>{
+      playShuffleSound();
+      await animateShuffle(700);
+      refreshFlashDeck(true);
+    });
+    $('#flashReset').addEventListener('click', async ()=>{
+      playShuffleSound();
+      await animateShuffle(700);
+      refreshFlashDeck(true);
+    });
     $('#flashAgain').addEventListener('click', againFlash);
     $('#flashGot').addEventListener('click', gotFlash);
     document.addEventListener('keydown', (e)=>{
@@ -571,11 +654,57 @@
     $('#mcqMode').addEventListener('change', (e)=> $('#quizLenWrap').style.visibility = e.target.value==='quiz' ? 'visible' : 'hidden');
 
     /* =======================
+       Modal logic (two steps)
+       ======================= */
+    const modal = $('#startModal');
+    const step1 = $('#step1'), step2 = $('#step2');
+    const chk = (sel, val) => Array.from(modal.querySelectorAll(`input[data-choice="${sel}"][value="${val}"]`))[0];
+
+    function openModal(step=1){
+      modal.classList.add('show');
+      step===1 ? (step1.classList.remove('hidden'), step2.classList.add('hidden')) : (step2.classList.remove('hidden'), step1.classList.add('hidden'));
+    }
+    function closeModal(){ modal.classList.remove('show'); }
+
+    $('#toStep2').addEventListener('click', ()=>{
+      const regions = Array.from(modal.querySelectorAll('input[data-choice="region"]:checked')).map(x=>x.value);
+      if(regions.length===0){ say('Pick at least one region.'); return; }
+      step1.classList.add('hidden'); step2.classList.remove('hidden');
+    });
+    $('#backTo1').addEventListener('click', ()=>{ step2.classList.add('hidden'); step1.classList.remove('hidden'); });
+
+    function applySelectionsFromModal(){
+      const regions = Array.from(modal.querySelectorAll('input[data-choice="region"]:checked')).map(x=>x.value);
+      const domains = Array.from(modal.querySelectorAll('input[data-choice="domain"]:checked')).map(x=>x.value);
+      if(regions.length===0 || domains.length===0){ say('Select at least one region and one topic.'); return false; }
+      activeFilters = new Set([...regions, ...domains]);
+
+      // mirror to filter checkboxes
+      $$('.filters input[type="checkbox"]').forEach(cb=>{
+        cb.checked = activeFilters.has(cb.dataset.filter);
+      });
+
+      refreshFlashDeck(true);
+      mcqStop();
+      return true;
+    }
+
+    $('#startStudy').addEventListener('click', ()=>{
+      if(applySelectionsFromModal()){
+        closeModal();
+      }
+    });
+
+    /* =======================
        Init
        ======================= */
     try{
-      refreshFlashDeck(true);
+      // Show modal on first load
+      openModal(1);
+
+      // default UI states
       $('#quizLenWrap').style.visibility = $('#mcqMode').value==='quiz' ? 'visible' : 'hidden';
+      refreshFlashDeck(true);
     }catch(err){
       window.dispatchEvent(new ErrorEvent('error',{message:err.message}));
     }
@@ -583,8 +712,8 @@
 
   <footer style="text-align:center;color:var(--muted);padding:24px 16px">
     Single‑file app · Modify the <strong>BANK</strong> array to add/edit items.  
-    Dark mode = black background/white UI text; flashcards stay white with black text for legibility.  
-    <div style="margin-top:6px;opacity:.7">Build: <code>v1.3-flip-shell</code></div>
+    Dark mode = black background / white UI text; flashcards remain white with black text for legibility.  
+    <div style="margin-top:6px;opacity:.7">Build: <code>v1.4-dark-contrast-modal-audio</code></div>
   </footer>
 </body>
 </html>
