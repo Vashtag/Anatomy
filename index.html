@@ -6,28 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     /* =========================
-       Ocean theme + variables
+       Dark‑blue ocean theme
        ========================= */
     :root{
-      --bg:#eaf9ff; --fg:#0b2542; --muted:#5b7b93; --surface:#ffffff; --border:#d7e6ef;
-      --accent:#0ea5e9; --accent-2:#22d3ee; --ok:#16a34a; --err:#dc2626;
-      --focus:2px solid #0ea5e9; --radius:16px; --shadow:0 10px 28px rgba(3, 105, 161, .15);
+      --bg:#041b2d; --fg:#e6f3ff; --muted:#a8c5da; --surface:#071e31; --border:#0c304a;
+      --accent:#38bdf8; --accent-2:#22d3ee; --ok:#22c55e; --err:#ef4444;
+      --focus:2px solid #38bdf8; --radius:16px; --shadow:0 10px 28px rgba(10, 84, 126, .25);
 
-      /* Button colors (high contrast) */
-      --btn-main:#0284c7; --btn-text:#fff;
-      --btn-ghost:#e0f2fe; --btn-ghost-text:#0c4a6e;
-      --btn-good:#16a34a; --btn-bad:#dc2626;
+      /* Buttons: high contrast */
+      --btn-main:#0ea5e9; --btn-text:#00131c;
+      --btn-ghost:#0c2a42; --btn-ghost-text:#d8f3ff;
+      --btn-good:#1f9d55; --btn-bad:#b91c1c;
 
       --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-    }
-
-    /* Optional dark mode (keeps cards white/black for legibility) */
-    body.dark{
-      --bg:#021e2f; --fg:#e6f6ff; --muted:#b6d6e7; --surface:#031625; --border:#0b2a3b;
-      --accent:#38bdf8; --accent-2:#22d3ee; --ok:#22c55e; --err:#ef4444;
-      --btn-main:#0ea5e9; --btn-text:#001019;
-      --btn-ghost:#072637; --btn-ghost-text:#d6f3ff;
-      --btn-good:#1f9d55; --btn-bad:#b91c1c;
     }
 
     *{box-sizing:border-box} html,body{height:100%}
@@ -36,34 +27,39 @@
       font-family:var(--font); line-height:1.5;
     }
 
-    /* Ocean animated background (behind all content) */
+    /* Ocean background (subtle) */
     .ocean{position:fixed; inset:0; z-index:0; pointer-events:none;
-      background:linear-gradient(180deg,#e1f6ff 0%, #bfeaff 45%, #8ad7ff 80%, #6cc5ff 100%);
+      background:linear-gradient(180deg,#06263e 0%, #082e4a 60%, #0b2842 100%);
+      animation:bgShift 40s ease-in-out infinite;
+    }
+    @keyframes bgShift{
+      0%,100%{filter:saturate(1) brightness(1)}
+      50%{filter:saturate(1.05) brightness(1.05)}
     }
     .ocean .wave{
-      position:absolute; left:0; right:0; bottom:-1px; height:140px;
-      background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 140"><path d="M0,80 C200,0 400,160 600,80 S1000,0 1200,80 V140 H0 Z" fill="%23ffffff55"/></svg>') repeat-x;
-      background-size:1200px 140px; animation:waveX 18s linear infinite; opacity:.35;
+      position:absolute; left:0; right:0; bottom:-2px; height:120px;
+      background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,70 C200,0 400,140 600,70 S1000,0 1200,70 V120 H0 Z" fill="%23ffffff22"/></svg>') repeat-x;
+      background-size:1200px 120px; animation:waveX 28s linear infinite; opacity:.18;
     }
-    .ocean .wave.wave2{height:160px; bottom:-8px; opacity:.5; animation-duration:24s}
+    .ocean .wave.wave2{height:140px; bottom:-10px; opacity:.12; animation-duration:36s}
     @keyframes waveX{from{background-position-x:0}to{background-position-x:1200px}}
 
+    /* A few faint bubbles */
     .ocean .bubble{
       position:absolute; bottom:-8vh; border-radius:50%;
-      background:rgba(255,255,255,.6); filter:blur(.3px);
-      left:var(--x,50%); width:var(--s,12px); height:var(--s,12px);
-      animation:rise var(--t,12s) linear infinite; opacity:.85;
+      background:rgba(255,255,255,.14); filter:blur(.4px);
+      left:var(--x,50%); width:var(--s,8px); height:var(--s,8px);
+      animation:rise var(--t,14s) linear infinite; opacity:.9;
     }
     @keyframes rise{to{transform:translateY(-120vh); opacity:0}}
-
     body.reduced-motion .ocean .wave,
-    body.reduced-motion .ocean .bubble{animation:none}
+    body.reduced-motion .ocean .bubble,
+    body.reduced-motion .ocean{animation:none}
 
     header{position:sticky;top:0;z-index:3;
-      background:linear-gradient(90deg, rgba(255,255,255,.85), rgba(224,246,255,.75));
-      border-bottom:1px solid var(--border); padding:14px 16px; backdrop-filter:saturate(1.2) blur(2px);
+      background:linear-gradient(90deg, rgba(5,23,38,.85), rgba(7,30,49,.75));
+      border-bottom:1px solid var(--border); padding:14px 16px; backdrop-filter:saturate(1.1) blur(2px);
     }
-    body.dark header{background:linear-gradient(90deg, rgba(3,22,37,.85), rgba(4,28,46,.75))}
     header .title{font-weight:800;font-size:1.1rem}
     header .subtitle{color:var(--muted);font-size:.95rem}
 
@@ -74,15 +70,11 @@
     .tabs button{border:0;background:none;padding:10px 14px;border-radius:999px;cursor:pointer;color:var(--muted);font-weight:700}
     .tabs button[aria-selected="true"]{background:var(--accent);color:#00131c; box-shadow:0 8px 18px rgba(14,165,233,.35)}
 
-    .filters,.session{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-    fieldset{border:1px dashed var(--border);border-radius:12px;padding:8px 10px;background:rgba(255,255,255,.55)}
-    legend{padding:0 6px;color:var(--muted);font-size:.9rem}
-    label{display:inline-flex;gap:8px;align-items:center;font-size:.95rem}
-    input[type="checkbox"],input[type="radio"]{width:18px;height:18px}
+    .session{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 
     .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
 
-    /* ===== Flashcards (ocean card style) ===== */
+    /* ===== Flashcards ===== */
     .flash-wrap{display:grid;gap:14px}
     .card{ position:relative; padding:18px; border-radius:20px; border:1px solid var(--border);
            background:var(--surface); box-shadow:var(--shadow); overflow:hidden }
@@ -105,7 +97,7 @@
     }
     .tagdot{display:inline-block; width:.66em; height:.66em; border-radius:999px; margin:0 .25em -.08em 0; background:var(--card-accent)}
 
-    /* Flip shell (text cross-fades; shell rotates) */
+    /* Flip shell (text cross‑fades; shell rotates) */
     .flipFx{ position:absolute; inset:18px; border-radius:18px; pointer-events:none; transform-style:preserve-3d; }
     .flipFx::before{
       content:""; position:absolute; inset:0; background:#fff; border:6px solid var(--card-accent); border-radius:18px;
@@ -114,36 +106,35 @@
     .card.flip-anim .flipFx::before{ animation:flipShell .5s ease both }
     @keyframes flipShell{0%{transform:rotateY(0);opacity:.15}45%{opacity:.45}100%{transform:rotateY(180deg);opacity:0}}
 
-    /* Buttons — stronger contrast */
+    /* Buttons — strong contrast */
     .flash-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .btn{border:0;padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:800;
          background:var(--btn-main); color:var(--btn-text); letter-spacing:.2px;
-         box-shadow:0 8px 18px rgba(2,132,199,.28); transition:transform .05s ease, box-shadow .15s ease}
-    .btn:hover{transform:translateY(-1px); box-shadow:0 12px 22px rgba(2,132,199,.35)}
-    .btn:active{transform:translateY(0); box-shadow:0 6px 12px rgba(2,132,199,.25)}
-    .btn.ghost{background:var(--btn-ghost); color:var(--btn-ghost-text); box-shadow:0 6px 14px rgba(12,74,110,.12)}
-    .btn.good{background:var(--btn-good); color:#fff; box-shadow:0 8px 18px rgba(22,163,74,.25)}
-    .btn.bad{background:var(--btn-bad); color:#fff; box-shadow:0 8px 18px rgba(220,38,38,.25)}
+         box-shadow:0 8px 18px rgba(2,132,199,.38); transition:transform .05s ease, box-shadow .15s ease}
+    .btn:hover{transform:translateY(-1px); box-shadow:0 12px 22px rgba(2,132,199,.45)}
+    .btn:active{transform:translateY(0); box-shadow:0 6px 12px rgba(2,132,199,.3)}
+    .btn.ghost{background:var(--btn-ghost); color:var(--btn-ghost-text); box-shadow:0 6px 14px rgba(12,74,110,.25)}
+    .btn.good{background:var(--btn-good); color:#fff; box-shadow:0 8px 18px rgba(22,163,74,.35)}
+    .btn.bad{background:var(--btn-bad); color:#fff; box-shadow:0 8px 18px rgba(220,38,38,.35)}
     .btn.primary{background:var(--accent); color:#00131c}
     .session .btn{padding:8px 12px}
 
     .stats{display:flex;gap:12px;justify-content:center;color:var(--muted);font-size:.95rem}
-    .barline{height:10px;background:#dff3ff;border-radius:999px;overflow:hidden}
+    .barline{height:10px;background:#093b58;border-radius:999px;overflow:hidden}
     .barline>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
-    body.dark .barline{background:#093b58}
 
     /* MCQ */
     .q-wrap{display:grid;gap:14px}
     .choice{
-      display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff
+      display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff; color:#111;
     }
     .choice[data-state="correct"]{border-color:var(--ok);box-shadow:0 0 0 2px rgba(34,197,94,.25) inset}
     .choice[data-state="wrong"]{border-color:var(--err);box-shadow:0 0 0 2px rgba(239,68,68,.2) inset}
-    .rationale{border-left:4px solid var(--accent);padding:10px 12px;background:#f0fbff;border-radius:10px}
+    .rationale{border-left:4px solid var(--accent);padding:10px 12px;background:#f0fbff;border-radius:10px;color:#06263e}
 
     /* Toast + confetti + shuffle minis */
     .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
-           background:#07304a;color:#e6f6ff;padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .25s ease;z-index:9999}
+           background:#07304a;color:#e6f3ff;padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .25s ease;z-index:9999}
     .toast.show{opacity:1}
     .confetti{position:fixed;pointer-events:none;inset:0;overflow:hidden;z-index:1000}
     .bit{position:absolute;font-size:18px;animation:fall 900ms ease-out forwards}
@@ -169,39 +160,33 @@
 
     /* =============== Modals with BLUR background =============== */
     .modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(6, 34, 54, .35);
-           z-index:2000; backdrop-filter: blur(6px) saturate(1.1);}
+           z-index:2000; backdrop-filter: blur(8px) saturate(1.05);}
     .modal.show{display:grid}
     .modal .box{
       width:min(560px,92vw); background:var(--surface); color:var(--fg); border:1px solid var(--border);
-      border-radius:16px; box-shadow:0 18px 44px rgba(3,105,161,.25); padding:18px 16px 14px;
+      border-radius:16px; box-shadow:0 18px 44px rgba(3,105,161,.35); padding:18px 16px 14px;
     }
     .modal h2{margin:6px 0 10px}
     .modal .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
     .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);
-          cursor:pointer;background:#fff; font-weight:700}
+          cursor:pointer;background:#0c2a42;color:#e6f3ff;font-weight:700}
     .chip input{width:18px;height:18px}
-    body.dark .modal .box{background:#041b2b;color:#e6f6ff;border-color:#0b2a3b}
-    body.dark .chip{background:#062335;color:#e6f6ff;border-color:#0b2a3b}
 
     /* Blur the whole page when modal is open */
     body.modal-open header,
     body.modal-open #main,
-    body.modal-open footer{ filter: blur(6px) saturate(.95); transition: filter .2s ease }
+    body.modal-open footer{ filter: blur(6px) saturate(.9); transition: filter .2s ease }
     body.modal-open{ overflow:hidden }
   </style>
 </head>
 <body>
-  <!-- Ocean background -->
+  <!-- Subtle ocean background -->
   <div class="ocean" aria-hidden="true">
     <div class="wave"></div><div class="wave wave2"></div>
-    <!-- a few bubbles -->
-    <span class="bubble" style="--x:10%;--s:10px;--t:12s"></span>
-    <span class="bubble" style="--x:22%;--s:14px;--t:14s"></span>
-    <span class="bubble" style="--x:38%;--s:8px;--t:11s"></span>
-    <span class="bubble" style="--x:52%;--s:12px;--t:13s"></span>
-    <span class="bubble" style="--x:64%;--s:9px;--t:12s"></span>
-    <span class="bubble" style="--x:77%;--s:13px;--t:15s"></span>
-    <span class="bubble" style="--x:86%;--s:10px;--t:12s"></span>
+    <span class="bubble" style="--x:18%;--s:8px;--t:14s"></span>
+    <span class="bubble" style="--x:42%;--s:10px;--t:16s"></span>
+    <span class="bubble" style="--x:66%;--s:7px;--t:13s"></span>
+    <span class="bubble" style="--x:82%;--s:9px;--t:15s"></span>
   </div>
 
   <a href="#main" class="skip">Skip to content</a>
@@ -219,18 +204,8 @@
         <button id="tab-mcq" role="tab" aria-selected="false" aria-controls="mcqPanel">MCQ</button>
       </div>
 
-      <fieldset class="filters">
-        <legend>Filters</legend>
-        <label><input type="checkbox" data-filter="shoulder" checked> Shoulder</label>
-        <label><input type="checkbox" data-filter="arm" checked> Arm</label>
-        <label><input type="checkbox" data-filter="muscles" checked> Muscles</label>
-        <label><input type="checkbox" data-filter="bones" checked> Bones</label>
-        <label><input type="checkbox" data-filter="innervation" checked> Nerves</label>
-        <label><input type="checkbox" data-filter="blood" checked> Blood supply</label>
-      </fieldset>
-
+      <!-- No filters here anymore -->
       <div class="session">
-        <label><input type="checkbox" id="darkToggle"> Dark mode</label>
         <label><input type="checkbox" id="rmToggle"> Reduced motion</label>
         <button class="btn ghost" id="changeTopics">Change topics</button>
         <label><input type="checkbox" id="soundToggle" checked> Sound</label>
@@ -314,7 +289,7 @@
           <label class="chip"><input type="checkbox" data-choice="region" value="shoulder" checked>Shoulder</label>
           <label class="chip"><input type="checkbox" data-choice="region" value="arm" checked>Arm</label>
         </div>
-        <div class="actions">
+        <div class="actions" style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px">
           <button class="btn primary" id="toStep2">Next</button>
         </div>
       </div>
@@ -327,7 +302,7 @@
           <label class="chip"><input type="checkbox" data-choice="domain" value="innervation" checked>Nerves</label>
           <label class="chip"><input type="checkbox" data-choice="domain" value="blood" checked>Blood supply</label>
         </div>
-        <div class="actions">
+        <div class="actions" style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px">
           <button class="btn" id="backTo1">Back</button>
           <button class="btn primary" id="startStudy">Start</button>
         </div>
@@ -339,7 +314,7 @@
   <div class="confetti" id="confetti" aria-hidden="true"></div>
 
   <script>
-    const BUILD = 'v1.5-ocean-theme-blur';
+    const BUILD = 'v1.6-ocean-darkblue-no-filterbar';
     window.addEventListener('error', e => {
       const t = document.getElementById('toast');
       if (t) { t.textContent = '⚠️ JS error: ' + e.message; t.classList.add('show'); }
@@ -429,7 +404,7 @@
       if(document.body.classList.contains('reduced-motion')) return;
       const ems = ['🎉','💪','🦴','⭐','🌊'];
       const c = $('#confetti');
-      for(let i=0;i<22;i++){
+      for(let i=0;i<16;i++){
         const b = document.createElement('span');
         b.className='bit';
         b.textContent = ems[rnd(ems.length)];
@@ -441,7 +416,7 @@
       }
     }
 
-    /* ===== Simple audio (shuffle sfx) ===== */
+    /* ===== Simple audio (shuffle) ===== */
     let soundOn = true;
     let actx = null;
     function getCtx(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
@@ -474,14 +449,7 @@
       });
     }
 
-    /* ===== Filters / Toggles ===== */
-    $$('.filters input[type="checkbox"]').forEach(cb=>{
-      cb.addEventListener('change', ()=>{
-        if(cb.checked) activeFilters.add(cb.dataset.filter); else activeFilters.delete(cb.dataset.filter);
-        refreshFlashDeck(true); mcqStop();
-      });
-    });
-    $('#darkToggle').addEventListener('change', (e)=> document.body.classList.toggle('dark', e.target.checked));
+    /* ===== Controls (no filter bar) ===== */
     $('#rmToggle').addEventListener('change', (e)=> document.body.classList.toggle('reduced-motion', e.target.checked));
     $('#soundToggle').addEventListener('change', (e)=> soundOn = e.target.checked);
     $('#changeTopics').addEventListener('click', ()=> openModal(1));
@@ -523,7 +491,7 @@
       $('#progressFill').style.width=pct+'%';
 
       if(!flashDeck.length){
-        front.innerHTML="No flashcards match your filters.";
+        front.innerHTML="No flashcards match your topics.<br><small>Use <strong>Change topics</strong> to adjust.</small>";
         back.textContent=""; setLabel({tags:[]}); card.classList.remove('showBack'); return;
       }
       const item=currentFlash();
@@ -585,7 +553,7 @@
     function mcqStart(){
       const mode=$('#mcqMode').value;
       const pool=BANK.filter(it=>it.type==='mcq' && matchesFilters(it));
-      if(!pool.length){ qStem.textContent="No MCQs match your filters."; qChoices.innerHTML=''; qRat.classList.add('hidden'); return; }
+      if(!pool.length){ qStem.textContent="No MCQs match your topics. Use Change topics."; qChoices.innerHTML=''; qRat.classList.add('hidden'); return; }
       let list=shuffle(pool);
       if(mode==='quiz'){
         const n=Math.max(5, Math.min(parseInt($('#quizLen').value||10,10), 30));
@@ -634,7 +602,7 @@
     $('#mcqStop').addEventListener('click', mcqStop);
     $('#mcqMode').addEventListener('change', (e)=> $('#quizLenWrap').style.visibility = e.target.value==='quiz' ? 'visible' : 'hidden');
 
-    /* ===== Modal logic (two steps) + BLUR toggle ===== */
+    /* ===== Modal logic (two steps) ===== */
     const modal=$('#startModal'); const step1=$('#step1'), step2=$('#step2');
     function openModal(step=1){ modal.classList.add('show'); document.body.classList.add('modal-open'); (step===1 ? (step1.classList.remove('hidden'), step2.classList.add('hidden')) : (step2.classList.remove('hidden'), step1.classList.add('hidden'))); }
     function closeModal(){ modal.classList.remove('show'); document.body.classList.remove('modal-open'); }
@@ -651,8 +619,6 @@
       const domains = Array.from(modal.querySelectorAll('input[data-choice="domain"]:checked')).map(x=>x.value);
       if(regions.length===0 || domains.length===0){ say('Select at least one region and one topic.'); return false; }
       activeFilters = new Set([...regions, ...domains]);
-      // mirror to filter checkboxes
-      $$('.filters input[type="checkbox"]').forEach(cb=> cb.checked = activeFilters.has(cb.dataset.filter));
       refreshFlashDeck(true); mcqStop();
       return true;
     }
@@ -660,7 +626,7 @@
 
     /* ===== Init ===== */
     try{
-      openModal(1); // ask on launch
+      openModal(1);
       $('#quizLenWrap').style.visibility = $('#mcqMode').value==='quiz' ? 'visible' : 'hidden';
       refreshFlashDeck(true);
     }catch(err){
@@ -670,8 +636,8 @@
 
   <footer style="text-align:center;color:var(--muted);padding:24px 16px; position:relative; z-index:1">
     Single‑file app · Modify the <strong>BANK</strong> array to add/edit items.  
-    Ocean theme uses CSS only; animations respect “Reduced motion.”  
-    <div style="margin-top:6px;opacity:.7">Build: <code>v1.5-ocean-theme-blur</code></div>
+    Ocean visuals are subtle and respect “Reduced motion.”  
+    <div style="margin-top:6px;opacity:.7">Build: <code>v1.6-ocean-darkblue-no-filterbar</code></div>
   </footer>
 </body>
 </html>
