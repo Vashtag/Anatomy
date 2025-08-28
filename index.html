@@ -44,8 +44,10 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
 .progress{margin-top:12px;height:10px;background:#0b1229;border-radius:999px;border:1px solid #1f2937;overflow:hidden}
 .bar{height:100%;width:0%;background:linear-gradient(90deg,#38bdf8,#22c55e);transition:width .3s ease}
 
-/* ===== mode row ===== */
-.mode{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:10px}
+/* ===== mode row: left & right areas so Dictionary sits right ===== */
+.mode{
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:10px
+}
 .mode-left{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .mode-right{margin-left:auto}
 
@@ -60,6 +62,7 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
 .grid{display:grid;gap:10px}
 @media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
 .stat{background:#0b1229;border:1px solid #1f2937;border-radius:12px;padding:10px}
+.chip{display:inline-flex;gap:6px;background:#0b1229;border:1px solid #1f2937;border-radius:999px;padding:6px 10px;font-size:12px;color:#94a3b8;margin:2px 4px 0 0}
 
 /* Bazaar */
 .map-wrap{position:relative;margin-top:10px}
@@ -191,7 +194,10 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
 .aq-option.wrong{ border-color: var(--err); box-shadow:0 0 0 2px rgba(239,68,68,.22) inset }
 
 /* ======== Postcards ======== */
-.pc-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill, minmax(140px,1fr));}
+.pc-grid{
+  display:grid; gap:10px;
+  grid-template-columns:repeat(auto-fill, minmax(140px,1fr));
+}
 .pc-tile{
   position:relative; border:1px solid #1f2937; border-radius:12px;
   background:#0b1229; overflow:hidden; cursor:pointer;
@@ -215,15 +221,12 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
 .dict-play{background:transparent;border:none;color:#e5e7eb;cursor:pointer;padding:0;font:inherit;text-decoration:underline dotted #334155}
 .dict-play:hover{opacity:.9}
 
-/* === Dictionary fixed-size modal experience === */
-#dictModal .modal-card{ min-height:460px }          /* keep modal height steady while paging */
-#dictPanel{ display:flex; flex-direction:column }
-#dictScroll{ flex:1 1 auto; max-height:340px; overflow:auto; margin-bottom:10px }
+/* Keep dictionary modal a consistent height */
+#dictPanel{ display:flex; flex-direction:column; }
+.dict-table-wrap{ min-height:260px; max-height:260px; overflow-y:auto; }
 
-/* ===== Furniture placements (specific) ===== */
-#furnCatTree{ top:8px; left:8px; width:92px }
-#furnCatToy{  top:18px; left:118px; width:72px }
-#furnCatBowl{ top:112px; left:22px; width:68px }
+/* Footer */
+footer{padding:16px;text-align:center;color:#94a3b8}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 </head>
@@ -272,6 +275,7 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
       <button id="quizBtn" class="btn">Quiz Mode</button>
       <button id="audioQuizBtn" class="btn">Audio Quiz</button>
       <button id="musicToggle" class="btn">🎵 Play Music</button>
+      <!-- (Moved midnight note to footer) -->
     </div>
     <div class="mode-right">
       <button id="openDictionary" class="btn" title="Dictionary">📚 Dictionary</button>
@@ -313,12 +317,10 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
   </div>
 </main>
 
-<footer style="padding:16px;text-align:center;color:#94a3b8">
-  Have fun!
-  <span class="tiny"> • New words unlock at
-    <button id="midnightBtn" class="btn" style="padding:2px 6px">midnight</button> ⏰
-  </span>
+<footer>
+  Have fun! • New words unlock at <button id="midnightBtn" class="btn" style="padding:2px 6px">midnight</button> ⏰
 </footer>
+
 <div id="celebration" class="cele-msg" style="display:none">let's goooooo 🎉</div>
 <div id="sadFace" class="cele-msg" style="display:none">😢</div>
 
@@ -355,10 +357,7 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
 
     <div id="shopPanel" class="stat" style="display:none; margin-top:10px">
       <div class="shop-row" style="justify-content:space-between">
-        <div class="muted">
-          Score: <b id="shopScore">0</b> • Fish: <b id="shopFish">0</b> • Catnip: <b id="shopCatnip">0</b>
-          • Furn: <b id="furnOwned">0/3</b>
-        </div>
+        <div class="muted">Score: <b id="shopScore">0</b> • Fish: <b id="shopFish">0</b> • Catnip: <b id="shopCatnip">0</b></div>
         <div class="shop-row">
           <button id="buyFishBtn" class="btn">🐟 Buy Fish (100)</button>
           <button id="feedFishBtn" class="btn">🍽️ Feed Cats</button>
@@ -416,9 +415,10 @@ main{max-width:980px;margin:24px auto;padding:0 clamp(16px,4vw,32px) 120px}
       <button id="closeDict" class="btn">Close</button>
     </div>
     <div id="dictPanel" class="stat">
-      <!-- kept stable height with scroll wrapper added in JS -->
-      <table class="dict-table" id="dictTable"></table>
-      <div id="dictEmpty" class="dict-empty" style="display:none">No learned words yet. Practice to add some!</div>
+      <div id="dictTableWrap" class="dict-table-wrap">
+        <table class="dict-table" id="dictTable"></table>
+        <div id="dictEmpty" class="dict-empty" style="display:none">No learned words yet. Practice to add some!</div>
+      </div>
       <div class="dict-controls">
         <button id="dictPrev" class="btn">⬅ Prev</button>
         <span id="dictPageLabel" class="tiny">Page 1 / 1</span>
@@ -559,7 +559,7 @@ const SENTENCES = [
   { fa:"من آب می‌نوشم.", translit:"man âb minusham.", en:"I drink water." },
   { fa:"او یک گربه دارد.", translit:"u yek gorbe dârad.", en:"He/She has a cat." },
   { fa:"این خانه بزرگ است.", translit:"in khâne bozorg ast.", en:"This house is big." },
-  { fa:"من کتاب می‌خوانم.", translit:"man ketâب mikhânam.", en:"I am reading a book." },
+  { fa:"من کتاب می‌خوانم.", translit:"man ketâb mikhânam.", en:"I am reading a book." },
   { fa:"امروز هوا خوب است.", translit:"emruz havâ khub ast.", en:"The weather is good today." },
   { fa:"سگ در پارک است.", translit:"sag dar pârk ast.", en:"The dog is in the park." }
 ];
@@ -772,7 +772,7 @@ function now(){return Date.now()}
 function todayISO(){const d=new Date();d.setHours(0,0,0,0);return d.toISOString().slice(0,10)}
 function normalizeTranslit(s){return (s||'').toLowerCase().normalize('NFKD').replace(/[\u0302\u0304]/g,'').replace(/[^a-z0-9]+/g,'').trim()}
 function normalizeFa(s){return (s||'').replace(/\s+/g,'').replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[\u200C\u200F\u202A-\u202E]/g,'')}
-function shuffle(a){ for(let i=a.length-1;i>0;i++){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j]]} return a }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j]]} return a }
 const isMobile = () => window.matchMedia('(max-width:700px)').matches || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 function maybeFocusInput(){ if(!isMobile()) $('typeInput').focus(); }
 function setImageWithFallback(imgEl, emojiEl, item){
@@ -851,7 +851,7 @@ function persist(){
   updateNamesToggleUI();
   updateNamesVisibility();
   if($('postcardsModal')?.style.display==='grid'){ renderPostcardsGrid(); const u=postcardsUnlockedCount(); renderPostcardView(u?u-1:-1); }
-  if($('dictModal')?.style.display==='grid'){ ensureDictScrollWrapper(); renderDictionary(); }
+  if($('dictModal')?.style.display==='grid'){ renderDictionary(); }
 }
 function loadState(){
   state = store.get('state', defaultState());
@@ -860,9 +860,8 @@ function loadState(){
   if(state.inventory.catnip===undefined) state.inventory.catnip=0;
   if(state.inventory.nameTokens===undefined) state.inventory.nameTokens=0;
   if(!state.furniture) state.furniture = {catTree:false, catToy:false, catBowl:false};
-  if(state.furniture.catTree===undefined) state.furniture.catTree=false;
-  if(state.furniture.catToy===undefined)  state.furniture.catToy=false;
-  if(state.furniture.catBowl===undefined) state.furniture.catBowl=false;
+  if(state.furniture.catToy===undefined) state.furniture.catToy = false;
+  if(state.furniture.catBowl===undefined) state.furniture.catBowl = false;
   if(!state.catNames) state.catNames = {};
   if(typeof state.nameCursor!=='number') state.nameCursor = -1;
   if(typeof state.showCatNames!=='boolean') state.showCatNames = false;
@@ -903,11 +902,11 @@ function mergeStates(local, remote){
     catnip:    Math.max(local.inventory?.catnip||0,    remote.inventory?.catnip||0),
     nameTokens:Math.max(local.inventory?.nameTokens||0,remote.inventory?.nameTokens||0)
   };
-  base.furniture = {
-    catTree: !!(local.furniture?.catTree || remote.furniture?.catTree),
-    catToy:  !!(local.furniture?.catToy  || remote.furniture?.catToy),
-    catBowl: !!(local.furniture?.catBowl || remote.furniture?.catBowl)
-  };
+  // --- UNION furniture for Nicole: preserve all purchased pieces across devices ---
+  const lf = local?.furniture || {}, rf = remote?.furniture || {};
+  const keys = new Set([...Object.keys(lf), ...Object.keys(rf), ...FURNITURE_ORDER]);
+  base.furniture = {};
+  keys.forEach(k => { base.furniture[k] = !!(lf[k] || rf[k]); });
   base.catNames   = (lts >= rts ? {...(local.catNames||{})} : {...(remote.catNames||{})});
   base.nameCursor = (lts >= rts ? (local.nameCursor??-1)    : (remote.nameCursor??-1));
   base.achievements = {...(local.achievements||{}), ...(remote.achievements||{})};
@@ -1212,7 +1211,7 @@ function initSpeech(){
 }
 
 /* ===================== ANSWERING / MAP ===================== */
-const POINTS_PER_CORRECT_LQ = 2;
+const POINTS_PER_CORRECT_LQ = 2; // 2 points for Learn & Quiz modes
 
 function handleAnswer(correct, gi, source='typing'){
   const r=ensureSRS(gi); r.seen++;
@@ -1250,35 +1249,33 @@ function renderMap(){
   }else{ wrap.style.display='none'; wrap.innerHTML=''; container.classList.add('arena'); layer.style.display='block'; }
   renderFurniture();
 }
-function nextFurnitureKey(){
-  for (const k of FURNITURE_ORDER){ if(!state.furniture?.[k]) return k; }
-  return null;
+function ensureFurnitureImg(id, src, alt, top, left){
+  const container = $('mapWrap'); if(!container) return null;
+  let el = $(id);
+  if(!el){
+    el = document.createElement('img');
+    el.id = id; el.className = 'furniture'; el.alt = alt; el.src = src;
+    container.appendChild(el);
+  }
+  el.style.top = (typeof top==='number'? `${top}px` : top || '8px');
+  el.style.left = (typeof left==='number'? `${left}px` : left || '8px');
+  return el;
 }
-function furnitureLabel(k){
-  return k==='catTree' ? 'Cat Tree' : k==='catToy' ? 'Cat Toy' : 'Cat Bowl';
-}
-function furnitureOwnedCount(){ return FURNITURE_ORDER.reduce((n,k)=>n+(state.furniture?.[k]?1:0),0); }
 function renderFurniture(){
+  const own = state.furniture || {};
   const container = $('mapWrap'); if(!container) return;
-  const f = state.furniture || {};
 
-  // Cat Tree
-  let tree = $('furnCatTree');
-  if(f.catTree){
-    if(!tree){ tree = document.createElement('img'); tree.id = 'furnCatTree'; tree.className = 'furniture'; tree.src = CAT_TREE_IMG; tree.alt = 'Cat Tree'; container.appendChild(tree); }
-  }else if(tree){ tree.remove(); }
+  // Cat Tree (default position)
+  if(own.catTree){ ensureFurnitureImg('furnCatTree', CAT_TREE_IMG, 'Cat Tree', 10, 12); }
+  else { $('furnCatTree')?.remove(); }
 
-  // Cat Toy
-  let toy = $('furnCatToy');
-  if(f.catToy){
-    if(!toy){ toy = document.createElement('img'); toy.id = 'furnCatToy'; toy.className = 'furniture'; toy.src = CAT_TOY_IMG; toy.alt = 'Cat Toy'; container.appendChild(toy); }
-  }else if(toy){ toy.remove(); }
+  // Cat Toy – to the right of the tree
+  if(own.catToy){ ensureFurnitureImg('furnCatToy', CAT_TOY_IMG, 'Cat Toy', 12, 120); }
+  else { $('furnCatToy')?.remove(); }
 
-  // Cat Bowl (slightly under cat tree)
-  let bowl = $('furnCatBowl');
-  if(f.catBowl){
-    if(!bowl){ bowl = document.createElement('img'); bowl.id = 'furnCatBowl'; bowl.className = 'furniture'; bowl.src = CAT_BOWL_IMG; bowl.alt = 'Cat Bowl'; container.appendChild(bowl); }
-  }else if(bowl){ bowl.remove(); }
+  // Cat Bowl – a little under the cat tree
+  if(own.catBowl){ ensureFurnitureImg('furnCatBowl', CAT_BOWL_IMG, 'Cat Bowl', 88, 16); }
+  else { $('furnCatBowl')?.remove(); }
 }
 
 /* ===================== CATNIP PARTY ===================== */
@@ -1338,16 +1335,12 @@ $('revealBtn').addEventListener('click', ()=>{ const gi=order[idx], item=words[g
 
 $('openAchievements').addEventListener('click', ()=>{ reflectBadges(); $('achModal').style.display='grid'; });
 $('closeAch').addEventListener('click', ()=> $('achModal').style.display='none');
-$('openMap').addEventListener('click', ()=>{ renderMap(); $('mapModal').style.display='grid'; requestAnimationFrame(startCats); updateShopUI(); updateNamesToggleUI(); updateNamesVisibility(); });
+$('openMap').addEventListener('click', ()=>{ renderMap(); $('mapModal').style.display='grid'; requestAnimationFrame(startCats); updateShopUI(); updateNamesToggleUI(); updateNamesVisibility(); bindBuyFurniture(); });
 $('closeMap').addEventListener('click', ()=>{ $('mapModal').style.display='none'; stopCats(); });
 
 function updateShopUI(){
-  const scoreEl=$('shopScore'), fishEl=$('shopFish'), nipEl=$('shopCatnip'), furnOwned=$('furnOwned');
-  if(scoreEl) scoreEl.textContent = state.score;
-  if(fishEl)  fishEl.textContent  = state.inventory?.fish || 0;
-  if(nipEl)   nipEl.textContent   = state.inventory?.catnip || 0;
-  if(furnOwned) furnOwned.textContent = `${furnitureOwnedCount()}/${FURNITURE_ORDER.length}`;
-
+  const scoreEl=$('shopScore'), fishEl=$('shopFish'), nipEl=$('shopCatnip');
+  if(scoreEl) scoreEl.textContent = state.score; if(fishEl) fishEl.textContent = state.inventory?.fish || 0; if(nipEl) nipEl.textContent = state.inventory?.catnip || 0;
   const buyBtn=$('buyFishBtn'), feedBtn=$('feedFishBtn'), nameBtn=$('toggleNameArea'), furnBtn=$('buyFurnitureBtn');
   if(buyBtn){ buyBtn.textContent = `🐟 Buy Fish (${FISH_COST})`; buyBtn.disabled = state.score < FISH_COST; }
   if(feedBtn) feedBtn.disabled = (state.inventory?.fish||0) <= 0;
@@ -1357,6 +1350,7 @@ function updateShopUI(){
   if(nameBtn){ nameBtn.textContent = `📝 Name a Cat (${NAME_COST})`; nameBtn.disabled = !hasToken && (state.score < NAME_COST || (state.mapUnlocked||0) === 0); }
   if($('nameCostNote')) $('nameCostNote').style.display = hasToken ? 'none' : 'inline';
 
+  // Furniture button label reflects next item
   if(furnBtn){
     const nextKey = nextFurnitureKey();
     if(!nextKey){
@@ -1366,7 +1360,7 @@ function updateShopUI(){
     }else{
       furnBtn.textContent = `🪑 Buy Furniture (${FURNITURE_COST}) — Next: ${furnitureLabel(nextKey)}`;
       furnBtn.disabled = state.score < FURNITURE_COST;
-      furnBtn.title = state.score < FURNITURE_COST ? 'Not enough points' : `Buy ${furnitureLabel(nextKey)}`;
+      furnBtn.title = furnBtn.disabled ? 'Not enough points' : `Buy ${furnitureLabel(nextKey)}`;
     }
   }
 
@@ -1378,9 +1372,7 @@ function updateShopUI(){
   }
   if(cats && cats.length){ cats.forEach(c => { const nm=getCatName(c.idx); c.el.title = nm; if(c.label) c.label.textContent = nm; }); }
 }
-$('openShop').addEventListener('click', ()=>{
-  const panel = $('shopPanel'); panel.style.display = panel.style.display==='none' ? 'block' : 'none'; updateShopUI();
-});
+$('openShop').addEventListener('click', ()=>{ const panel = $('shopPanel'); panel.style.display = panel.style.display==='none' ? 'block' : 'none'; updateShopUI(); bindBuyFurniture(); });
 $('feedFishBtn').addEventListener('click', ()=>{
   if((state.inventory.fish||0) <= 0) return; state.inventory.fish -= 1;
   $('shopMsg').textContent = 'Fed the cats! They’re zooming 😺💨'; $('shopMsg').className='feedback ok';
@@ -1412,31 +1404,53 @@ $('confirmNameBtn').addEventListener('click', ()=>{
   $('shopMsg').textContent = `Named cat #${idx+1} “${name}” 🏷️`; $('shopMsg').className='feedback ok'; $('catNameInput').value=''; $('nameArea').style.display='none'; flashCatNames(4000); persist();
 });
 
-/* === Sequential furniture purchase: Tree → Toy → Bowl (each costs 1000) === */
-$('buyFurnitureBtn').addEventListener('click', ()=>{
+/* ---------- Furniture purchase flow (Cat Tree → Cat Toy → Cat Bowl) ---------- */
+function nextFurnitureKey(){
+  state.furniture = state.furniture || {};
+  for (const k of FURNITURE_ORDER){ if(!state.furniture[k]) return k; }
+  return null;
+}
+function furnitureLabel(k){
+  return k==='catTree' ? 'Cat Tree' : k==='catToy' ? 'Cat Toy' : k==='catBowl' ? 'Cat Bowl' : 'Furniture';
+}
+function handleBuyFurnitureClick(e){
+  e.preventDefault();
+  e.stopImmediatePropagation();
+
   const key = nextFurnitureKey();
+  const msg = $('shopMsg');
+
   if(!key){
-    $('shopMsg').textContent = 'All furniture purchased!';
-    $('shopMsg').className = 'feedback ok';
+    if (msg) { msg.textContent = 'All furniture purchased!'; msg.className = 'feedback ok'; }
     updateShopUI();
     return;
   }
   if(state.score < FURNITURE_COST){
-    $('shopMsg').textContent = 'Not enough points for furniture.';
-    $('shopMsg').className = 'feedback warn';
+    if (msg) { msg.textContent = 'Not enough points for furniture.'; msg.className = 'feedback warn'; }
     updateShopUI();
     return;
   }
+
   state.score -= FURNITURE_COST;
-  state.furniture = state.furniture || {};
   state.furniture[key] = true;
 
-  $('shopMsg').textContent = `${furnitureLabel(key)} placed! The cats approve. 🐾`;
-  $('shopMsg').className = 'feedback ok';
-  if(window.confetti){ confetti({origin:{x:0.5,y:1},particleCount:90,spread:80,startVelocity:55}); }
-  persist(); // re-renders furniture and updates button to next item
-});
+  if (msg) { msg.textContent = `${furnitureLabel(key)} placed! The cats approve. 🐾`; msg.className = 'feedback ok'; }
+  if (window.confetti){ confetti({origin:{x:0.5,y:1},particleCount:90,spread:80,startVelocity:55}); }
 
+  persist();
+}
+function bindBuyFurniture(){
+  const btn = $('buyFurnitureBtn');
+  if(!btn) return;
+  if(btn.dataset.bound === 'v2') return;
+  const clone = btn.cloneNode(true);
+  clone.id = 'buyFurnitureBtn';
+  btn.replaceWith(clone);
+  clone.dataset.bound = 'v2';
+  clone.addEventListener('click', handleBuyFurnitureClick, { capture:true });
+}
+
+/* ===================== NAMES TOGGLE ===================== */
 function updateNamesToggleUI(){ const btn = $('toggleNamesBtn'); if(!btn) return; btn.textContent = state.showCatNames ? '🐾 Hide Names' : '🐾 Show Names'; }
 function updateNamesVisibility(){ const show = state.showCatNames || (Date.now() < flashNamesUntil); if(cats && cats.length){ cats.forEach(c=>{ if(c.label){ c.label.style.display = show ? 'block' : 'none'; c.label.textContent = getCatName(c.idx); } c.el.title = getCatName(c.idx); }); } }
 function flashCatNames(ms=3000){ flashNamesUntil = Date.now() + ms; updateNamesVisibility(); setTimeout(()=>updateNamesVisibility(), ms+50); }
@@ -1491,24 +1505,10 @@ $('quickSia').addEventListener('click', ()=>{ const pin = prompt('Enter develope
   });
 })();
 
-/* Start overlay: choose mode — explicit listeners */
-function startAs(m){
-  try{
-    if(m==='audio'){ $('startOverlay').style.display='none'; openAudioQuiz(); return; }
-    mode=m; resetSessionProgress(); ensureOrder(); $('startOverlay').style.display='none'; showItem();
-  }catch(e){
-    $('startOverlay').style.display='none';
-    mode='learn'; resetSessionProgress(); ensureOrder(); showItem();
-  }
-}
-$('startLearn').addEventListener('click', (e)=>{ e.stopPropagation(); startAs('learn'); });
-$('startQuiz').addEventListener('click',  (e)=>{ e.stopPropagation(); startAs('quiz'); });
-
-/* (Optional) keep delegation as fallback */
-$('startOverlay').addEventListener('click',(e)=>{
-  if(e.target && e.target.id==='startLearn') startAs('learn');
-  if(e.target && e.target.id==='startQuiz')  startAs('quiz');
-});
+/* Start overlay: choose mode */
+function startAs(m){ if(m==='audio'){ $('startOverlay').style.display='none'; openAudioQuiz(); return; } mode=m; resetSessionProgress(); ensureOrder(); $('startOverlay').style.display='none'; showItem(); }
+['startLearn','startQuiz','startAudio'].forEach(id=>{ const el=$(id); if(el) el.setAttribute('type','button'); });
+$('startOverlay').addEventListener('click',(e)=>{ if(e.target.id==='startLearn') startAs('learn'); if(e.target.id==='startQuiz')  startAs('quiz'); });
 
 /* Close modals on backdrop click */
 document.addEventListener('click', (e)=>{
@@ -1638,19 +1638,6 @@ function learnedIndicesInOrder(){
     .filter(i => i < unlockedCount())
     .sort((a,b)=>a-b);
 }
-
-/* Keep modal stable: add a scroll wrapper for the table/empty area */
-function ensureDictScrollWrapper(){
-  const panel = $('dictPanel'); if(!panel) return;
-  if ($('dictScroll')) return;
-  const tbl = $('dictTable'); const empty = $('dictEmpty');
-  const controls = panel.querySelector('.dict-controls');
-  const sc = document.createElement('div'); sc.id='dictScroll';
-  panel.insertBefore(sc, controls);
-  if (tbl)   sc.appendChild(tbl);
-  if (empty) sc.appendChild(empty);
-}
-
 function renderDictionary(){
   const tbl = $('dictTable'); const empty = $('dictEmpty'); const pageLbl = $('dictPageLabel');
   if(!tbl || !empty || !pageLbl) return;
@@ -1707,7 +1694,7 @@ $('dictTable').addEventListener('click', (e)=>{
   if(!item) return;
   try{ const a = getAudio(item); a.currentTime = 0; a.play(); }catch{}
 });
-function openDictionary(){ dictPage = 0; ensureDictScrollWrapper(); renderDictionary(); $('dictModal').style.display='grid'; }
+function openDictionary(){ dictPage = 0; renderDictionary(); $('dictModal').style.display='grid'; }
 function closeDictionary(){ $('dictModal').style.display='none'; }
 $('openDictionary').addEventListener('click', openDictionary);
 $('closeDict').addEventListener('click', closeDictionary);
@@ -1745,6 +1732,7 @@ updateMusicBtnUI();
 
 /* Init */
 initSpeech();
+bindBuyFurniture();
 </script>
 </body>
 </html>
