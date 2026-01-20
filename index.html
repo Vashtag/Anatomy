@@ -2,580 +2,581 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>KIN 100 Review — Shoulder & Arm (Flashcards + MCQ + Sequencers)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Anatomy Flash Cards</title>
 <style>
-/* =========================
-   Dark‑blue ocean theme
-   ========================= */
-:root{
-  --bg:#041b2d; --fg:#e6f3ff; --muted:#a8c5da; --surface:#071e31; --border:#0c304a;
-  --accent:#38bdf8; --accent-2:#22d3ee; --ok:#22c55e; --err:#ef4444;
-  --focus:2px solid #38bdf8; --radius:16px; --shadow:0 10px 28px rgba(10,84,126,.25);
+  :root{
+    --bg0:#050913;
+    --bg1:#071225;
+    --fg:#eaf3ff;
+    --muted:#9bb6d3;
+    --accent:#6ecbff;
+    --accent2:#8a7dff;
+    --card:#0b1426cc;
+    --border:rgba(140,200,255,.28);
+    --shadow:0 18px 50px rgba(0,0,0,.45);
+    --radius:22px;
+    --focus:2px solid rgba(110,203,255,.9);
+    --maxw:820px;
+    --cardw:min(92vw,520px);
+    --cardh:min(62vh,520px);
+    --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  }
 
-  /* Buttons */
-  --btn-main:#0ea5e9; --btn-text:#00131c;
-  --btn-ghost:#0c2a42; --btn-ghost-text:#d8f3ff;
-  --btn-good:#1f9d55; --btn-bad:#b91c1c;
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:var(--font);
+    color:var(--fg);
+    background:
+      radial-gradient(1200px 800px at 20% 10%, rgba(110,203,255,.16), transparent 60%),
+      radial-gradient(900px 700px at 80% 40%, rgba(138,125,255,.14), transparent 62%),
+      radial-gradient(700px 700px at 55% 85%, rgba(110,203,255,.10), transparent 60%),
+      linear-gradient(180deg, var(--bg0), var(--bg1));
+    overflow-x:hidden;
+  }
 
-  --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-}
-*{box-sizing:border-box} html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.5}
+  /* subtle stars */
+  .stars{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.35), transparent 2px),
+      radial-gradient(1px 1px at 35% 70%, rgba(255,255,255,.25), transparent 2px),
+      radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,.25), transparent 2px),
+      radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,.18), transparent 2px),
+      radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,.18), transparent 2px),
+      radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,.20), transparent 2px);
+    opacity:.9;
+    filter: blur(.1px);
+  }
 
-/* Subtle ocean background */
-.ocean{position:fixed; inset:0; z-index:0; pointer-events:none;
-  background:linear-gradient(180deg,#06263e 0%, #082e4a 60%, #0b2842 100%);
-  animation:bgShift 40s ease-in-out infinite;
-}
-@keyframes bgShift{0%,100%{filter:saturate(1) brightness(1)} 50%{filter:saturate(1.05) brightness(1.05)}}
-.ocean .wave{position:absolute;left:0;right:0;bottom:-2px;height:120px;
-  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,70 C200,0 400,140 600,70 S1000,0 1200,70 V120 H0 Z" fill="%23ffffff22"/></svg>') repeat-x;
-  background-size:1200px 120px;animation:waveX 28s linear infinite;opacity:.18}
-.ocean .wave.wave2{height:140px;bottom:-10px;opacity:.12;animation-duration:36s}
-@keyframes waveX{from{background-position-x:0}to{background-position-x:1200px}}
-.ocean .bubble{position:absolute;bottom:-8vh;border-radius:50%;background:rgba(255,255,255,.14);filter:blur(.4px);
-  left:var(--x,50%);width:var(--s,8px);height:var(--s,8px);animation:rise var(--t,14s) linear infinite;opacity:.9}
-@keyframes rise{to{transform:translateY(-120vh);opacity:0}}
-body.reduced-motion .ocean,.ocean .wave,.ocean .bubble{animation:none}
+  .wrap{
+    position:relative; z-index:1;
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:28px 16px 40px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+  }
 
-header{position:sticky;top:0;z-index:3;background:linear-gradient(90deg,rgba(5,23,38,.85),rgba(7,30,49,.75));border-bottom:1px solid var(--border);padding:14px 16px;backdrop-filter:saturate(1.1) blur(2px)}
-header .title{font-weight:800;font-size:1.1rem}
-header .subtitle{color:var(--muted);font-size:.95rem}
-.container{max-width:1020px;margin:16px auto;padding:0 16px;position:relative;z-index:1}
-.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:12px 0 18px}
+  h1{
+    margin:8px 0 0;
+    font-size:clamp(28px, 4vw, 44px);
+    letter-spacing:.2px;
+    font-weight:900;
+    text-align:center;
+  }
 
-.tabs[role="tablist"]{display:flex;gap:6px;padding:6px;background:var(--surface);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow)}
-.tabs button{border:0;background:none;padding:10px 14px;border-radius:999px;cursor:pointer;color:var(--muted);font-weight:700}
-.tabs button[aria-selected="true"]{background:var(--accent);color:#00131c;box-shadow:0 8px 18px rgba(14,165,233,.35)}
+  .top{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
 
-.session{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+  .progressRow{
+    width:min(92vw, 720px);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    align-items:center;
+  }
 
-/* ===== Flashcards ===== */
-.flash-wrap{display:grid;gap:14px}
-.card{position:relative;padding:18px;border-radius:20px;border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
-.plate{--card-accent:#f7c948;background:#fff;color:#111;border:6px solid var(--card-accent);border-radius:18px;position:relative;min-height:210px}
-.plate .text{position:absolute;left:18px;right:18px;top:22px;bottom:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;font-size:1.12rem;line-height:1.45;transition:opacity .28s ease}
-.text-front{opacity:1}.text-back{opacity:0}
-.card.showBack .text-front{opacity:0}.card.showBack .text-back{opacity:1}
-.hint{position:absolute;left:0;right:0;bottom:66px;text-align:center;color:#8a8a8a;font-size:.95rem}
-.labelbar{position:absolute;left:0;right:0;bottom:0;height:58px;border-top:1px solid rgba(0,0,0,.06);background:#fff;border-radius:0 0 12px 12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.02rem;color:#111}
-.tagdot{display:inline-block;width:.66em;height:.66em;border-radius:999px;margin:0 .25em -.08em 0;background:var(--card-accent)}
-.flipFx{position:absolute;inset:18px;border-radius:18px;pointer-events:none;transform-style:preserve-3d}
-.flipFx::before{content:"";position:absolute;inset:0;background:#fff;border:6px solid var(--card-accent);border-radius:18px;transform-origin:center;transform:rotateY(0);opacity:0}
-.card.flip-anim .flipFx::before{animation:flipShell .5s ease both}
-@keyframes flipShell{0%{transform:rotateY(0);opacity:.15}45%{opacity:.45}100%{transform:rotateY(180deg);opacity:0}}
-.flash-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.btn{border:0;padding:12px 16px;border-radius:12px;cursor:pointer;font-weight:800;background:var(--btn-main);color:var(--btn-text);letter-spacing:.2px;box-shadow:0 8px 18px rgba(2,132,199,.38);transition:transform .05s ease, box-shadow .15s ease}
-.btn:hover{transform:translateY(-1px);box-shadow:0 12px 22px rgba(2,132,199,.45)}
-.btn:active{transform:translateY(0);box-shadow:0 6px 12px rgba(2,132,199,.3)}
-.btn.ghost{background:var(--btn-ghost);color:var(--btn-ghost-text);box-shadow:0 6px 14px rgba(12,74,110,.25)}
-.btn.good{background:var(--btn-good);color:#fff;box-shadow:0 8px 18px rgba(22,163,74,.35)}
-.btn.bad{background:var(--btn-bad);color:#fff;box-shadow:0 8px 18px rgba(220,38,38,.35)}
-.btn.primary{background:var(--accent);color:#00131c}
-.session .btn{padding:8px 12px}
-.stats{display:flex;gap:12px;justify-content:center;color:var(--muted);font-size:.95rem}
-.barline{height:10px;background:#093b58;border-radius:999px;overflow:hidden}
-.barline>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+  .bar{
+    width:100%;
+    height:12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.10);
+    overflow:hidden;
+  }
+  .bar > span{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, rgba(110,203,255,.95), rgba(138,125,255,.95));
+    border-radius:999px;
+    transition:width .25s ease;
+  }
 
-/* ===== MCQ ===== */
-.q-wrap{display:grid;gap:14px}
-.choice{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;background:#fff;color:#111}
-.choice[data-state="correct"]{border-color:var(--ok);box-shadow:0 0 0 2px rgba(34,197,94,.25) inset}
-.choice[data-state="wrong"]{border-color:var(--err);box-shadow:0 0 0 2px rgba(239,68,68,.2) inset}
-.rationale{border-left:4px solid var(--accent);padding:10px 12px;background:#f0fbff;border-radius:10px;color:#06263e}
+  .counter{
+    font-size:clamp(18px, 2.5vw, 30px);
+    font-weight:800;
+    color:rgba(110,203,255,.95);
+  }
 
-/* ===== Order / Sequencer UI (Plexus + Arteries) ===== */
-.order-wrap{display:grid;gap:14px}
-.order-title{font-weight:800}
-.order-line{display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-height:60px;padding:10px;border:1px dashed var(--border);border-radius:12px;background:rgba(255,255,255,.05)}
-.pill{user-select:none;display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:999px;border:1px solid var(--border);background:#0c2a42;color:#d8f3ff;font-weight:800;cursor:grab}
-.pill[draggable="true"]{touch-action:none}
-.pill.dragging{opacity:.6}
-.pill.sel{outline:2px solid var(--accent)}
-.order-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.order-feedback{color:var(--muted);text-align:center}
+  .controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:6px;
+  }
 
-/* ===== Toast / confetti / shuffle minis ===== */
-.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#07304a;color:#e6f3ff;padding:8px 12px;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .25s ease;z-index:9999}
-.toast.show{opacity:1}
-.confetti{position:fixed;pointer-events:none;inset:0;overflow:hidden;z-index:1000}
-.bit{position:absolute;font-size:18px;animation:fall 900ms ease-out forwards}
-@keyframes fall{from{transform:translateY(0) rotate(0deg);opacity:1}to{transform:translateY(120vh) rotate(540deg);opacity:0}}
-body.reduced-motion .bit{animation:none;opacity:0}
+  button{
+    border:0;
+    cursor:pointer;
+    border-radius:14px;
+    padding:10px 14px;
+    font-weight:800;
+    color:#041018;
+    background:rgba(110,203,255,.95);
+    box-shadow:0 10px 22px rgba(0,0,0,.25);
+    transition:transform .06s ease, filter .15s ease;
+  }
+  button:hover{transform:translateY(-1px); filter:brightness(1.03)}
+  button:active{transform:translateY(0)}
+  button.secondary{
+    background:rgba(255,255,255,.10);
+    color:var(--fg);
+    border:1px solid rgba(255,255,255,.14);
+  }
+  button.danger{
+    background:rgba(239,68,68,.92);
+    color:#fff;
+  }
+  button:focus-visible{outline:var(--focus); outline-offset:3px}
 
-/* Shuffle minis (flashcard shuffle) */
-.shuffle-overlay{position:absolute; inset:0; pointer-events:none; display:none; z-index:5;}
-.shuffle-overlay.show{ display:block; }
-.mini-card{position:absolute;width:64px;height:42px;border-radius:8px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow);opacity:0;left:50%;top:50%;transform:translate(-200%,-50%) rotate(0deg);animation:riffle 650ms ease-in-out forwards}
-@keyframes riffle{0%{transform:translate(-200%,-50%) rotate(var(--rot,0deg));opacity:0}50%{transform:translate(-50%,-50%) rotate(calc(var(--rot,0deg) + 8deg));opacity:1}100%{transform:translate(110%,-50%) rotate(calc(var(--rot,0deg) + 18deg));opacity:0}}
+  /* Card flip */
+  .cardStage{
+    width:var(--cardw);
+    height:var(--cardh);
+    perspective: 1200px;
+  }
+  .card{
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:var(--radius);
+    transform-style:preserve-3d;
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+    box-shadow: var(--shadow);
+    cursor:pointer;
+  }
+  .card.isFlipped{ transform: rotateY(180deg); cursor:default; }
 
-.hidden{display:none !important}
-:focus-visible{outline:var(--focus);outline-offset:2px}
+  .face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
 
-/* ===== Modals (blur background) ===== */
-.modal{position:fixed; inset:0; display:none; place-items:center; background:rgba(6,34,54,.35); z-index:2000; backdrop-filter: blur(8px) saturate(1.05)}
-.modal.show{display:grid}
-.modal .box{width:min(560px,92vw); background:var(--surface); color:var(--fg); border:1px solid var(--border); border-radius:16px; box-shadow:0 18px 44px rgba(3,105,161,.35); padding:18px 16px 14px}
-.modal h2{margin:6px 0 10px}
-.modal .row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);cursor:pointer;background:#0c2a42;color:#e6f3ff;font-weight:700}
-.chip input{width:18px;height:18px}
-body.modal-open header,body.modal-open #main,body.modal-open footer{filter:blur(6px) saturate(.9);transition:filter .2s ease}
-body.modal-open{overflow:hidden}
+  /* Neon frame */
+  .frame{
+    position:absolute;
+    inset:0;
+    border-radius:var(--radius);
+    pointer-events:none;
+    border:2px solid rgba(140,220,255,.45);
+    box-shadow:
+      0 0 0 6px rgba(110,203,255,.10) inset,
+      0 0 24px rgba(110,203,255,.28),
+      0 0 46px rgba(138,125,255,.18);
+  }
 
-/* ===== Streak fish ===== */
-.fish{position:fixed; left:-12vw; top:30vh; font-size:26px; z-index:1100; filter:drop-shadow(0 2px 2px rgba(0,0,0,.25)); opacity:.95; pointer-events:none}
-.fish.swim{animation:swim 5s linear forwards}
-@keyframes swim{from{transform:translateX(0)}to{transform:translateX(120vw)}}
+  /* Front: image (card back) */
+  .front{
+    background:rgba(10,18,32,.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .front img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:scale(1.02);
+    filter:contrast(1.05) saturate(1.05);
+  }
+  .front .overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.48));
+  }
+  .front .hint{
+    position:absolute;
+    bottom:16px;
+    left:0; right:0;
+    text-align:center;
+    font-weight:800;
+    color:rgba(234,243,255,.92);
+    text-shadow:0 6px 22px rgba(0,0,0,.55);
+    padding:0 12px;
+  }
+
+  /* Back: question + answer box */
+  .back{
+    transform: rotateY(180deg);
+    background: var(--card);
+    border:1px solid rgba(255,255,255,.12);
+    display:flex;
+    flex-direction:column;
+    padding:18px;
+    gap:14px;
+  }
+  .q{
+    font-size:clamp(18px, 2.2vw, 22px);
+    font-weight:900;
+    line-height:1.25;
+    margin-top:6px;
+  }
+  .answerRow{
+    margin-top:auto;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  input[type="text"]{
+    width:100%;
+    padding:14px 14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.06);
+    color:var(--fg);
+    font-size:16px;
+    outline:none;
+  }
+  input[type="text"]::placeholder{color:rgba(155,182,211,.78)}
+  input[type="text"]:focus{box-shadow:0 0 0 3px rgba(110,203,255,.18); border-color:rgba(110,203,255,.45)}
+
+  .btnRow{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
+  .reveal{
+    display:none;
+    border-left:3px solid rgba(110,203,255,.75);
+    background:rgba(110,203,255,.08);
+    padding:10px 12px;
+    border-radius:12px;
+    color:rgba(234,243,255,.95);
+  }
+  .reveal.show{display:block}
+
+  .toast{
+    position:fixed;
+    bottom:18px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(8,18,32,.92);
+    border:1px solid rgba(255,255,255,.10);
+    color:rgba(234,243,255,.95);
+    padding:10px 14px;
+    border-radius:999px;
+    font-weight:800;
+    opacity:0;
+    transition:opacity .2s ease;
+    z-index:50;
+  }
+  .toast.show{opacity:1}
+
+  .small{
+    color:var(--muted);
+    font-size:.95rem;
+    text-align:center;
+    max-width:62ch;
+    line-height:1.4;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card{transition:none}
+    .bar > span{transition:none}
+  }
 </style>
 </head>
+
 <body>
-<!-- Ocean background -->
-<div class="ocean" aria-hidden="true">
-  <div class="wave"></div><div class="wave wave2"></div>
-  <span class="bubble" style="--x:18%;--s:8px;--t:14s"></span>
-  <span class="bubble" style="--x:42%;--s:10px;--t:16s"></span>
-  <span class="bubble" style="--x:66%;--s:7px;--t:13s"></span>
-  <span class="bubble" style="--x:82%;--s:9px;--t:15s"></span>
-</div>
+<div class="stars" aria-hidden="true"></div>
 
-<header>
-  <div class="container">
-    <div class="title">KIN 100 Review — Shoulder &amp; Arm</div>
-    <div class="subtitle">Flashcards • MCQ • Sequencers</div>
-  </div>
-</header>
+<div class="wrap">
+  <div class="top">
+    <h1>Anatomy Flash Cards</h1>
 
-<div class="container" id="main">
-  <div class="bar">
-    <div class="tabs" role="tablist" aria-label="Mode">
-      <button id="tab-flash" role="tab" aria-selected="true" aria-controls="flashcardsPanel">Flashcards</button>
-      <button id="tab-mcq" role="tab" aria-selected="false" aria-controls="mcqPanel">MCQ</button>
-      <button id="tab-plexus" role="tab" aria-selected="false" aria-controls="plexusPanel">Plexus</button>
-      <button id="tab-arteries" role="tab" aria-selected="false" aria-controls="arteriesPanel">Arteries</button>
-    </div>
+    <div class="progressRow" aria-label="Progress">
+      <div class="bar" aria-hidden="true"><span id="barFill"></span></div>
+      <div class="counter" id="counter">1 / 1</div>
 
-    <div class="session">
-      <label><input type="checkbox" id="rmToggle"> Reduced motion</label>
-      <label><input type="checkbox" id="soundToggle" checked> Sound</label>
-      <label><input type="checkbox" id="hapticToggle"> Haptics</label>
-      <button class="btn ghost" id="changeTopics">Change topics</button>
-    </div>
-  </div>
-
-  <!-- Flashcards -->
-  <section id="flashcardsPanel" class="panel flash-wrap" role="tabpanel" aria-labelledby="tab-flash">
-    <div class="bar" style="justify-content:center; gap:14px">
-      <button class="btn ghost" id="flashShuffle">Shuffle</button>
-      <button class="btn ghost" id="flashReset">Reset</button>
-    </div>
-
-    <div class="card" id="flashCard" aria-live="polite" aria-atomic="true">
-      <div class="flipFx" aria-hidden="true"></div>
-      <div class="plate" id="plate">
-        <div class="text text-front" id="flashFront">Building deck…</div>
-        <div class="text text-back" id="flashBack"></div>
-        <div class="hint">Press Space or click card to flip</div>
-        <div class="labelbar"><span class="tagdot"></span><span id="labelTxt">KIN 100</span></div>
-      </div>
-      <div class="shuffle-overlay" id="shuffleOverlay" aria-hidden="true"></div>
-    </div>
-
-    <div class="flash-actions" aria-label="Flashcard actions">
-      <button class="btn" id="flashFlip" title="Space to flip">Flip</button>
-      <button class="btn bad" id="flashAgain" title="A key">Again</button>
-      <button class="btn good" id="flashGot" title="G key">Got it</button>
-    </div>
-
-    <div class="stats">
-      <div>Deck: <span id="deckCount">0</span></div>
-      <div>Remaining: <span id="deckRemaining">0</span></div>
-      <div>Streak: <span id="streak">0</span> 🔥</div>
-    </div>
-    <div class="barline" aria-hidden="true"><span id="progressFill"></span></div>
-  </section>
-
-  <!-- MCQ -->
-  <section id="mcqPanel" class="panel q-wrap hidden" role="tabpanel" aria-labelledby="tab-mcq">
-    <div class="bar" style="justify-content:space-between">
-      <div>
-        <label>Mode:
-          <select id="mcqMode">
-            <option value="practice">Practice (endless)</option>
-            <option value="quiz">Quiz</option>
-          </select>
-        </label>
-        <label id="quizLenWrap" class=""><span style="margin-left:8px"># Q:</span>
-          <input type="number" id="quizLen" min="5" max="30" step="1" value="10" style="width:72px">
-        </label>
-      </div>
-      <div>
-        <button class="btn primary" id="mcqStart">Start</button>
-        <button class="btn ghost" id="mcqStop">Stop</button>
-      </div>
-    </div>
-
-    <div id="mcqStatus" class="stats" aria-live="polite"></div>
-
-    <div id="mcqQ" class="panel">
-      <div id="mcqStem" style="font-size:1.1rem; font-weight:700; margin-bottom:8px">Press Start</div>
-      <div id="mcqChoices" class="choices" role="group" aria-label="Choices"></div>
-      <div id="mcqRationale" class="rationale hidden"></div>
-      <div class="bar" style="justify-content:space-between; margin-top:6px">
-        <div><span class="score" id="mcqScore">0/0</span></div>
-        <div><button class="btn" id="mcqNext" title="N key">Next</button></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Brachial Plexus Sequencer -->
-  <section id="plexusPanel" class="panel order-wrap hidden" role="tabpanel" aria-labelledby="tab-plexus">
-    <div class="order-title">Brachial Plexus Sequencer</div>
-    <div class="order-line" id="plexusLine" aria-label="Reorder to Roots → Trunks → Divisions → Cords → Branches"></div>
-    <div class="order-actions">
-      <button class="btn ghost" id="plexusShuffle">Shuffle</button>
-      <button class="btn primary" id="plexusCheck">Check</button>
-      <button class="btn ghost" id="plexusReset">Reset</button>
-    </div>
-    <div class="order-feedback" id="plexusMsg">Mnemonic: <em>Randy Travis Drinks Cold Beer</em>.</div>
-  </section>
-
-  <!-- Arterial Path Builder -->
-  <section id="arteriesPanel" class="panel order-wrap hidden" role="tabpanel" aria-labelledby="tab-arteries">
-    <div class="order-title">Arterial Path Builder — <span id="artLabel">Path</span></div>
-    <div class="order-line" id="artLine" aria-label="Drag/tap to order the arterial path"></div>
-    <div class="order-actions">
-      <button class="btn ghost" id="artNew">New path</button>
-      <button class="btn ghost" id="artShuffle">Shuffle</button>
-      <button class="btn primary" id="artCheck">Check</button>
-      <button class="btn ghost" id="artReset">Reset</button>
-    </div>
-    <div class="order-feedback" id="artMsg">Example: Femoral → Popliteal → Anterior tibial (AT) → Dorsalis pedis (DP).</div>
-  </section>
-</div>
-
-<!-- Topics modal -->
-<div class="modal" id="startModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="box">
-    <h2 id="modalTitle">What would you like to study?</h2>
-
-    <div id="step1">
-      <strong>Step 1 — Region(s)</strong>
-      <div class="row">
-        <label class="chip"><input type="checkbox" data-choice="region" value="shoulder" checked>Shoulder</label>
-        <label class="chip"><input type="checkbox" data-choice="region" value="arm" checked>Arm</label>
-      </div>
-      <div class="actions" style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px">
-        <button class="btn primary" id="toStep2">Next</button>
-      </div>
-    </div>
-
-    <div id="step2" class="hidden">
-      <strong>Step 2 — Topic(s)</strong>
-      <div class="row">
-        <label class="chip"><input type="checkbox" data-choice="domain" value="bones" checked>Bones</label>
-        <label class="chip"><input type="checkbox" data-choice="domain" value="muscles" checked>Muscles</label>
-        <label class="chip"><input type="checkbox" data-choice="domain" value="innervation" checked>Nerves</label>
-        <label class="chip"><input type="checkbox" data-choice="domain" value="blood" checked>Blood supply</label>
-      </div>
-      <div class="actions" style="display:flex;gap:10px;justify-content:flex-end;margin-top:14px">
-        <button class="btn" id="backTo1">Back</button>
-        <button class="btn primary" id="startStudy">Start</button>
+      <div class="controls">
+        <button class="secondary" id="shuffleBtn" type="button">Shuffle</button>
+        <button class="secondary" id="resetBtn" type="button">Reset</button>
       </div>
     </div>
   </div>
+
+  <div class="cardStage" aria-label="Flashcard">
+    <div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard. Click to flip.">
+      <!-- FRONT (image back of card) -->
+      <div class="face front">
+        <img id="cardImg" alt="Flashcard back image" />
+        <div class="overlay" aria-hidden="true"></div>
+        <div class="hint" id="frontHint">Click to flip</div>
+        <div class="frame" aria-hidden="true"></div>
+      </div>
+
+      <!-- BACK (question + answer input) -->
+      <div class="face back">
+        <div class="q" id="question">Loading…</div>
+
+        <div class="reveal" id="revealBox" aria-live="polite"></div>
+
+        <div class="answerRow">
+          <input id="answerInput" type="text" autocomplete="off" spellcheck="false" placeholder="Type your answer…" />
+          <div class="btnRow">
+            <button class="secondary" id="revealBtn" type="button">Reveal answer</button>
+            <button id="nextBtn" type="button">Next</button>
+          </div>
+        </div>
+
+        <div class="frame" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="small" id="statusLine"></div>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-<div class="confetti" id="confetti" aria-hidden="true"></div>
 
 <script>
-const BUILD='v1.7-ocean-darkblue-plexus-arteries-haptics-fish';
-window.addEventListener('error',e=>{const t=document.getElementById('toast');if(t){t.textContent='⚠️ JS error: '+e.message;t.classList.add('show')}console.error('Build',BUILD,e.message,e)});
+/* =========================
+   CONFIG
+   ========================= */
+const IMAGE_DIR = "./Anatomy/images/";                 // where your images live
+const MANIFEST_URL = IMAGE_DIR + "manifest.json";     // you create this file
 
-/* ===== Data ===== */
-const BANK=[
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Deltoid — innervation?",back:"Axillary nerve (C5–C6)."},
-  {type:"flash",tags:["shoulder","muscles"],front:"Deltoid (middle fibers) — primary action?",back:"Shoulder abduction (~15–90°)."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Teres minor — action + innervation?",back:"External (lateral) rotation; axillary nerve."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Supraspinatus — role + innervation?",back:"Initiates abduction (0–15°); suprascapular nerve."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Infraspinatus — action + innervation?",back:"External rotation; suprascapular nerve."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Subscapularis — action + innervation?",back:"Internal (medial) rotation; upper & lower subscapular nerves."},
-  {type:"flash",tags:["shoulder","muscles"],front:"Rotator cuff muscles (SITS)?",back:"Supraspinatus, Infraspinatus, Teres minor, Subscapularis."},
-  {type:"flash",tags:["arm","muscles","innervation"],front:"Biceps brachii — major actions + nerve?",back:"Forearm supination; elbow flexion (best when supinated); musculocutaneous nerve (C5–C7)."},
-  {type:"flash",tags:["arm","muscles","innervation"],front:"Brachialis — action + nerve?",back:"Primary elbow flexor; musculocutaneous nerve (C5–C6)."},
-  {type:"flash",tags:["arm","muscles","innervation"],front:"Coracobrachialis — action + nerve?",back:"Flexes & adducts shoulder; pierced by musculocutaneous nerve."},
-  {type:"flash",tags:["arm","muscles","innervation"],front:"Triceps brachii — action + nerve?",back:"Elbow extension; long head assists shoulder extension/adduction; radial nerve (C6–C8)."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Serratus anterior — nerve + key function?",back:"Long thoracic nerve (C5–C7); protracts & upwardly rotates scapula; stabilizes against thorax."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Latissimus dorsi — nerve?",back:"Thoracodorsal nerve (C6–C8)."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Pectoralis major — nerves?",back:"Medial & lateral pectoral nerves; adducts & internally rotates shoulder."},
-  {type:"flash",tags:["shoulder","muscles","innervation"],front:"Pectoralis minor — attachments + nerve?",back:"Ribs 3–5 → coracoid; stabilizes scapula; medial pectoral nerve."},
-  {type:"flash",tags:["arm","bones"],front:"Deltoid tuberosity — what & where?",back:"Lateral humerus; insertion for deltoid."},
-  {type:"flash",tags:["arm","bones","innervation"],front:"Surgical neck of humerus — clinical relevance?",back:"Risk to axillary nerve & posterior circumflex humeral artery."},
-  {type:"flash",tags:["arm","bones","innervation"],front:"Midshaft humerus fracture — key nerve risk?",back:"Radial nerve in radial groove → wrist drop."},
-  {type:"flash",tags:["shoulder","bones","blood"],front:"Quadrangular space — contents?",back:"Axillary nerve & posterior circumflex humeral artery."},
-  {type:"flash",tags:["arm","bones","blood"],front:"Triangular interval — contents?",back:"Radial nerve & profunda brachii (deep brachial) artery."},
-  {type:"flash",tags:["arm","bones"],front:"Intertubercular (bicipital) groove — notable content?",back:"Tendon of long head of biceps brachii."},
-  {type:"flash",tags:["shoulder","bones"],front:"Long head of biceps — origin?",back:"Supraglenoid tubercle of scapula."},
-  {type:"flash",tags:["shoulder","bones"],front:"Short head of biceps — origin?",back:"Coracoid process of scapula."},
-  {type:"flash",tags:["shoulder","bones"],front:"Long head of triceps — origin?",back:"Infraglenoid tubercle of scapula."},
-  {type:"flash",tags:["arm","innervation"],front:"Musculocutaneous nerve — terminal sensory branch?",back:"Lateral cutaneous nerve of forearm."},
-  {type:"flash",tags:["shoulder","innervation"],front:"Axillary nerve — sensory patch?",back:"“Regimental badge” area over lateral deltoid."},
-  {type:"flash",tags:["arm","blood"],front:"Main artery of the posterior compartment of the arm?",back:"Profunda brachii (deep brachial) artery via radial collateral branches."},
-
-  /* MCQ (unchanged here for brevity) */
-  {type:"mcq",tags:["shoulder","innervation"],stem:"Which nerve innervates the deltoid muscle?",options:["Radial","Axillary","Musculocutaneous","Median"],answerIndex:1,rationale:"Deltoid (and teres minor) receive axillary nerve (C5–C6)."},
-  {type:"mcq",tags:["shoulder","muscles"],stem:"Which muscle initiates glenohumeral abduction (0–15°)?",options:["Supraspinatus","Deltoid","Infraspinatus","Subscapularis"],answerIndex:0,rationale:"Supraspinatus initiates the first degrees of abduction."},
-  {type:"mcq",tags:["arm","innervation"],stem:"The anterior compartment of the arm is primarily innervated by which nerve?",options:["Radial","Ulnar","Musculocutaneous","Axillary"],answerIndex:2,rationale:"Biceps brachii, brachialis, coracobrachialis are musculocutaneous."},
-  {type:"mcq",tags:["arm","innervation","bones"],stem:"A fracture of the surgical neck of the humerus endangers which nerve?",options:["Radial","Median","Axillary","Ulnar"],answerIndex:2,rationale:"Axillary nerve + PCHA wrap the surgical neck."},
-  {type:"mcq",tags:["arm","innervation","bones"],stem:"A midshaft humeral fracture classically injures which nerve?",options:["Ulnar","Radial","Musculocutaneous","Axillary"],answerIndex:1,rationale:"Radial nerve in radial groove → wrist/finger extensor weakness."},
-  {type:"mcq",tags:["arm","muscles","bones"],stem:"Which muscle inserts on the deltoid tuberosity?",options:["Deltoid","Teres major","Latissimus dorsi","Pectoralis major"],answerIndex:0,rationale:"Deltoid inserts on the deltoid tuberosity."},
-  {type:"mcq",tags:["shoulder","bones","blood"],stem:"Which structure passes through the quadrangular space with the posterior circumflex humeral artery?",options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Ulnar nerve"],answerIndex:1,rationale:"Quadrangular space: axillary nerve + PCHA."},
-  {type:"mcq",tags:["shoulder","innervation","muscles"],stem:"Injury to the long thoracic nerve primarily weakens which muscle?",options:["Rhomboid major","Serratus anterior","Trapezius","Latissimus dorsi"],answerIndex:1,rationale:"Long thoracic → serratus anterior; winged scapula."},
-  {type:"mcq",tags:["shoulder","muscles"],stem:"Which is an external (lateral) rotator of the shoulder?",options:["Subscapularis","Teres major","Infraspinatus","Pectoralis major"],answerIndex:2,rationale:"Infraspinatus (and teres minor) laterally rotate."},
-  {type:"mcq",tags:["shoulder","bones","muscles"],stem:"The tendon traveling in the intertubercular (bicipital) groove belongs to:",options:["Biceps long head","Biceps short head","Triceps long head","Brachialis"],answerIndex:0,rationale:"Long head of biceps tendon runs in the groove."},
-  {type:"mcq",tags:["arm","innervation"],stem:"Innervation of triceps brachii?",options:["Radial","Axillary","Musculocutaneous","Median"],answerIndex:0,rationale:"All heads by radial nerve."},
-  {type:"mcq",tags:["arm","bones","blood"],stem:"Artery accompanying the radial nerve through the triangular interval:",options:["Posterior circumflex humeral","Profunda brachii (deep brachial)","Anterior circumflex humeral","Radial recurrent"],answerIndex:1,rationale:"Triangular interval: radial nerve + profunda brachii artery."},
-  {type:"mcq",tags:["shoulder","muscles"],stem:"Latissimus dorsi does all EXCEPT:",options:["Adduction","Internal rotation","Abduction","Extension"],answerIndex:2,rationale:"Lat adducts, extends, medially rotates; not abduction."},
-  {type:"mcq",tags:["shoulder","innervation"],stem:"Cutaneous sensation over the 'regimental badge' area is from:",options:["Radial","Axillary","Suprascapular","Lateral pectoral"],answerIndex:1,rationale:"Superior lateral cutaneous nerve of arm (axillary)."},
-  {type:"mcq",tags:["shoulder","bones","innervation"],stem:"Axillary nerve arises from which cord?",options:["Lateral","Medial","Posterior","Superior trunk"],answerIndex:2,rationale:"Axillary and radial from posterior cord."},
-  {type:"mcq",tags:["shoulder","bones","muscles"],stem:"Origin on supraglenoid tubercle:",options:["Triceps long head","Biceps long head","Biceps short head","Teres minor"],answerIndex:1,rationale:"Biceps long head from supraglenoid; triceps long head from infraglenoid."}
+/* =========================
+   FLASHCARD DATA (edit this)
+   ========================= */
+const DECK = [
+  { q: "Deltoid — innervation?", a: "Axillary nerve (C5–C6)." },
+  { q: "Supraspinatus — primary role?", a: "Initiates abduction (0–15°)." },
+  { q: "Midshaft humerus fracture — key nerve risk?", a: "Radial nerve (radial groove) → wrist drop." }
 ];
 
-/* ===== Helpers & state ===== */
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
-const REGIONS=['shoulder','arm'];
-const DOMAINS=['muscles','bones','innervation','blood'];
-let activeFilters=new Set([...REGIONS,...DOMAINS]);
-const ACCENTS={shoulder:'#f7c948',arm:'#f8a3c9'};
-const rnd=n=>Math.floor(Math.random()*n);
-const shuffle=arr=>{const a=[...arr];for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;};
-const intersects=(a,b)=>a.some(x=>b.includes(x));
-const matchesFilters=item=>{
-  const it=item.tags||[];
-  const selR=REGIONS.filter(t=>activeFilters.has(t));
-  const selD=DOMAINS.filter(t=>activeFilters.has(t));
-  const r=it.filter(t=>REGIONS.includes(t));
-  const d=it.filter(t=>DOMAINS.includes(t));
-  return (r.length===0||intersects(r,selR)) && (d.length===0||intersects(d,selD));
-};
+/* =========================
+   State
+   ========================= */
+const $ = (s) => document.querySelector(s);
+const card = $("#card");
+const cardImg = $("#cardImg");
+const questionEl = $("#question");
+const counterEl = $("#counter");
+const barFill = $("#barFill");
+const answerInput = $("#answerInput");
+const revealBox = $("#revealBox");
+const statusLine = $("#statusLine");
 
-function say(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(say._t);say._t=setTimeout(()=>t.classList.remove('show'),1500)}
-function confettiBurst(){if(document.body.classList.contains('reduced-motion'))return;const ems=['🎉','💪','🦴','⭐','🌊'];const c=$('#confetti');for(let i=0;i<16;i++){const b=document.createElement('span');b.className='bit';b.textContent=ems[rnd(ems.length)];b.style.left=(5+Math.random()*90)+'vw';b.style.top='-10vh';b.style.animationDelay=(Math.random()*0.2)+'s';c.appendChild(b);setTimeout(()=>b.remove(),1000)}}
+const toastEl = $("#toast");
 
-/* ===== Audio: shuffle ===== */
-let soundOn=true, actx=null;
-function getCtx(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx}
-function playShuffleSound(){if(!soundOn)return;const ctx=getCtx();const now=ctx.currentTime;const dur=.35,frames=Math.floor(ctx.sampleRate*dur);const buf=ctx.createBuffer(1,frames,ctx.sampleRate);const data=buf.getChannelData(0);for(let i=0;i<frames;i++){data[i]=(Math.random()*2-1)*0.6}const src=ctx.createBufferSource();src.buffer=buf;const bp=ctx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=900;bp.Q.value=.7;const g=ctx.createGain();g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(.9,now+.05);g.gain.exponentialRampToValueAtTime(.001,now+dur);src.connect(bp).connect(g).connect(ctx.destination);src.start(now)}
+let images = [];           // list of filenames from manifest
+let deck = [];             // shuffled deck
+let idx = 0;
+let lastImage = null;
 
-/* ===== Haptics ===== */
-let hapticsOn=false;
-function buzz(p=12){if(hapticsOn && navigator.vibrate){navigator.vibrate(p)}}
-
-/* ===== Shuffle animation (flashcards) ===== */
-function createMiniCard(d,rot){const el=document.createElement('div');el.className='mini-card';el.style.setProperty('--rot',rot+'deg');el.style.animationDelay=d+'ms';return el}
-function animateShuffle(duration=700){return new Promise(resolve=>{const overlay=$('#shuffleOverlay');overlay.innerHTML='';overlay.classList.add('show');for(let i=0;i<10;i++){overlay.appendChild(createMiniCard(40*i,-6+Math.random()*12))}setTimeout(()=>{overlay.classList.remove('show');overlay.innerHTML='';resolve()},duration)})}
-
-/* ===== Controls ===== */
-$('#rmToggle').addEventListener('change',e=>document.body.classList.toggle('reduced-motion',e.target.checked));
-$('#soundToggle').addEventListener('change',e=>soundOn=e.target.checked);
-$('#hapticToggle').addEventListener('change',e=>hapticsOn=e.target.checked);
-$('#changeTopics').addEventListener('click',()=>openModal(1));
-
-/* ===== Tabs ===== */
-const tabs={
-  flash:{btn:$('#tab-flash'),panel:$('#flashcardsPanel')},
-  mcq:{btn:$('#tab-mcq'),panel:$('#mcqPanel')},
-  plexus:{btn:$('#tab-plexus'),panel:$('#plexusPanel')},
-  arteries:{btn:$('#tab-arteries'),panel:$('#arteriesPanel')}
-};
-Object.values(tabs).forEach(o=>{
-  o.btn.addEventListener('click',()=>{
-    Object.values(tabs).forEach(p=>{p.btn.setAttribute('aria-selected','false');p.panel.classList.add('hidden');p.panel.setAttribute('hidden','')});
-    o.btn.setAttribute('aria-selected','true');o.panel.classList.remove('hidden');o.panel.removeAttribute('hidden');
-  })
-});
-
-/* ===== Flashcards ===== */
-let flashDeck=[],deckIndex=0,showBack=false,streak=0;
-function setAccentFor(item){const t=item.tags||[];const color=t.includes('shoulder')?ACCENTS.shoulder:(t.includes('arm')?ACCENTS.arm:'#0ea5e9');$('#plate').style.setProperty('--card-accent',color);$('.tagdot').style.background=color}
-function setLabel(item){const tags=(item.tags||[]).filter(t=>REGIONS.includes(t)||DOMAINS.includes(t));$('#labelTxt').textContent=tags.join(' • ')||'KIN 100'}
-function currentFlash(){return flashDeck[deckIndex]||null}
-function updateFlashUI(announce){
-  const front=$('#flashFront'),back=$('#flashBack'),card=$('#flashCard');
-  $('#streak').textContent=String(streak);$('#deckCount').textContent=flashDeck.length;
-  const remain=flashDeck.length?(flashDeck.length-deckIndex):0;$('#deckRemaining').textContent=String(remain);
-  const pct=flashDeck.length?Math.round((deckIndex/flashDeck.length)*100):0;$('#progressFill').style.width=pct+'%';
-  if(!flashDeck.length){front.innerHTML="No flashcards match your topics.<br><small>Use <strong>Change topics</strong> to adjust.</small>";back.textContent="";setLabel({tags:[]});card.classList.remove('showBack');return}
-  const item=currentFlash();front.innerHTML=item.front;back.textContent=item.back;setAccentFor(item);setLabel(item);card.classList.toggle('showBack',showBack);if(announce)say("Deck ready · "+flashDeck.length+" cards")
-}
-function buildDeck(){const pool=BANK.filter(it=>it.type==='flash'&&matchesFilters(it));flashDeck=shuffle(pool);deckIndex=0;showBack=false;streak=0}
-function refreshFlashDeck(a){buildDeck();updateFlashUI(a)}
-function againFlash(){const it=currentFlash();if(!it)return;const pos=Math.min(flashDeck.length,deckIndex+3+Math.floor(Math.random()*3));flashDeck.splice(pos,0,it);deckIndex++;streak=0;say("One more rep.");updateFlashUI(false)}
-function gotFlash(){const it=currentFlash();if(!it)return;flashDeck.splice(deckIndex,1);streak++;buzz([10,40,10]);if(streak>0&&streak%5===0)confettiBurst();if(streak%10===0)swimFish();say("Nice rep.");updateFlashUI(false);if(deckIndex>=flashDeck.length){$('#flashFront').innerHTML="🎯 Deck complete — clean set.";$('#flashBack').textContent="";$('#flashCard').classList.remove('showBack')}}
-function nextFlash(){deckIndex++;showBack=false;if(deckIndex>=flashDeck.length){$('#flashFront').innerHTML="🎯 Deck complete — smooth work.";$('#flashBack').textContent="";$('#flashCard').classList.remove('showBack');confettiBurst();return}updateFlashUI(false)}
-function flipWithFx(){const card=$('#flashCard');card.classList.add('flip-anim');showBack=!showBack;updateFlashUI(false);buzz(12);setTimeout(()=>card.classList.remove('flip-anim'),520)}
-$('#flashCard').addEventListener('click',flipWithFx);
-$('#flashFlip').addEventListener('click',flipWithFx);
-$('#flashShuffle').addEventListener('click',async()=>{playShuffleSound();await animateShuffle(700);refreshFlashDeck(true)});
-$('#flashReset').addEventListener('click',async()=>{playShuffleSound();await animateShuffle(700);refreshFlashDeck(true)});
-$('#flashAgain').addEventListener('click',againFlash);
-$('#flashGot').addEventListener('click',gotFlash);
-document.addEventListener('keydown',e=>{
-  const active=$('#tab-flash').getAttribute('aria-selected')==='true';if(!active)return;
-  if(e.key===' '){e.preventDefault();flipWithFx()} if(e.key.toLowerCase()==='a'){$('#flashAgain').click()} if(e.key.toLowerCase()==='g'){$('#flashGot').click()} if(e.key==='ArrowRight'){nextFlash()}
-});
-
-/* ===== Streak fish ===== */
-function swimFish(){ if(document.body.classList.contains('reduced-motion')) return;
-  const f=document.createElement('div'); f.className='fish swim';
-  f.textContent = Math.random()<0.5 ? '🐟' : '🐠';
-  f.style.top = (20 + Math.random()*50) + 'vh';
-  document.body.appendChild(f); setTimeout(()=>f.remove(),5200);
+function say(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  clearTimeout(say._t);
+  say._t = setTimeout(() => toastEl.classList.remove("show"), 1400);
 }
 
-/* ===== MCQ ===== */
-let mcqSession=null;
-const qStem=$('#mcqStem'), qChoices=$('#mcqChoices'), qRat=$('#mcqRationale'), qScore=$('#mcqScore'), qStatus=$('#mcqStatus');
-function mcqStart(){
-  const mode=$('#mcqMode').value;const pool=BANK.filter(it=>it.type==='mcq'&&matchesFilters(it));
-  if(!pool.length){qStem.textContent="No MCQs match your topics. Use Change topics.";qChoices.innerHTML='';qRat.classList.add('hidden');return}
-  let list=shuffle(pool); if(mode==='quiz'){const n=Math.max(5,Math.min(parseInt($('#quizLen').value||10,10),30)); if(list.length>n) list=list.slice(0,n)}
-  mcqSession={mode,list,idx:0,score:0,total:0,answered:false}; say("Quiz loaded · "+list.length+" Q"); renderMCQ();
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
 }
-function mcqStop(){mcqSession=null;qStem.textContent="Press Start";qChoices.innerHTML='';qRat.classList.add('hidden');qScore.textContent="0/0";qStatus.textContent=""}
-function renderMCQ(){
-  if(!mcqSession) return; const {list,idx,score,total}=mcqSession;
-  if(idx>=list.length){qStem.innerHTML="🎉 Session complete.";qChoices.innerHTML='';qRat.classList.add('hidden');qScore.textContent=`${mcqSession.score}/${mcqSession.total}`;qStatus.textContent="Nice pace — run another set.";confettiBurst();return}
-  const item=list[idx]; mcqSession.answered=false; qStem.textContent=item.stem; qChoices.innerHTML=''; const shuffled=shuffle(item.options.map((opt,i)=>({opt,i}))); qRat.textContent=item.rationale||""; qRat.classList.add('hidden');
-  shuffled.forEach((o,k)=>{const id=`opt-${idx}-${k}`;const wrap=document.createElement('label');wrap.className='choice';wrap.setAttribute('data-state','idle');wrap.innerHTML=`<input type="radio" name="mcq" id="${id}" value="${o.i}"><div><strong>${k+1}.</strong> <span>${o.opt}</span></div>`;
-    wrap.addEventListener('click',()=>{if(mcqSession.answered)return;const chosen=parseInt(wrap.querySelector('input').value,10);mcqSession.answered=true;const correct=chosen===item.answerIndex;mcqSession.total++;if(correct){mcqSession.score++;wrap.dataset.state='correct';say("Correct.");buzz([10,40,10])}else{wrap.dataset.state='wrong';say("Not quite.")}$$('#mcqChoices .choice').forEach(ch=>{const val=parseInt(ch.querySelector('input').value,10);if(val===item.answerIndex){ch.dataset.state='correct'}ch.querySelector('input').disabled=true});qRat.classList.remove('hidden');qScore.textContent=`${mcqSession.score}/${mcqSession.total}`}); qChoices.appendChild(wrap)});
-  qStatus.textContent=`Q ${idx+1} of ${list.length}`;
-}
-$('#mcqNext').addEventListener('click',()=>{if(!mcqSession)return;mcqSession.idx++;renderMCQ()});
-$('#mcqStart').addEventListener('click',mcqStart);
-$('#mcqStop').addEventListener('click',mcqStop);
-$('#mcqMode').addEventListener('change',e=>$('#quizLenWrap').style.visibility=e.target.value==='quiz'?'visible':'hidden');
 
-/* ===== Modal logic ===== */
-const modal=$('#startModal');const step1=$('#step1'),step2=$('#step2');
-function openModal(step=1){modal.classList.add('show');document.body.classList.add('modal-open');(step===1?(step1.classList.remove('hidden'),step2.classList.add('hidden')):(step2.classList.remove('hidden'),step1.classList.add('hidden')))}
-function closeModal(){modal.classList.remove('show');document.body.classList.remove('modal-open')}
-$('#toStep2').addEventListener('click',()=>{const regions=Array.from(modal.querySelectorAll('input[data-choice="region"]:checked')).map(x=>x.value);if(!regions.length){say('Pick at least one region.');return}step1.classList.add('hidden');step2.classList.remove('hidden')});
-$('#backTo1').addEventListener('click',()=>{step2.classList.add('hidden');step1.classList.remove('hidden')});
-function applySelectionsFromModal(){
-  const regions=Array.from(modal.querySelectorAll('input[data-choice="region"]:checked')).map(x=>x.value);
-  const domains=Array.from(modal.querySelectorAll('input[data-choice="domain"]:checked')).map(x=>x.value);
-  if(!regions.length||!domains.length){say('Select at least one region and one topic.');return false}
-  activeFilters=new Set([...regions,...domains]); refreshFlashDeck(true); mcqStop(); return true;
-}
-$('#startStudy').addEventListener('click',()=>{if(applySelectionsFromModal())closeModal()});
+/* =========================
+   Load image manifest
+   ========================= */
+async function loadManifest(){
+  try{
+    const res = await fetch(MANIFEST_URL, { cache: "no-store" });
+    if(!res.ok) throw new Error("Manifest not found");
+    const data = await res.json();
 
-/* ===== Brachial Plexus Sequencer ===== */
-const PLEXUS_SEQ=['Roots','Trunks','Divisions','Cords','Branches'];
-const plexusLine=$('#plexusLine'), plexusMsg=$('#plexusMsg');
-function renderPlexus(seq){ plexusLine.innerHTML=''; seq.forEach(label=>plexusLine.appendChild(makePill(label))); enableReorder(plexusLine) }
-function plexusShuffle(){ renderPlexus(shuffle(PLEXUS_SEQ)) }
-function plexusReset(){ renderPlexus(PLEXUS_SEQ) }
-function plexusCheck(){
-  const arr=[...plexusLine.querySelectorAll('.pill')].map(p=>p.dataset.id);
-  const ok = arr.join('|')===PLEXUS_SEQ.join('|');
-  if(ok){say('Perfect order!');buzz([10,40,10]);confettiBurst();plexusMsg.textContent="Spot‑on: Roots → Trunks → Divisions → Cords → Branches."}
-  else{say('Not yet — try again.');plexusMsg.textContent="Hint: mnemonic ‘Randy Travis Drinks Cold Beer’."}
-}
-$('#plexusShuffle').addEventListener('click',plexusShuffle);
-$('#plexusReset').addEventListener('click',plexusReset);
-$('#plexusCheck').addEventListener('click',plexusCheck);
+    // Support either: { images: [...] } OR [...]
+    const list = Array.isArray(data) ? data : (data.images || []);
+    images = list.filter(Boolean);
 
-/* ===== Arterial Path Builder ===== */
-const ARTERIAL_PATHS=[
-  {label:'Lower limb — anterior route', seq:['Femoral','Popliteal','Anterior tibial (AT)','Dorsalis pedis (DP)']},
-  {label:'Upper limb — radial', seq:['Subclavian','Axillary','Brachial','Radial']},
-  {label:'Upper limb — ulnar', seq:['Subclavian','Axillary','Brachial','Ulnar']}
-];
-let artIdx=0; const artLine=$('#artLine'), artLabel=$('#artLabel'), artMsg=$('#artMsg');
-function normalize(t){return t.toLowerCase().replace(/\s*\([^)]*\)/g,'').trim()}
-function renderArt(seq){ artLine.innerHTML=''; seq.forEach(label=>artLine.appendChild(makePill(label))); enableReorder(artLine) }
-function artSet(i){ artIdx=i; const p=ARTERIAL_PATHS[artIdx]; artLabel.textContent=p.label; renderArt(shuffle(p.seq)); artMsg.textContent="Arrange proximal → distal."; }
-function artNew(){ artSet(rnd(ARTERIAL_PATHS.length)) }
-function artShuffle(){ renderArt(shuffle(ARTERIAL_PATHS[artIdx].seq)) }
-function artReset(){ renderArt(ARTERIAL_PATHS[artIdx].seq) }
-function artCheck(){
-  const want=ARTERIAL_PATHS[artIdx].seq.map(normalize);
-  const got=[...artLine.querySelectorAll('.pill')].map(p=>normalize(p.dataset.id));
-  const ok= want.join('|')===got.join('|');
-  if(ok){say('Nice flow!');buzz([10,40,10]);confettiBurst();artMsg.textContent="Correct path."}
-  else{say('Check the order.');artMsg.textContent="Try proximal → distal (e.g., Femoral before Popliteal)."}
-}
-$('#artNew').addEventListener('click',artNew);
-$('#artShuffle').addEventListener('click',artShuffle);
-$('#artReset').addEventListener('click',artReset);
-$('#artCheck').addEventListener('click',artCheck);
-
-/* ===== Shared: pill factory + drag/tap reorder ===== */
-function makePill(label){
-  const el=document.createElement('div'); el.className='pill'; el.textContent=label; el.setAttribute('draggable','true'); el.dataset.id=label;
-  el.addEventListener('dragstart',e=>{el.classList.add('dragging'); e.dataTransfer.effectAllowed='move'});
-  el.addEventListener('dragend',()=>el.classList.remove('dragging'));
-  el.addEventListener('click',onPillClick);
-  return el;
-}
-let selectedPill=null;
-function onPillClick(e){
-  const pill=e.currentTarget;
-  if(selectedPill && selectedPill!==pill){
-    // swap positions
-    const a=selectedPill, b=pill, p=a.parentNode, an=a.nextSibling;
-    if(b===an){ p.insertBefore(b,a) } else { p.insertBefore(a,b); p.insertBefore(b,an) }
-    a.classList.remove('sel'); selectedPill=null;
-  }else{
-    pill.classList.toggle('sel');
-    selectedPill = pill.classList.contains('sel') ? pill : null;
+    if(!images.length){
+      statusLine.textContent =
+        "Manifest loaded, but it contains no images. Add filenames to Anatomy/images/manifest.json.";
+    }else{
+      statusLine.textContent =
+        "Tip: Click the card back image to flip. Space also flips. Enter reveals answer when flipped.";
+    }
+  }catch(err){
+    images = [];
+    statusLine.textContent =
+      "Could not load Anatomy/images/manifest.json yet. Add it to enable random card-back images.";
   }
 }
-function enableReorder(container){
-  container.addEventListener('dragover',e=>{
+
+function pickRandomImage(){
+  if(!images.length) return null;
+
+  // avoid immediate repeats when possible
+  if(images.length === 1) return images[0];
+
+  let pick = images[Math.floor(Math.random()*images.length)];
+  let tries = 0;
+  while(pick === lastImage && tries < 6){
+    pick = images[Math.floor(Math.random()*images.length)];
+    tries++;
+  }
+  lastImage = pick;
+  return pick;
+}
+
+function setCardBackImage(){
+  const filename = pickRandomImage();
+  if(!filename){
+    // fallback: gradient placeholder
+    cardImg.removeAttribute("src");
+    cardImg.style.display = "none";
+    card.querySelector(".front").style.background =
+      "radial-gradient(800px 600px at 30% 25%, rgba(110,203,255,.22), transparent 55%)," +
+      "radial-gradient(700px 600px at 70% 70%, rgba(138,125,255,.18), transparent 60%)," +
+      "linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02))";
+    $("#frontHint").textContent = "Add Anatomy/images/manifest.json to enable random images";
+    return;
+  }
+
+  // show image again if previously hidden
+  cardImg.style.display = "block";
+  $("#frontHint").textContent = "Click to flip";
+
+  // encode filename to handle spaces safely
+  const url = IMAGE_DIR + encodeURIComponent(filename);
+  cardImg.src = url;
+  cardImg.onerror = () => {
+    // If a filename is wrong in the manifest, degrade gracefully
+    cardImg.style.display = "none";
+    $("#frontHint").textContent = "Image not found. Check manifest.json filenames.";
+  };
+}
+
+function render(){
+  if(!deck.length){
+    questionEl.textContent = "No cards in deck.";
+    counterEl.textContent = "0 / 0";
+    barFill.style.width = "0%";
+    return;
+  }
+
+  const cur = deck[idx];
+  questionEl.textContent = cur.q;
+
+  counterEl.textContent = `${idx+1} / ${deck.length}`;
+  barFill.style.width = `${Math.round(((idx+1)/deck.length)*100)}%`;
+
+  answerInput.value = "";
+  revealBox.classList.remove("show");
+  revealBox.textContent = "";
+
+  // Always start on the image side for each card
+  card.classList.remove("isFlipped");
+  card.setAttribute("aria-label", "Flashcard. Click to flip.");
+
+  setCardBackImage();
+}
+
+function revealAnswer(){
+  const cur = deck[idx];
+  revealBox.textContent = "Answer: " + cur.a;
+  revealBox.classList.add("show");
+}
+
+function nextCard(){
+  if(!deck.length) return;
+  idx = (idx + 1) % deck.length;
+  render();
+  say("Next");
+}
+
+/* =========================
+   Interactions
+   ========================= */
+function flipToQuestion(){
+  card.classList.add("isFlipped");
+  card.setAttribute("aria-label", "Flashcard question. Type your answer.");
+  setTimeout(() => answerInput.focus(), 250);
+}
+
+function flipToImage(){
+  card.classList.remove("isFlipped");
+  card.setAttribute("aria-label", "Flashcard. Click to flip.");
+}
+
+card.addEventListener("click", () => {
+  if(card.classList.contains("isFlipped")) return; // when flipped, use buttons instead
+  flipToQuestion();
+});
+
+card.addEventListener("keydown", (e) => {
+  if(e.key === " "){
     e.preventDefault();
-    const after=getDragAfterElement(container,e.clientX);
-    const dragging=container.querySelector('.pill.dragging');
-    if(!dragging) return;
-    if(after==null) container.appendChild(dragging); else container.insertBefore(dragging,after);
-  });
-  container.addEventListener('drop',e=>e.preventDefault());
-  // clear tap selection if user clicks outside
-  container.addEventListener('click',e=>{ if(!e.target.classList.contains('pill') && selectedPill){ selectedPill.classList.remove('sel'); selectedPill=null; }});
-}
-function getDragAfterElement(container,x){
-  const els=[...container.querySelectorAll('.pill:not(.dragging)')];
-  return els.reduce((closest,child)=>{
-    const box=child.getBoundingClientRect();
-    const offset=x - box.left - box.width/2;
-    return (offset<0 && offset>closest.offset)?{offset,element:child}:closest
-  },{offset:Number.NEGATIVE_INFINITY,element:null}).element;
-}
+    if(!card.classList.contains("isFlipped")) flipToQuestion();
+    else flipToImage();
+  }
+  if(e.key === "Enter" && card.classList.contains("isFlipped")){
+    e.preventDefault();
+    revealAnswer();
+  }
+  if(e.key === "ArrowRight"){
+    e.preventDefault();
+    nextCard();
+  }
+});
 
-/* ===== Init ===== */
-function initSequencers(){ plexusShuffle(); artNew(); }
-try{
-  openModal(1);
-  $('#quizLenWrap').style.visibility=$('#mcqMode').value==='quiz'?'visible':'hidden';
-  refreshFlashDeck(true);
-  initSequencers();
-}catch(err){window.dispatchEvent(new ErrorEvent('error',{message:err.message}))}
-</script>
+$("#revealBtn").addEventListener("click", () => {
+  revealAnswer();
+  answerInput.focus();
+});
+$("#nextBtn").addEventListener("click", nextCard);
 
-<footer style="text-align:center;color:var(--muted);padding:24px 16px;position:relative;z-index:1">
-  Single‑file app • Ocean theme • New modes: Plexus Sequencer, Arterial Path Builder, Haptics toggle, Streak fish at 10.  
-  <div style="margin-top:6px;opacity:.7">Build: <code>v1.7-ocean-darkblue-plexus-arteries-haptics-fish</code></div>
-</footer>
+$("#shuffleBtn").addEventListener("click", () => {
+  deck = shuffle(DECK);
+  idx = 0;
+  render();
+  say("Shuffled");
+});
+$("#resetBtn").addEventListener("click", () => {
+  deck = [...DECK];
+  idx = 0;
+  render();
+  say("Reset");
+});
 
-<!-- Modal blur helper (kept at end to prevent FOUC) -->
-<script>
-/* Modal helpers at end to avoid FOUC */
-const modal2=document.getElementById('startModal'); // alias
+/* Optional: Enter in the input reveals the answer (keeps hands on keyboard) */
+answerInput.addEventListener("keydown", (e) => {
+  if(e.key === "Enter"){
+    e.preventDefault();
+    revealAnswer();
+  }
+});
+
+/* =========================
+   Init
+   ========================= */
+(async function init(){
+  deck = [...DECK];
+  await loadManifest();
+  render();
+})();
 </script>
 </body>
 </html>
