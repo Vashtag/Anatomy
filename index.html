@@ -19,7 +19,7 @@
     --focus:2px solid rgba(110,203,255,.9);
     --maxw:860px;
     --cardw:min(92vw,560px);
-    --cardh:min(60vh,520px);
+    --cardh:min(56vh,500px);
     --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
   }
   *{box-sizing:border-box}
@@ -36,7 +36,6 @@
     overflow-x:hidden;
   }
 
-  /* subtle stars */
   .stars{
     position:fixed; inset:0; pointer-events:none; z-index:0;
     background-image:
@@ -123,10 +122,7 @@
     background:rgba(255,255,255,.10);
     color:var(--fg);
     border:1px solid rgba(255,255,255,.14);
-  }
-  button.danger{
-    background:rgba(239,68,68,.92);
-    color:#fff;
+    box-shadow:none;
   }
   button:focus-visible{outline:var(--focus); outline-offset:3px}
 
@@ -156,7 +152,6 @@
     overflow:hidden;
   }
 
-  /* Neon frame */
   .frame{
     position:absolute;
     inset:0;
@@ -169,7 +164,6 @@
       0 0 46px rgba(138,125,255,.18);
   }
 
-  /* Front: image (card back) */
   .front{
     background:rgba(10,18,32,.55);
     display:flex;
@@ -199,7 +193,6 @@
     padding:0 12px;
   }
 
-  /* Back: question */
   .back{
     transform: rotateY(180deg);
     background: var(--surface);
@@ -209,61 +202,66 @@
     padding:18px;
     gap:12px;
   }
+  .meta{
+    color:rgba(155,182,211,.9);
+    font-weight:900;
+    font-size:.98rem;
+  }
   .q{
     font-size:clamp(18px, 2.2vw, 24px);
     font-weight:950;
     line-height:1.25;
     margin-top:2px;
   }
-  .meta{
-    color:rgba(155,182,211,.9);
-    font-weight:800;
-    font-size:.98rem;
-  }
-  .tagline{
-    margin-top:auto;
-    color:rgba(155,182,211,.9);
-    font-size:.95rem;
-    line-height:1.35;
-  }
 
-  /* Answer area under the card */
-  .answerArea{
-    width:var(--cardw);
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    align-items:stretch;
-  }
-  .inputWrap{
+  .choicesWrap{
     position:relative;
-  }
-  input[type="text"]{
-    width:100%;
-    padding:14px 14px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(255,255,255,.06);
-    color:var(--fg);
-    font-size:16px;
-    outline:none;
-  }
-  input[type="text"]::placeholder{color:rgba(155,182,211,.78)}
-  input[type="text"]:focus{
-    box-shadow:0 0 0 3px rgba(110,203,255,.18);
-    border-color:rgba(110,203,255,.45);
-  }
-  input[disabled]{
-    opacity:.55;
-    cursor:not-allowed;
+    display:grid;
+    gap:10px;
+    margin-top:6px;
   }
 
-  .btnRow{
+  .choiceBtn{
+    width:100%;
+    text-align:left;
+    padding:12px 12px;
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    color:rgba(234,243,255,.96);
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:none;
+    font-weight:900;
     display:flex;
     gap:10px;
-    flex-wrap:wrap;
-    justify-content:center;
+    align-items:flex-start;
   }
+  .choiceBtn:hover{filter:brightness(1.04)}
+  .choiceBtn[disabled]{opacity:.72; cursor:not-allowed}
+  .badge{
+    min-width:28px;
+    height:28px;
+    border-radius:10px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:950;
+    background:rgba(110,203,255,.18);
+    border:1px solid rgba(110,203,255,.30);
+    color:rgba(234,243,255,.96);
+    margin-top:1px;
+  }
+  .choiceText{line-height:1.25}
+
+  .choiceBtn.correct{
+    border-color:rgba(34,197,94,.55);
+    background:rgba(34,197,94,.14);
+  }
+  .choiceBtn.wrong{
+    border-color:rgba(239,68,68,.55);
+    background:rgba(239,68,68,.12);
+  }
+  .choiceBtn.correct .badge{background:rgba(34,197,94,.18); border-color:rgba(34,197,94,.35)}
+  .choiceBtn.wrong .badge{background:rgba(239,68,68,.16); border-color:rgba(239,68,68,.35)}
 
   .reveal{
     display:none;
@@ -272,15 +270,25 @@
     padding:10px 12px;
     border-radius:12px;
     color:rgba(234,243,255,.95);
-    font-weight:800;
+    font-weight:900;
+    line-height:1.35;
+    margin-top:4px;
   }
   .reveal.show{display:block}
+
+  .bottomRow{
+    width:var(--cardw);
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
 
   .statusLine{
     color:rgba(155,182,211,.9);
     font-size:.95rem;
     text-align:center;
-    max-width:68ch;
+    max-width:72ch;
     line-height:1.4;
   }
 
@@ -294,17 +302,17 @@
     color:rgba(234,243,255,.95);
     padding:10px 14px;
     border-radius:999px;
-    font-weight:900;
+    font-weight:950;
     opacity:0;
     transition:opacity .2s ease;
     z-index:50;
   }
   .toast.show{opacity:1}
 
-  /* Confetti (localized around input) */
-  .confettiBox{
+  /* Confetti localized around choices */
+  .confettiLayer{
     position:absolute;
-    inset:-14px -10px -14px -10px;
+    inset:-10px -10px -10px -10px;
     pointer-events:none;
     overflow:visible;
   }
@@ -320,7 +328,7 @@
   }
   @keyframes confettiPop{
     0%{opacity:1; transform:translateY(0) rotate(0deg)}
-    100%{opacity:0; transform:translateY(90px) rotate(540deg)}
+    100%{opacity:0; transform:translateY(100px) rotate(540deg)}
   }
 
   /* Modal */
@@ -334,7 +342,7 @@
   }
   .modal.show{display:grid}
   .modal .box{
-    width:min(720px, 92vw);
+    width:min(740px, 92vw);
     background:rgba(12,18,34,.92);
     border:1px solid rgba(255,255,255,.12);
     border-radius:18px;
@@ -360,7 +368,7 @@
     border:1px solid rgba(255,255,255,.12);
     background:rgba(255,255,255,.06);
     color:rgba(234,243,255,.95);
-    font-weight:900;
+    font-weight:950;
     cursor:pointer;
     user-select:none;
   }
@@ -374,7 +382,7 @@
   }
   .modal .sub{
     color:rgba(155,182,211,.9);
-    font-weight:800;
+    font-weight:900;
     margin:8px 0 0;
   }
 
@@ -412,29 +420,26 @@
         <div class="frame" aria-hidden="true"></div>
       </div>
 
-      <!-- BACK: question -->
+      <!-- BACK: MCQ -->
       <div class="face back">
         <div class="meta" id="metaLine">Pick labs/topics to begin</div>
         <div class="q" id="question">—</div>
-        <div class="tagline" id="tagLine">Tip: Type your answer below, then press Enter to check.</div>
+
+        <div class="choicesWrap" id="choicesWrap" aria-label="Choices">
+          <div class="confettiLayer" id="confettiLayer" aria-hidden="true"></div>
+          <!-- choices injected here -->
+        </div>
+
+        <div class="reveal" id="revealBox" aria-live="polite"></div>
+
         <div class="frame" aria-hidden="true"></div>
       </div>
     </div>
   </div>
 
-  <div class="answerArea" aria-label="Answer area">
-    <div class="inputWrap">
-      <div class="confettiBox" id="confettiBox" aria-hidden="true"></div>
-      <input id="answerInput" type="text" autocomplete="off" spellcheck="false" placeholder="Flip the card to answer…" disabled />
-    </div>
-
-    <div class="btnRow">
-      <button id="checkBtn" type="button">Check</button>
-      <button class="secondary" id="revealBtn" type="button">Reveal</button>
-      <button id="nextBtn" type="button">Next</button>
-    </div>
-
-    <div class="reveal" id="revealBox" aria-live="polite"></div>
+  <div class="bottomRow">
+    <button class="secondary" id="revealBtn" type="button">Reveal</button>
+    <button id="nextBtn" type="button">Next</button>
   </div>
 
   <div class="statusLine" id="statusLine"></div>
@@ -457,7 +462,7 @@
     </div>
 
     <div id="stepTopics" style="display:none">
-      <div class="sub">Step 2 — Topics (optional but recommended)</div>
+      <div class="sub">Step 2 — Topics (pick one or more)</div>
       <div class="row" id="topicChips"></div>
       <div class="actions">
         <button class="secondary" id="backToLabs" type="button">Back</button>
@@ -476,23 +481,23 @@ const IMAGE_DIR = "./Anatomy/images/";
 const MANIFEST_URL = IMAGE_DIR + "manifest.json";
 
 /* =========================
-   DATA MODEL
+   DATA MODEL for MCQ
    =========================
-   lab: 1..11
-   topics: array of strings (e.g., ["bones","muscles","innervation"])
-   q: question string
-   a: array of accepted answers (strings)
+   {
+     lab: 1..11,
+     topics: ["bones","muscles",...],
+     stem: "Question...",
+     options: ["A","B","C","D"],
+     answerIndex: 0-based index into options,
+     explanation: "Optional"
+   }
 */
 const CARD_BANK = [
-  // ===== SAMPLE ONLY — replace with your real Lab 1–11 content =====
-  { lab: 1, topics:["muscles","innervation"], q:"Deltoid — innervation?", a:["axillary nerve","axillary nerve (c5-c6)","axillary nerve (c5–c6)"] },
-  { lab: 1, topics:["muscles"], q:"Supraspinatus — primary role?", a:["initiates abduction 0-15","initiates abduction (0–15°)","initiates shoulder abduction 0-15"] },
-  { lab: 2, topics:["bones","innervation"], q:"Midshaft humerus fracture — key nerve at risk?", a:["radial nerve","radial nerve in radial groove"] },
-  { lab: 2, topics:["blood"], q:"Triangular interval — artery that travels with radial nerve?", a:["profunda brachii artery","deep brachial artery","profunda brachii"] },
-
-  { lab: 3, topics:["muscles"], q:"Rotator cuff muscles (SITS)?", a:["supraspinatus infraspinatus teres minor subscapularis","supraspinatus, infraspinatus, teres minor, subscapularis"] },
-
-  // Add labs 4–11 similarly...
+  // SAMPLE ONLY — replace with your Labs 1–11 content
+  { lab: 1, topics:["muscles","innervation"], stem:"Deltoid — innervation?", options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Median nerve"], answerIndex:1, explanation:"Deltoid is innervated by the axillary nerve (C5–C6)." },
+  { lab: 1, topics:["muscles"], stem:"Which muscle initiates shoulder abduction (0–15°)?", options:["Deltoid","Supraspinatus","Infraspinatus","Subscapularis"], answerIndex:1 },
+  { lab: 2, topics:["bones","innervation"], stem:"A midshaft humeral fracture classically injures which nerve?", options:["Ulnar","Radial","Axillary","Median"], answerIndex:1, explanation:"Radial nerve in the radial groove → wrist/finger extensor weakness." },
+  { lab: 2, topics:["blood"], stem:"Artery accompanying the radial nerve through the triangular interval:", options:["Posterior circumflex humeral","Profunda brachii (deep brachial)","Anterior circumflex humeral","Radial recurrent"], answerIndex:1 }
 ];
 
 /* =========================
@@ -507,7 +512,6 @@ function say(msg){
   clearTimeout(say._t);
   say._t = setTimeout(()=>t.classList.remove("show"), 1400);
 }
-
 function shuffle(arr){
   const a=[...arr];
   for(let i=a.length-1;i>0;i--){
@@ -516,20 +520,7 @@ function shuffle(arr){
   }
   return a;
 }
-
-// Normalization for answer matching (lenient by default)
-function norm(s){
-  return String(s||"")
-    .toLowerCase()
-    .replace(/[\u2013\u2014]/g,"-")      // normalize dashes
-    .replace(/[^\p{L}\p{N}\s-]/gu,"")   // drop punctuation (unicode letters/numbers)
-    .replace(/\s+/g," ")
-    .trim();
-}
-
-function unique(arr){
-  return [...new Set(arr)];
-}
+function unique(arr){ return [...new Set(arr)]; }
 
 /* =========================
    Image manifest loading
@@ -554,11 +545,9 @@ async function loadManifest(){
       "Could not load Anatomy/images/manifest.json yet. Add it to enable random card-back images.";
   }
 }
-
 function pickRandomImage(){
   if(!images.length) return null;
   if(images.length === 1) return images[0];
-
   let pick = images[Math.floor(Math.random()*images.length)];
   let tries=0;
   while(pick === lastImage && tries < 6){
@@ -568,14 +557,12 @@ function pickRandomImage(){
   lastImage = pick;
   return pick;
 }
-
 function setCardBackImage(){
   const imgEl = $("#cardImg");
   const hint = $("#frontHint");
 
   const filename = pickRandomImage();
   if(!filename){
-    // fallback
     imgEl.removeAttribute("src");
     imgEl.style.display="none";
     $("#card .front").style.background =
@@ -597,12 +584,11 @@ function setCardBackImage(){
 }
 
 /* =========================
-   Deck building from labs/topics
+   Labs/topics selection
    ========================= */
 const ALL_LABS = Array.from({length:11}, (_,i)=>i+1);
-
 let selectedLabs = new Set([1]);
-let selectedTopics = new Set(); // filled dynamically after labs chosen
+let selectedTopics = new Set();
 
 function topicsInLabs(labsSet){
   const labs = [...labsSet];
@@ -611,7 +597,6 @@ function topicsInLabs(labsSet){
     .flatMap(c => c.topics || []);
   return unique(topics).sort((a,b)=>a.localeCompare(b));
 }
-
 function buildDeck(){
   const labs = [...selectedLabs];
   const topics = [...selectedTopics];
@@ -621,7 +606,6 @@ function buildDeck(){
     const inTopic = topics.length ? (c.topics || []).some(t => selectedTopics.has(t)) : true;
     return inLab && inTopic;
   });
-
   return shuffle(pool);
 }
 
@@ -631,14 +615,71 @@ function buildDeck(){
 let deck = [];
 let idx = 0;
 let flipped = false;
+let answered = false;
+let lastChoiceIndex = null;
+
+function currentCard(){ return deck[idx] || null; }
 
 function updateProgress(){
   $("#counter").textContent = deck.length ? `${idx+1} / ${deck.length}` : `0 / 0`;
   $("#barFill").style.width = deck.length ? `${Math.round(((idx+1)/deck.length)*100)}%` : "0%";
 }
 
-function currentCard(){
-  return deck[idx] || null;
+function clearConfetti(){
+  $("#confettiLayer").innerHTML = "";
+}
+function confettiAroundChoices(){
+  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const layer = $("#confettiLayer");
+  layer.innerHTML = "";
+
+  const colors = ["#6ecbff","#8a7dff","#22c55e","#f59e0b","#ef4444","#ffffff"];
+  const W = layer.clientWidth || 520;
+  const H = layer.clientHeight || 220;
+
+  const n = 26;
+  for(let i=0;i<n;i++){
+    const bit = document.createElement("span");
+    bit.className = "confettiBit";
+    bit.style.left = (Math.random()*W) + "px";
+    bit.style.top  = (Math.random()*H*0.25) + "px";
+    bit.style.background = colors[Math.floor(Math.random()*colors.length)];
+    bit.style.animationDelay = (Math.random()*0.08) + "s";
+    layer.appendChild(bit);
+  }
+  setTimeout(()=>layer.innerHTML="", 1000);
+}
+
+function renderChoices(cardObj){
+  const wrap = $("#choicesWrap");
+  // remove old choice buttons (keep confetti layer)
+  [...wrap.querySelectorAll(".choiceBtn")].forEach(x=>x.remove());
+
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  (cardObj.options || []).forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choiceBtn";
+    btn.setAttribute("data-index", String(i));
+    btn.innerHTML = `<span class="badge">${letters[i] || (i+1)}</span><span class="choiceText">${opt}</span>`;
+    btn.addEventListener("click", () => chooseAnswer(i));
+    wrap.appendChild(btn);
+  });
+}
+
+function lockChoices(lock=true){
+  const btns = [...$("#choicesWrap").querySelectorAll(".choiceBtn")];
+  btns.forEach(b => b.disabled = lock);
+}
+
+function markChoices(cardObj, chosenIndex, revealOnly=false){
+  const btns = [...$("#choicesWrap").querySelectorAll(".choiceBtn")];
+  btns.forEach((b, i) => {
+    b.classList.remove("correct","wrong");
+    if(i === cardObj.answerIndex) b.classList.add("correct");
+    if(!revealOnly && chosenIndex === i && chosenIndex !== cardObj.answerIndex) b.classList.add("wrong");
+  });
 }
 
 function setQuestionUI(){
@@ -646,25 +687,25 @@ function setQuestionUI(){
   if(!c){
     $("#metaLine").textContent = "No cards match your selection";
     $("#question").textContent = "Change labs/topics to begin.";
-    $("#tagLine").textContent = "";
-    $("#answerInput").value = "";
-    $("#answerInput").placeholder = "Flip the card to answer…";
-    $("#answerInput").disabled = true;
     $("#revealBox").classList.remove("show");
     $("#revealBox").textContent = "";
+    // clear choices
+    [...$("#choicesWrap").querySelectorAll(".choiceBtn")].forEach(x=>x.remove());
     return;
   }
 
   $("#metaLine").textContent = `Lab ${c.lab} • ${(c.topics||[]).join(" • ")}`;
-  $("#question").textContent = c.q;
+  $("#question").textContent = c.stem;
 
   $("#revealBox").classList.remove("show");
   $("#revealBox").textContent = "";
 
-  // input only enabled when flipped to question
-  $("#answerInput").value = "";
-  $("#answerInput").placeholder = flipped ? "Type your answer…" : "Flip the card to answer…";
-  $("#answerInput").disabled = !flipped;
+  answered = false;
+  lastChoiceIndex = null;
+  clearConfetti();
+
+  renderChoices(c);
+  lockChoices(!flipped); // only clickable when flipped
 }
 
 function renderCard(){
@@ -672,81 +713,52 @@ function renderCard(){
   setCardBackImage();
   setQuestionUI();
 
-  const cardEl = $("#card");
-  cardEl.classList.toggle("isFlipped", flipped);
-
-  if(flipped){
-    setTimeout(()=>$("#answerInput").focus(), 220);
-  }
+  $("#card").classList.toggle("isFlipped", flipped);
 }
 
 /* =========================
-   Confetti around input
+   Answer handling
    ========================= */
-function confettiAroundInput(){
-  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const box = $("#confettiBox");
-  box.innerHTML = "";
-
-  // Use a small palette; confetti bits are localized to the input region.
-  const colors = ["#6ecbff","#8a7dff","#22c55e","#f59e0b","#ef4444","#ffffff"];
-  const W = box.clientWidth || 360;
-  const H = box.clientHeight || 80;
-
-  const n = 22;
-  for(let i=0;i<n;i++){
-    const bit = document.createElement("span");
-    bit.className = "confettiBit";
-    bit.style.left = (Math.random()*W) + "px";
-    bit.style.top  = (Math.random()*H*0.35) + "px";
-    bit.style.background = colors[Math.floor(Math.random()*colors.length)];
-    bit.style.transform = `translateY(0) rotate(${Math.random()*180}deg)`;
-    bit.style.animationDelay = (Math.random()*0.08) + "s";
-    box.appendChild(bit);
-  }
-
-  setTimeout(()=>{ box.innerHTML=""; }, 1000);
+function ensureFlipped(){
+  if(!deck.length){ say("Pick labs/topics first."); return false; }
+  if(!flipped){ say("Flip the card first."); return false; }
+  return true;
 }
 
-/* =========================
-   Answer checking
-   ========================= */
-function isCorrectAnswer(input, acceptedList){
-  const nIn = norm(input);
-  if(!nIn) return false;
-  const accepted = (acceptedList||[]).map(norm);
-  return accepted.some(a => a === nIn);
-}
-
-function checkAnswer(){
+function chooseAnswer(choiceIndex){
   const c = currentCard();
   if(!c) return;
+  if(!ensureFlipped()) return;
+  if(answered) return;
 
-  if(!flipped){
-    say("Flip the card first.");
-    return;
-  }
+  answered = true;
+  lastChoiceIndex = choiceIndex;
 
-  const input = $("#answerInput").value;
-  if(!input.trim()){
-    say("Type an answer first.");
-    return;
-  }
+  const correct = choiceIndex === c.answerIndex;
 
-  if(isCorrectAnswer(input, c.a)){
+  if(correct){
     say("Correct.");
-    confettiAroundInput();
+    markChoices(c, choiceIndex, false);
+    confettiAroundChoices();
   }else{
     say("Not quite.");
+    markChoices(c, choiceIndex, false);
   }
+
+  lockChoices(true);
 }
 
 function revealAnswer(){
   const c = currentCard();
   if(!c) return;
-  const pretty = Array.isArray(c.a) ? c.a[0] : String(c.a||"");
-  $("#revealBox").textContent = "Answer: " + pretty;
+  if(!ensureFlipped()) return;
+
+  // show correct highlighting
+  markChoices(c, lastChoiceIndex, true);
+  lockChoices(true);
+
+  const expl = c.explanation ? `<div style="margin-top:6px; opacity:.95">${c.explanation}</div>` : "";
+  $("#revealBox").innerHTML = `<strong>Correct answer:</strong> ${c.options[c.answerIndex] || "—"}${expl}`;
   $("#revealBox").classList.add("show");
 }
 
@@ -754,8 +766,10 @@ function nextCard(){
   if(!deck.length) return;
   idx = (idx + 1) % deck.length;
 
-  // requirement #1: new random image per new card
+  // new card => new random image, start on image side
   flipped = false;
+  answered = false;
+  lastChoiceIndex = null;
   renderCard();
   say("Next");
 }
@@ -770,10 +784,7 @@ function openModal(step="labs"){
   $("#stepLabs").style.display = (step==="labs") ? "block" : "none";
   $("#stepTopics").style.display = (step==="topics") ? "block" : "none";
 }
-
-function closeModal(){
-  modal.classList.remove("show");
-}
+function closeModal(){ modal.classList.remove("show"); }
 
 function renderLabChips(){
   const host = $("#labChips");
@@ -796,13 +807,13 @@ function renderTopicChips(){
   if(!topics.length){
     const p=document.createElement("div");
     p.style.color="rgba(155,182,211,.9)";
-    p.style.fontWeight="800";
-    p.textContent = "No topics found in your selected labs (check your CARD_BANK data).";
+    p.style.fontWeight="900";
+    p.textContent = "No topics found for those labs (check CARD_BANK topics).";
     host.appendChild(p);
     return;
   }
 
-  // If selectedTopics is empty, default select all topics for those labs
+  // default: select all topics for those labs
   if(selectedTopics.size === 0){
     topics.forEach(t=>selectedTopics.add(t));
   }
@@ -811,8 +822,7 @@ function renderTopicChips(){
     const label = document.createElement("label");
     label.className = "chip";
     label.innerHTML = `<input type="checkbox" value="${t}">${t}`;
-    const cb = label.querySelector("input");
-    cb.checked = selectedTopics.has(t);
+    label.querySelector("input").checked = selectedTopics.has(t);
     host.appendChild(label);
   });
 }
@@ -820,26 +830,16 @@ function renderTopicChips(){
 function applyLabsFromModal(){
   const cbs = [...$("#labChips").querySelectorAll("input[type=checkbox]:checked")];
   const labs = cbs.map(cb=>parseInt(cb.value,10)).filter(n=>Number.isFinite(n));
-
-  if(!labs.length){
-    say("Pick at least one lab.");
-    return false;
-  }
+  if(!labs.length){ say("Pick at least one lab."); return false; }
   selectedLabs = new Set(labs);
-
-  // reset topics to force refresh for chosen labs
-  selectedTopics = new Set();
+  selectedTopics = new Set(); // rebuild topic set for chosen labs
   return true;
 }
 
 function applyTopicsFromModal(){
   const cbs = [...$("#topicChips").querySelectorAll("input[type=checkbox]:checked")];
   const topics = cbs.map(cb=>cb.value).filter(Boolean);
-
-  if(!topics.length){
-    say("Pick at least one topic (or use Select all).");
-    return false;
-  }
+  if(!topics.length){ say("Pick at least one topic (or Select all)."); return false; }
   selectedTopics = new Set(topics);
   return true;
 }
@@ -848,6 +848,9 @@ function startWithSelections(){
   deck = buildDeck();
   idx = 0;
   flipped = false;
+  answered = false;
+  lastChoiceIndex = null;
+
   renderCard();
 
   if(deck.length){
@@ -856,7 +859,7 @@ function startWithSelections(){
     $("#statusLine").textContent = `Studying labs: ${labsTxt}. Topics: ${topicsTxt}.`;
     say(`Loaded ${deck.length} cards.`);
   }else{
-    $("#statusLine").textContent = "No cards match that selection. Add cards for those labs/topics in CARD_BANK.";
+    $("#statusLine").textContent = "No cards match that selection. Add MCQs for those labs/topics in CARD_BANK.";
     say("No matching cards.");
   }
 }
@@ -871,6 +874,8 @@ $("#shuffleBtn").addEventListener("click", ()=>{
   deck = shuffle(deck);
   idx = 0;
   flipped = false;
+  answered = false;
+  lastChoiceIndex = null;
   renderCard();
   say("Shuffled");
 });
@@ -879,56 +884,55 @@ $("#resetBtn").addEventListener("click", ()=>{
   if(!deck.length){ say("Pick labs/topics first."); return; }
   idx = 0;
   flipped = false;
+  answered = false;
+  lastChoiceIndex = null;
   renderCard();
   say("Reset");
 });
 
 $("#card").addEventListener("click", ()=>{
   if(!deck.length){ say("Pick labs/topics first."); return; }
-  if(flipped) return;
+  if(flipped) return; // prevent accidental flip back once on MCQ side
   flipped = true;
+  // enable choices now that flipped
   renderCard();
+  // unlock choices (renderCard locks if not flipped)
+  lockChoices(false);
 });
 
 $("#card").addEventListener("keydown", (e)=>{
+  // Space toggles flip (useful for keyboard users)
   if(e.key === " "){
     e.preventDefault();
     if(!deck.length){ say("Pick labs/topics first."); return; }
     flipped = !flipped;
+    answered = false;
+    lastChoiceIndex = null;
     renderCard();
+    lockChoices(!flipped);
   }
-  if(e.key === "Enter"){
-    e.preventDefault();
-    checkAnswer();
+
+  // 1-6 choose option when flipped
+  const n = parseInt(e.key,10);
+  if(Number.isFinite(n) && n >= 1 && n <= 6){
+    if(flipped){
+      const c=currentCard(); if(!c) return;
+      if(n-1 < (c.options||[]).length) chooseAnswer(n-1);
+    }
   }
-  if(e.key.toLowerCase() === "r"){
-    e.preventDefault();
-    revealAnswer();
-  }
-  if(e.key === "ArrowRight"){
-    e.preventDefault();
-    nextCard();
-  }
+
+  // R reveal, -> next
+  if(e.key.toLowerCase() === "r"){ e.preventDefault(); revealAnswer(); }
+  if(e.key === "ArrowRight"){ e.preventDefault(); nextCard(); }
 });
 
-$("#checkBtn").addEventListener("click", checkAnswer);
 $("#revealBtn").addEventListener("click", revealAnswer);
 $("#nextBtn").addEventListener("click", nextCard);
 
-$("#answerInput").addEventListener("keydown", (e)=>{
-  if(e.key === "Enter"){
-    e.preventDefault();
-    checkAnswer();
-  }
-});
-
 /* Modal buttons */
 $("#labsSelectAll").addEventListener("click", ()=>{
-  // toggle: if all selected -> clear, else select all
   const allSelected = ALL_LABS.every(n=>$("#labChips input[value='"+n+"']").checked);
-  ALL_LABS.forEach(n=>{
-    $("#labChips input[value='"+n+"']").checked = !allSelected;
-  });
+  ALL_LABS.forEach(n=>{ $("#labChips input[value='"+n+"']").checked = !allSelected; });
 });
 
 $("#toTopics").addEventListener("click", ()=>{
@@ -937,9 +941,7 @@ $("#toTopics").addEventListener("click", ()=>{
   openModal("topics");
 });
 
-$("#backToLabs").addEventListener("click", ()=>{
-  openModal("labs");
-});
+$("#backToLabs").addEventListener("click", ()=>openModal("labs"));
 
 $("#topicsSelectAll").addEventListener("click", ()=>{
   const inputs = [...$("#topicChips").querySelectorAll("input[type=checkbox]")];
@@ -962,7 +964,6 @@ $("#startBtn").addEventListener("click", ()=>{
   renderLabChips();
   openModal("labs");
 
-  // If you want the UI to show something even before selection:
   deck = [];
   idx = 0;
   flipped = false;
