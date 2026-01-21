@@ -1,1241 +1,1459 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Anatomy Flash Cards</title>
-<style>
-  :root{
-    --bg0:#050913;
-    --bg1:#071225;
-    --fg:#eaf3ff;
-    --muted:#9bb6d3;
-    --accent:#6ecbff;
-    --accent2:#8a7dff;
-    --surface:rgba(12,18,34,.78);
-    --border:rgba(150,210,255,.18);
-    --shadow:0 18px 50px rgba(0,0,0,.45);
-    --radius:22px;
-    --focus:2px solid rgba(110,203,255,.9);
-    --maxw:860px;
-    --cardw:min(92vw,560px);
-    --cardh:min(60vh,540px);
-    --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family:var(--font);
-    color:var(--fg);
-    background:
-      radial-gradient(1200px 800px at 20% 10%, rgba(110,203,255,.16), transparent 60%),
-      radial-gradient(900px 700px at 80% 40%, rgba(138,125,255,.14), transparent 62%),
-      radial-gradient(700px 700px at 55% 85%, rgba(110,203,255,.10), transparent 60%),
-      linear-gradient(180deg, var(--bg0), var(--bg1));
-    overflow-x:hidden;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>KIN100 Flashcards</title>
+  <style>
+    :root{
+      --bg:#0b0f14; --card:#121925; --card2:#0f1622; --text:#e8eef7; --muted:#a8b3c7;
+      --accent:#69b3ff; --good:#3ddc97; --bad:#ff6b6b; --warn:#ffd166;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(105,179,255,.25), transparent 55%),
+                  radial-gradient(800px 600px at 10% 20%, rgba(61,220,151,.12), transparent 55%),
+                  radial-gradient(900px 700px at 90% 30%, rgba(255,209,102,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      display:flex; flex-direction:column;
+      padding: env(safe-area-inset-top) 14px env(safe-area-inset-bottom) 14px;
+    }
 
-  .stars{
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background-image:
-      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.35), transparent 2px),
-      radial-gradient(1px 1px at 35% 70%, rgba(255,255,255,.25), transparent 2px),
-      radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,.25), transparent 2px),
-      radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,.18), transparent 2px),
-      radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,.18), transparent 2px),
-      radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,.20), transparent 2px);
-    opacity:.9;
-    filter: blur(.1px);
-  }
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; padding:10px 0 12px 0;
+    }
+    .left, .right{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .btn{
+      appearance:none; border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 12px; border-radius:12px;
+      font-weight:600; font-size:14px;
+      cursor:pointer;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{background: rgba(105,179,255,.16); border-color: rgba(105,179,255,.32)}
+    .btn.ghost{background: transparent}
+    .btn.small{padding:8px 10px; border-radius:10px; font-size:13px}
+    .btn.danger{background: rgba(255,107,107,.14); border-color: rgba(255,107,107,.28)}
+    .btn.good{background: rgba(61,220,151,.14); border-color: rgba(61,220,151,.28)}
+    .btn.warn{background: rgba(255,209,102,.14); border-color: rgba(255,209,102,.28)}
 
-  .wrap{
-    position:relative; z-index:1;
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:26px 16px 44px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:16px;
-  }
+    .wrap{
+      flex:1;
+      display:flex; align-items:center; justify-content:center;
+      padding: 10px 0 18px 0;
+    }
 
-  h1{
-    margin:8px 0 0;
-    font-size:clamp(28px, 4vw, 44px);
-    letter-spacing:.2px;
-    font-weight:900;
-    text-align:center;
-  }
+    .cardWrap{
+      width: min(440px, 92vw);
+      height: min(560px, 72vh);
+      perspective: 1100px;
+    }
 
-  /* Top-left mode switch */
-  .modeSwitch{
-    position:fixed;
-    top:14px; left:14px;
-    z-index:80;
-    display:flex;
-    gap:8px;
-    padding:8px;
-    border-radius:16px;
-    background:rgba(8,18,32,.65);
-    border:1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(10px) saturate(1.05);
-    box-shadow:0 12px 30px rgba(0,0,0,.28);
-  }
-  .modeBtn{
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(255,255,255,.08);
-    color:var(--fg);
-    border-radius:14px;
-    padding:9px 12px;
-    font-weight:950;
-    cursor:pointer;
-    box-shadow:none;
-    transition:filter .15s ease, transform .06s ease;
-    white-space:nowrap;
-  }
-  .modeBtn:hover{filter:brightness(1.04); transform:translateY(-1px)}
-  .modeBtn:active{transform:translateY(0)}
-  .modeBtn.active{
-    border-color:rgba(110,203,255,.45);
-    background:rgba(110,203,255,.22);
-  }
-  .modeBtn:focus-visible{outline:var(--focus); outline-offset:3px}
+    .card{
+      width:100%; height:100%;
+      position:relative;
+      transform-style: preserve-3d;
+      transition: transform .55s cubic-bezier(.2,.8,.2,1);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .card.flipped{transform: rotateY(180deg)}
+    .side{
+      position:absolute; inset:0;
+      border-radius: var(--radius);
+      overflow:hidden;
+      backface-visibility: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
 
-  .progressRow{
-    width:min(92vw, 760px);
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    align-items:center;
-    margin-top:4px;
-  }
-  .bar{
-    width:100%;
-    height:12px;
-    border-radius:999px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.10);
-    overflow:hidden;
-  }
-  .bar > span{
-    display:block;
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg, rgba(110,203,255,.95), rgba(138,125,255,.95));
-    border-radius:999px;
-    transition:width .25s ease;
-  }
-  .counter{
-    font-size:clamp(18px, 2.5vw, 30px);
-    font-weight:800;
-    color:rgba(110,203,255,.95);
-  }
+    /* Back (image cover) */
+    .cover{
+      display:flex; flex-direction:column; justify-content:flex-end;
+      background: radial-gradient(1200px 700px at 50% 10%, rgba(105,179,255,.18), rgba(255,255,255,.03)),
+                  linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.12));
+    }
+    .coverImg{
+      position:absolute; inset:0;
+      width:100%; height:100%; object-fit:cover;
+      filter: saturate(1.08) contrast(1.05);
+      transform: scale(1.02);
+    }
+    .coverOverlay{
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.55));
+    }
+    .coverMeta{
+      position:relative;
+      padding: 14px 14px 12px 14px;
+    }
+    .coverTitle{
+      font-size:16px; font-weight:800; letter-spacing:.2px;
+      margin:0 0 6px 0;
+    }
+    .coverSub{
+      margin:0;
+      font-size: 13px;
+      color: rgba(232,238,247,.85);
+      line-height: 1.35;
+    }
+    .tapHint{
+      margin-top:10px;
+      display:flex; gap:8px; flex-wrap:wrap;
+      color: rgba(232,238,247,.75);
+      font-size: 12px;
+    }
+    .kbd{
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width: 26px;
+      padding: 3px 7px;
+      border-radius: 8px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      font-weight:700;
+      color: rgba(232,238,247,.9);
+    }
 
-  .topControls{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    justify-content:center;
-    margin-top:2px;
-  }
-  button{
-    border:0;
-    cursor:pointer;
-    border-radius:14px;
-    padding:10px 14px;
-    font-weight:950;
-    color:#041018;
-    background:rgba(110,203,255,.95);
-    box-shadow:0 10px 22px rgba(0,0,0,.25);
-    transition:transform .06s ease, filter .15s ease;
-  }
-  button:hover{transform:translateY(-1px); filter:brightness(1.03)}
-  button:active{transform:translateY(0)}
-  button.secondary{
-    background:rgba(255,255,255,.10);
-    color:var(--fg);
-    border:1px solid rgba(255,255,255,.14);
-    box-shadow:none;
-  }
-  button:focus-visible{outline:var(--focus); outline-offset:3px}
+    /* Front (question) */
+    .front{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      transform: rotateY(180deg);
+      display:flex; flex-direction:column;
+    }
+    .qHead{
+      padding: 14px 14px 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+    }
+    .qLab{
+      font-size: 12px;
+      color: rgba(232,238,247,.72);
+      margin: 0 0 6px 0;
+    }
+    .qText{
+      margin:0;
+      font-size: 18px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
 
-  .cardStage{
-    width:var(--cardw);
-    height:var(--cardh);
-    perspective: 1200px;
-  }
-  .card{
-    position:relative;
-    width:100%;
-    height:100%;
-    border-radius:var(--radius);
-    transform-style:preserve-3d;
-    transition: transform .6s cubic-bezier(.2,.8,.2,1);
-    box-shadow: var(--shadow);
-    cursor:pointer;
-  }
-  .card.isFlipped{ transform: rotateY(180deg); cursor:default; }
+    .qBody{
+      padding: 12px 14px 12px 14px;
+      display:flex; flex-direction:column;
+      gap:10px;
+      overflow:auto;
+    }
+    .choices{display:flex; flex-direction:column; gap:10px}
+    .choice{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      cursor:pointer;
+      user-select:none;
+    }
+    .choice strong{display:inline-block; width:22px; opacity:.9}
+    .choice .label{flex:1; font-weight:650; line-height:1.25}
+    .choice.selected{outline: 2px solid rgba(105,179,255,.55); background: rgba(105,179,255,.10)}
+    .choice.correct{outline: 2px solid rgba(61,220,151,.65); background: rgba(61,220,151,.12)}
+    .choice.wrong{outline: 2px solid rgba(255,107,107,.65); background: rgba(255,107,107,.12)}
+    .feedback{
+      padding:10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      color: rgba(232,238,247,.9);
+      display:none;
+      line-height:1.35;
+      font-size: 14px;
+    }
+    .feedback.show{display:block}
+    .feedback.good{border-color: rgba(61,220,151,.35)}
+    .feedback.bad{border-color: rgba(255,107,107,.35)}
+    .feedback.warn{border-color: rgba(255,209,102,.35)}
 
-  .face{
-    position:absolute;
-    inset:0;
-    backface-visibility:hidden;
-    border-radius:var(--radius);
-    overflow:hidden;
-  }
+    .actions{
+      padding: 12px 14px 14px 14px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap;
+      background: rgba(0,0,0,.10);
+    }
+    .actions .group{display:flex; gap:10px; flex-wrap:wrap}
 
-  .frame{
-    position:absolute;
-    inset:0;
-    border-radius:var(--radius);
-    pointer-events:none;
-    border:2px solid rgba(140,220,255,.45);
-    box-shadow:
-      0 0 0 6px rgba(110,203,255,.10) inset,
-      0 0 24px rgba(110,203,255,.28),
-      0 0 46px rgba(138,125,255,.18);
-  }
+    /* Modal */
+    .modalBack{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none; align-items:center; justify-content:center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .modalBack.show{display:flex}
+    .modal{
+      width: min(720px, 96vw);
+      max-height: min(86vh, 820px);
+      overflow:auto;
+      background: rgba(18,25,37,.98);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+    .modal h2{margin: 4px 0 10px 0; font-size: 18px}
+    .modal p{margin: 0 0 10px 0; color: rgba(232,238,247,.78); font-size: 13px; line-height:1.35}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 760px){
+      .grid{grid-template-columns: 1.2fr .8fr}
+    }
+    .panel{
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .panel h3{margin:0 0 10px 0; font-size:14px; color: rgba(232,238,247,.92)}
+    .labs{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    @media (min-width: 520px){
+      .labs{grid-template-columns: 1fr 1fr}
+    }
+    .labOpt{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+    }
+    .labOpt input{margin-top:3px}
+    .labName{font-weight:800; font-size: 13px}
+    .labTopic{color: rgba(232,238,247,.75); font-size: 12px; margin-top: 2px; line-height:1.25}
 
-  .front{
-    background:rgba(10,18,32,.55);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .front img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transform:scale(1.02);
-    filter:contrast(1.05) saturate(1.05);
-  }
-  .front .overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.52));
-  }
-  .front .hint{
-    position:absolute;
-    bottom:16px;
-    left:0; right:0;
-    text-align:center;
-    font-weight:950;
-    color:rgba(234,243,255,.92);
-    text-shadow:0 6px 22px rgba(0,0,0,.55);
-    padding:0 12px;
-  }
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .field{
+      display:flex; flex-direction:column; gap:6px;
+      min-width: 140px;
+    }
+    .field label{font-size: 12px; color: rgba(232,238,247,.75)}
+    .field input, .field select{
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.16);
+      color: var(--text);
+      outline:none;
+      font-weight:700;
+    }
 
-  .back{
-    transform: rotateY(180deg);
-    background: var(--surface);
-    border:1px solid rgba(255,255,255,.12);
-    display:flex;
-    flex-direction:column;
-    padding:18px;
-    gap:12px;
-  }
-  .meta{
-    color:rgba(155,182,211,.9);
-    font-weight:950;
-    font-size:.98rem;
-  }
-  .q{
-    font-size:clamp(18px, 2.2vw, 24px);
-    font-weight:980;
-    line-height:1.25;
-    margin-top:2px;
-  }
+    .help{
+      font-size: 12px;
+      color: rgba(232,238,247,.75);
+      line-height:1.35;
+      margin-top:10px;
+    }
+    .hr{height:1px; background: rgba(255,255,255,.10); margin: 10px 0}
 
-  .hidden{display:none !important;}
-
-  /* MCQ */
-  .choicesWrap{
-    position:relative;
-    display:grid;
-    gap:10px;
-    margin-top:6px;
-  }
-  .choiceBtn{
-    width:100%;
-    text-align:left;
-    padding:12px 12px;
-    border-radius:14px;
-    background:rgba(255,255,255,.08);
-    color:rgba(234,243,255,.96);
-    border:1px solid rgba(255,255,255,.14);
-    box-shadow:none;
-    font-weight:950;
-    display:flex;
-    gap:10px;
-    align-items:flex-start;
-    cursor:pointer;
-  }
-  .choiceBtn:hover{filter:brightness(1.04)}
-  .choiceBtn[disabled]{opacity:.72; cursor:not-allowed}
-  .badge{
-    min-width:28px;
-    height:28px;
-    border-radius:10px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:980;
-    background:rgba(110,203,255,.18);
-    border:1px solid rgba(110,203,255,.30);
-    color:rgba(234,243,255,.96);
-    margin-top:1px;
-  }
-  .choiceText{line-height:1.25}
-  .choiceBtn.correct{
-    border-color:rgba(34,197,94,.55);
-    background:rgba(34,197,94,.14);
-  }
-  .choiceBtn.wrong{
-    border-color:rgba(239,68,68,.55);
-    background:rgba(239,68,68,.12);
-  }
-  .choiceBtn.correct .badge{background:rgba(34,197,94,.18); border-color:rgba(34,197,94,.35)}
-  .choiceBtn.wrong .badge{background:rgba(239,68,68,.16); border-color:rgba(239,68,68,.35)}
-
-  /* Short answer */
-  .saWrap{
-    position:relative;
-    margin-top:6px;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-  .inputWrap{
-    position:relative;
-  }
-  input[type="text"]{
-    width:100%;
-    padding:14px 14px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(255,255,255,.06);
-    color:var(--fg);
-    font-size:16px;
-    outline:none;
-  }
-  input[type="text"]::placeholder{color:rgba(155,182,211,.78)}
-  input[type="text"]:focus{
-    box-shadow:0 0 0 3px rgba(110,203,255,.18);
-    border-color:rgba(110,203,255,.45);
-  }
-  input[disabled]{opacity:.6; cursor:not-allowed}
-
-  .saHint{
-    color:rgba(155,182,211,.9);
-    font-weight:900;
-    text-align:center;
-    font-size:.95rem;
-  }
-
-  /* Reveal */
-  .reveal{
-    display:none;
-    border-left:3px solid rgba(110,203,255,.75);
-    background:rgba(110,203,255,.08);
-    padding:10px 12px;
-    border-radius:12px;
-    color:rgba(234,243,255,.95);
-    font-weight:950;
-    line-height:1.35;
-    margin-top:4px;
-  }
-  .reveal.show{display:block}
-
-  .bottomRow{
-    width:var(--cardw);
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-  }
-
-  .statusLine{
-    color:rgba(155,182,211,.9);
-    font-size:.95rem;
-    text-align:center;
-    max-width:78ch;
-    line-height:1.4;
-  }
-
-  .toast{
-    position:fixed;
-    bottom:18px;
-    left:50%;
-    transform:translateX(-50%);
-    background:rgba(8,18,32,.92);
-    border:1px solid rgba(255,255,255,.10);
-    color:rgba(234,243,255,.95);
-    padding:10px 14px;
-    border-radius:999px;
-    font-weight:980;
-    opacity:0;
-    transition:opacity .2s ease;
-    z-index:90;
-  }
-  .toast.show{opacity:1}
-
-  /* Confetti localized layers */
-  .confettiLayer{
-    position:absolute;
-    inset:-10px -10px -10px -10px;
-    pointer-events:none;
-    overflow:visible;
-  }
-  .confettiBit{
-    position:absolute;
-    width:8px;
-    height:12px;
-    border-radius:2px;
-    opacity:0;
-    transform:translateY(0) rotate(0deg);
-    animation:confettiPop 900ms ease-out forwards;
-    box-shadow:0 4px 14px rgba(0,0,0,.2);
-  }
-  @keyframes confettiPop{
-    0%{opacity:1; transform:translateY(0) rotate(0deg)}
-    100%{opacity:0; transform:translateY(100px) rotate(540deg)}
-  }
-
-  /* Modal */
-  .modal{
-    position:fixed; inset:0;
-    display:none;
-    place-items:center;
-    background:rgba(0,0,0,.40);
-    z-index:1000;
-    backdrop-filter: blur(10px) saturate(1.05);
-  }
-  .modal.show{display:grid}
-  .modal .box{
-    width:min(760px, 92vw);
-    background:rgba(12,18,34,.92);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:18px;
-    box-shadow:0 18px 44px rgba(0,0,0,.45);
-    padding:18px 16px 14px;
-  }
-  .modal h2{
-    margin:6px 0 10px;
-    font-size:1.25rem;
-  }
-  .row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin:10px 0;
-  }
-  .chip{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:9px 12px;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.06);
-    color:rgba(234,243,255,.95);
-    font-weight:980;
-    cursor:pointer;
-    user-select:none;
-  }
-  .chip input{width:18px; height:18px}
-  .modal .actions{
-    display:flex;
-    gap:10px;
-    justify-content:flex-end;
-    margin-top:14px;
-    flex-wrap:wrap;
-  }
-  .modal .sub{
-    color:rgba(155,182,211,.9);
-    font-weight:950;
-    margin:8px 0 0;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .card{transition:none}
-    .bar > span{transition:none}
-    .confettiBit{animation:none; opacity:0}
-  }
-</style>
+    /* Exam results modal */
+    .resultsList{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .resultCard{
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      padding: 10px;
+    }
+    .resultCard .meta{font-size:12px; color: rgba(232,238,247,.75); margin-bottom:6px}
+    .resultCard .qt{font-weight:850; margin:0 0 6px 0}
+    .resultCard .ans{font-size:13px; color: rgba(232,238,247,.9); line-height:1.35}
+    .badge{
+      display:inline-flex; align-items:center;
+      padding:4px 8px; border-radius:999px;
+      font-size:12px; font-weight:900;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      margin-left:8px;
+    }
+    .badge.good{border-color: rgba(61,220,151,.35); background: rgba(61,220,151,.10)}
+    .badge.bad{border-color: rgba(255,107,107,.35); background: rgba(255,107,107,.10)}
+  </style>
 </head>
-
 <body>
-<div class="stars" aria-hidden="true"></div>
 
-<!-- Mode buttons (top-left) -->
-<div class="modeSwitch" aria-label="Answer mode">
-  <button class="modeBtn active" id="modeMcq" type="button">Multiple choice</button>
-  <button class="modeBtn" id="modeSa" type="button">Short answer</button>
-</div>
-
-<div class="wrap" id="appRoot">
-  <h1>Anatomy Flash Cards</h1>
-
-  <div class="progressRow" aria-label="Progress">
-    <div class="bar" aria-hidden="true"><span id="barFill"></span></div>
-    <div class="counter" id="counter">0 / 0</div>
-    <div class="topControls">
-      <button class="secondary" id="changeBtn" type="button">Change labs/topics</button>
-      <button class="secondary" id="shuffleBtn" type="button">Shuffle</button>
-      <button class="secondary" id="resetBtn" type="button">Reset</button>
+  <div class="topbar">
+    <div class="left">
+      <span class="pill" id="modePill">Mode: —</span>
+      <button class="btn small" id="settingsBtn" title="Settings (Esc)">Settings</button>
+      <button class="btn small ghost" id="helpBtn" title="Shortcuts (?)">?</button>
+    </div>
+    <div class="right">
+      <span class="pill" id="labPill">Labs: —</span>
+      <span class="pill" id="progressPill">0 / 0</span>
+      <span class="pill" id="timerPill" style="display:none;">Time: —</span>
     </div>
   </div>
 
-  <div class="cardStage" aria-label="Flashcard">
-    <div class="card" id="card" role="button" tabindex="0" aria-label="Flashcard. Click to flip.">
-      <!-- FRONT: image (card back) -->
-      <div class="face front">
-        <img id="cardImg" alt="Flashcard back image" />
-        <div class="overlay" aria-hidden="true"></div>
-        <div class="hint" id="frontHint">Click to flip</div>
-        <div class="frame" aria-hidden="true"></div>
-      </div>
-
-      <!-- BACK: question + either MCQ or short-answer -->
-      <div class="face back">
-        <div class="meta" id="metaLine">Pick labs/topics to begin</div>
-        <div class="q" id="question">—</div>
-
-        <!-- MCQ section -->
-        <div id="mcqSection">
-          <div class="choicesWrap" id="choicesWrap" aria-label="Choices">
-            <div class="confettiLayer" id="confettiMcq" aria-hidden="true"></div>
-            <!-- choices injected here -->
-          </div>
-        </div>
-
-        <!-- Short-answer section -->
-        <div id="saSection" class="hidden">
-          <div class="saWrap" aria-label="Short answer">
-            <div class="inputWrap">
-              <div class="confettiLayer" id="confettiSa" aria-hidden="true"></div>
-              <input id="saInput" type="text" autocomplete="off" spellcheck="false" placeholder="Type ONE word, then press Enter…" disabled />
+  <div class="wrap">
+    <div class="cardWrap">
+      <div class="card" id="card">
+        <!-- COVER (image side) -->
+        <div class="side cover" id="coverSide">
+          <img class="coverImg" id="coverImg" alt="" />
+          <div class="coverOverlay"></div>
+          <div class="coverMeta">
+            <p class="coverTitle" id="coverTitle">KIN100 Flashcards</p>
+            <p class="coverSub" id="coverSub">Tap to flip. Use selected labs to study.</p>
+            <div class="tapHint">
+              <span><span class="kbd">Space</span> flip</span>
+              <span><span class="kbd">1–4</span> choose</span>
+              <span><span class="kbd">Enter</span> submit</span>
+              <span><span class="kbd">Esc</span> settings</span>
             </div>
-            <div class="saHint">Type one word, then press Enter to submit.</div>
           </div>
         </div>
 
-        <div class="reveal" id="revealBox" aria-live="polite"></div>
+        <!-- FRONT (question side) -->
+        <div class="side front">
+          <div class="qHead">
+            <p class="qLab" id="qLab">—</p>
+            <p class="qText" id="qText">—</p>
+          </div>
 
-        <div class="frame" aria-hidden="true"></div>
+          <div class="qBody">
+            <div class="choices" id="choices"></div>
+            <div class="feedback" id="feedback"></div>
+          </div>
+
+          <div class="actions">
+            <div class="group">
+              <button class="btn small ghost" id="flipBtn" title="Flip (Space)">Flip</button>
+              <button class="btn small warn" id="revealBtn" title="Reveal (R) - Learn mode only">Reveal</button>
+            </div>
+            <div class="group">
+              <button class="btn small primary" id="submitBtn" title="Submit (Enter)">Submit</button>
+              <button class="btn small good" id="nextBtn" title="Next (N)">Next</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="bottomRow">
-    <button class="secondary" id="revealBtn" type="button">Reveal</button>
-    <button id="nextBtn" type="button">Next</button>
-  </div>
+  <!-- SETTINGS MODAL -->
+  <div class="modalBack" id="settingsModalBack" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+        <h2>Study Setup</h2>
+        <button class="btn small ghost" id="closeSettingsBtn">Close</button>
+      </div>
+      <p>Select labs (body regions), choose a mode, then start. This runs entirely in one HTML file; progress settings can be remembered on this device.</p>
 
-  <div class="statusLine" id="statusLine"></div>
-</div>
+      <div class="grid">
+        <div class="panel">
+          <h3>Labs</h3>
+          <div class="labs" id="labsList"></div>
+          <div class="help">
+            Tip: for an “Upper Limb” session, select Labs 1–6. For “Lower Limb,” select Labs 7–10.
+          </div>
+        </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+        <div class="panel">
+          <h3>Mode</h3>
+          <div class="row" style="margin-bottom:10px;">
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="mode" value="learn" style="margin-right:8px;"> Learn
+            </label>
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="mode" value="test" style="margin-right:8px;"> Test
+            </label>
+            <label class="pill" style="cursor:pointer;">
+              <input type="radio" name="mode" value="exam" style="margin-right:8px;"> Exam
+            </label>
+          </div>
 
-<!-- Modal -->
-<div class="modal" id="pickerModal" role="dialog" aria-modal="true" aria-labelledby="pickerTitle">
-  <div class="box">
-    <h2 id="pickerTitle">Choose what to study</h2>
+          <div class="hr"></div>
 
-    <div id="stepLabs">
-      <div class="sub">Step 1 — Labs (pick one or more)</div>
-      <div class="row" id="labChips"></div>
-      <div class="actions">
-        <button class="secondary" id="labsSelectAll" type="button">Select all</button>
-        <button id="toTopics" type="button">Next</button>
+          <div id="examFields" style="display:none;">
+            <h3 style="margin-top:0;">Exam settings</h3>
+            <div class="row">
+              <div class="field">
+                <label for="examCount">Number of questions</label>
+                <input id="examCount" type="number" min="5" max="220" value="20" />
+              </div>
+              <div class="field">
+                <label for="examTime">Time limit (minutes, optional)</label>
+                <input id="examTime" type="number" min="0" max="180" value="0" />
+              </div>
+            </div>
+            <div class="help" style="margin-top:8px;">
+              Exam mode shows no correctness feedback until the end. You’ll see a score summary and review list.
+            </div>
+            <div class="hr"></div>
+          </div>
+
+          <div id="studyFields">
+            <h3 style="margin-top:0;">Session settings</h3>
+            <div class="row">
+              <div class="field">
+                <label for="sessionCount">Questions this session</label>
+                <select id="sessionCount">
+                  <option value="20">20</option>
+                  <option value="30" selected>30</option>
+                  <option value="50">50</option>
+                  <option value="9999">All (selected labs)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="remember">Remember my settings</label>
+                <select id="remember">
+                  <option value="yes" selected>Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="help" style="margin-top:8px;">
+              Learn mode allows “Reveal.” Test mode requires Submit to see feedback.
+            </div>
+            <div class="hr"></div>
+          </div>
+
+          <div class="row" style="justify-content:space-between;">
+            <button class="btn danger" id="resetBtn">Reset</button>
+            <button class="btn primary" id="startBtn">Start</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="help" style="margin-top:12px;">
+        Keyboard shortcuts: <span class="kbd">Space</span> flip, <span class="kbd">1–4</span> select option, <span class="kbd">Enter</span> submit/advance, <span class="kbd">N</span> next, <span class="kbd">R</span> reveal (learn), <span class="kbd">Esc</span> settings, <span class="kbd">?</span> shortcuts.
       </div>
     </div>
+  </div>
 
-    <div id="stepTopics" style="display:none">
-      <div class="sub">Step 2 — Topics (pick one or more)</div>
-      <div class="row" id="topicChips"></div>
-      <div class="actions">
-        <button class="secondary" id="backToLabs" type="button">Back</button>
-        <button class="secondary" id="topicsSelectAll" type="button">Select all</button>
-        <button id="startBtn" type="button">Start</button>
+  <!-- HELP MODAL -->
+  <div class="modalBack" id="helpModalBack" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+        <h2>Keyboard Shortcuts</h2>
+        <button class="btn small ghost" id="closeHelpBtn">Close</button>
+      </div>
+      <div class="panel">
+        <div class="help" style="font-size:13px;">
+          <div class="row" style="gap:14px;">
+            <span><span class="kbd">Space</span> Flip card</span>
+            <span><span class="kbd">1</span>–<span class="kbd">4</span> Select choice</span>
+            <span><span class="kbd">Enter</span> Submit (or advance if already submitted)</span>
+          </div>
+          <div class="row" style="gap:14px; margin-top:10px;">
+            <span><span class="kbd">N</span> Next</span>
+            <span><span class="kbd">R</span> Reveal (Learn mode)</span>
+            <span><span class="kbd">Esc</span> Settings</span>
+            <span><span class="kbd">?</span> Open this help</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- EXAM RESULTS MODAL -->
+  <div class="modalBack" id="resultsModalBack" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+        <h2>Exam Results</h2>
+        <button class="btn small ghost" id="closeResultsBtn">Close</button>
+      </div>
+      <p id="resultsSummary">—</p>
+      <div class="resultsList" id="resultsList"></div>
+      <div class="hr"></div>
+      <div class="row" style="justify-content:flex-end;">
+        <button class="btn primary" id="restartBtn">Start New Session</button>
+      </div>
+    </div>
+  </div>
 
 <script>
-/* =========================
-   CONFIG: images
-   ========================= */
-const IMAGE_DIR = "./Anatomy/images/";
-const MANIFEST_URL = IMAGE_DIR + "manifest.json";
+/* =========================================================
+   EDIT THIS: Add your own images in /images and list them here.
+   If an image fails to load, a placeholder will appear instead.
+========================================================= */
+const LAB_IMAGES = {
+  1: ["images/lab1_01.jpg","images/lab1_02.jpg"],
+  2: ["images/lab2_01.jpg","images/lab2_02.jpg"],
+  3: ["images/lab3_01.jpg","images/lab3_02.jpg"],
+  4: ["images/lab4_01.jpg","images/lab4_02.jpg"],
+  5: ["images/lab5_01.jpg","images/lab5_02.jpg"],
+  6: ["images/lab6_01.jpg","images/lab6_02.jpg"],
+  7: ["images/lab7_01.jpg","images/lab7_02.jpg"],
+  8: ["images/lab8_01.jpg","images/lab8_02.jpg"],
+  9: ["images/lab9_01.jpg","images/lab9_02.jpg"],
+ 10: ["images/lab10_01.jpg","images/lab10_02.jpg"],
+ 11: ["images/lab11_01.jpg","images/lab11_02.jpg"]
+};
 
-/* =========================
-   CARD BANK
-   =========================
-   - mcq options/answerIndex for Multiple Choice mode
-   - shortAnswer must be EXACTLY ONE WORD for Short Answer mode
-*/
-const CARD_BANK = [
-  {
-    lab: 1,
-    topics:["muscles","innervation"],
-    stem:"Deltoid — innervation?",
-    options:["Radial nerve","Axillary nerve","Musculocutaneous nerve","Median nerve"],
-    answerIndex:1,
-    shortAnswer:"Axillary",
-    explanation:"Deltoid is innervated by the axillary nerve (C5–C6)."
-  },
-  {
-    lab: 1,
-    topics:["muscles"],
-    stem:"Which muscle initiates shoulder abduction (0–15°)?",
-    options:["Deltoid","Supraspinatus","Infraspinatus","Subscapularis"],
-    answerIndex:1,
-    shortAnswer:"Supraspinatus",
-    explanation:"Supraspinatus initiates the first degrees of abduction."
-  },
-  {
-    lab: 2,
-    topics:["bones","innervation"],
-    stem:"A midshaft humeral fracture classically injures which nerve?",
-    options:["Ulnar","Radial","Axillary","Median"],
-    answerIndex:1,
-    shortAnswer:"Radial",
-    explanation:"Radial nerve runs in the radial groove; injury can cause wrist drop."
-  },
-  {
-    lab: 2,
-    topics:["blood"],
-    stem:"Artery accompanying the radial nerve through the triangular interval:",
-    options:["Posterior circumflex humeral","Profunda brachii (deep brachial)","Anterior circumflex humeral","Radial recurrent"],
-    answerIndex:1,
-    shortAnswer:"Profunda",
-    explanation:"Triangular interval contains the radial nerve and profunda brachii (deep brachial) artery."
-  }
+const LABS = [
+  {id:1,  name:"Lab 1",  topic:"Back and Pectoral Girdle"},
+  {id:2,  name:"Lab 2",  topic:"Axio-Appendicular and Scapulohumeral Muscles"},
+  {id:3,  name:"Lab 3",  topic:"Axilla, Brachial Plexus, and Heart"},
+  {id:4,  name:"Lab 4",  topic:"Arm, Cubital Fossa, and Elbow Joint"},
+  {id:5,  name:"Lab 5",  topic:"Anterior and Posterior Forearm"},
+  {id:6,  name:"Lab 6",  topic:"Wrist and Hand"},
+  {id:7,  name:"Lab 7",  topic:"Abdominal Walls, Pelvis, and Hip Joint"},
+  {id:8,  name:"Lab 8",  topic:"Gluteal Region and Thigh"},
+  {id:9,  name:"Lab 9",  topic:"Knee Joint, Ankle Joints, and Bones of the Foot"},
+  {id:10, name:"Lab 10", topic:"Muscles of the Leg and Foot"},
+  {id:11, name:"Lab 11", topic:"Introduction to Neuroanatomy"}
 ];
 
+/* =========================================================
+   QUESTION BANK (20 per lab, MC)
+   Format per line:
+   prompt<TAB>A<TAB>B<TAB>C<TAB>D<TAB>CorrectLetter
+========================================================= */
+const QUESTION_DATA = {
+1: `
+Scapular protraction is mainly produced by	Serratus anterior	Rhomboid major	Trapezius	Levator scapulae	A
+Scapular retraction is strongly produced by	Rhomboid major	Serratus anterior	Pectoralis minor	Subscapularis	A
+Scapular elevation is a primary action of	Levator scapulae	Lower trapezius	Serratus anterior	Teres major	A
+Scapular depression is a key action of	Lower trapezius	Upper trapezius	Rhomboid major	Deltoid	A
+Which bone has the acromion process?	Scapula	Clavicle	Sternum	Humerus	A
+Joint between clavicle and sternum	Sternoclavicular joint	Acromioclavicular joint	Glenohumeral joint	Costovertebral joint	A
+Vertebrae with costal facets for ribs	Thoracic	Cervical	Lumbar	Sacral	A
+Transverse foramina are characteristic of	Cervical	Thoracic	Lumbar	Sacral	A
+Muscle forming posterior axillary fold	Latissimus dorsi	Biceps brachii	Pectoralis minor	Pronator teres	A
+Primary nerve supply to serratus anterior	Long thoracic nerve	Axillary nerve	Radial nerve	Ulnar nerve	A
+Classic “winged scapula” lesion	Long thoracic nerve	Suprascapular nerve	Median nerve	Musculocutaneous nerve	A
+Trapezius inserts on lateral third of	Clavicle	Scapular medial border	Humeral shaft	Radius	A
+Spine of scapula continues laterally as	Acromion	Coracoid	Olecranon	Greater tubercle	A
+The clavicle most often fractures at	Middle third	Medial end	Lateral end	Sternal angle	A
+The pectoral girdle consists of	Clavicle and scapula	Humerus and radius	Ulna and radius	Sternum and ribs	A
+Scapulothoracic “joint” is best described as	A functional articulation	A synovial hinge	A cartilaginous joint	A fibrous joint	A
+Facet joints of vertebrae are also called	Zygapophyseal joints	Costovertebral joints	Sacroiliac joints	Symphyses	A
+Rhomboid major attaches to the	Medial border of scapula	Lateral epicondyle	Deltoid tuberosity	Coracoid process	A
+Trapezius is innervated primarily by	Spinal accessory nerve (CN XI)	Long thoracic nerve	Axillary nerve	Phrenic nerve	A
+Floating ribs are typically ribs	11 and 12	1 and 2	7 and 8	3 and 4	A
+`.trim(),
+
+2: `
+Supraspinatus primarily initiates	Abduction of the arm	Adduction of the arm	Elbow flexion	Wrist extension	A
+Infraspinatus is best known for	External rotation	Internal rotation	Elbow extension	Forearm pronation	A
+Subscapularis primarily produces	Internal rotation	External rotation	Elbow flexion	Scapular elevation	A
+Teres minor contributes most to	External rotation	Scapular protraction	Hip extension	Wrist flexion	A
+Rotator cuff muscles include	Supraspinatus, infraspinatus, teres minor, subscapularis	Deltoid, biceps, triceps, brachialis	Pectoralis major, latissimus dorsi, trapezius, rhomboids	Rectus abdominis, obliques, transversus	A
+Deltoid is a prime mover for	Abduction after ~15°	Forearm pronation	Knee extension	Ankle dorsiflexion	A
+Pectoralis major primarily	Adducts and internally rotates arm	Extends elbow	Protracts scapula	Dorsiflexes ankle	A
+Pectoralis minor primarily acts to	Protract and depress scapula	Extend wrist	Flex hip	Extend knee	A
+Teres major primarily	Adducts and internally rotates arm	Extends knee	Everts foot	Supinates forearm	A
+Latissimus dorsi primarily	Extends and adducts arm	Flexes knee	Protracts scapula	Abducts hip	A
+Serratus anterior helps	Upwardly rotate scapula	Downwardly rotate scapula	Flex elbow	Extend knee	A
+Upper trapezius assists with	Scapular elevation	Scapular depression	Forearm pronation	Ankle inversion	A
+Lower trapezius assists with	Scapular depression and upward rotation	Scapular elevation	Wrist flexion	Toe extension	A
+A common site of rotator cuff impingement is the	Supraspinatus tendon	Pectoralis minor tendon	Achilles tendon	Patellar ligament	A
+Muscle that stabilizes scapula against thorax	Serratus anterior	Pronator teres	Flexor carpi ulnaris	Extensor digitorum	A
+Which is NOT a rotator cuff muscle?	Teres major	Teres minor	Supraspinatus	Subscapularis	A
+Scapulohumeral muscles attach from scapula to	Humerus	Radius	Ulna	Femur	A
+Scapular upward rotation is essential for	Overhead abduction	Knee extension	Toe flexion	Hip adduction	A
+Subacromial bursa reduces friction under the	Acromion	Olecranon	Patella	Trochanter	A
+The “SITS” mnemonic refers to	Rotator cuff muscles	Carpal bones	Foot arches	Cranial nerves	A
+`.trim(),
+
+3: `
+Brachial plexus roots are primarily	C5–T1	C1–C4	T2–T6	L1–L5	A
+The axillary artery is a continuation of the	Subclavian artery	Brachial artery	Radial artery	Ulnar artery	A
+The brachial artery is a continuation of the	Axillary artery	Subclavian artery	Femoral artery	Popliteal artery	A
+Terminal branch: musculocutaneous nerve arises from	Lateral cord	Medial cord	Posterior cord	Cervical plexus	A
+Terminal branch: axillary nerve arises from	Posterior cord	Lateral cord	Medial cord	Lumbar plexus	A
+Terminal branch: radial nerve arises from	Posterior cord	Medial cord	Lateral cord	Sacral plexus	A
+Terminal branch: ulnar nerve arises from	Medial cord	Posterior cord	Lateral cord	Cervical plexus	A
+Median nerve is formed by contributions from	Lateral and medial cords	Posterior cord only	Medial cord only	Lateral cord only	A
+Structure in axilla commonly compressed by crutches	Axillary nerve	Median nerve	Femoral nerve	Tibial nerve	A
+Axillary lymph nodes primarily drain the	Upper limb	Lower limb	Brain	Abdominal viscera	A
+Chamber that pumps to pulmonary circulation	Right ventricle	Left ventricle	Right atrium	Left atrium	A
+Valve between left atrium and left ventricle	Mitral (bicuspid)	Tricuspid	Aortic	Pulmonary	A
+Valve between right atrium and right ventricle	Tricuspid	Mitral	Aortic	Pulmonary	A
+Valve between left ventricle and aorta	Aortic	Pulmonary	Tricuspid	Mitral	A
+Valve between right ventricle and pulmonary trunk	Pulmonary	Aortic	Mitral	Tricuspid	A
+The sinoatrial (SA) node is the heart’s	Primary pacemaker	Aortic valve	Coronary sinus	Chordae tendineae	A
+The left coronary artery commonly branches into	LAD and circumflex	Right marginal and PDA	Azygos and hemiazygos	Brachiocephalic and carotid	A
+Blood returns from lungs to left atrium via	Pulmonary veins	Pulmonary arteries	Aorta	Venae cavae	A
+The interatrial septum contains the	Fossa ovalis	Foramen magnum	Odontoid process	Sella turcica	A
+The pericardium is best described as a	Sac surrounding the heart	Muscle of the diaphragm	Valve leaflet	A coronary artery	A
+`.trim(),
+
+4: `
+Primary elbow flexor (deep)	Brachialis	Biceps brachii	Triceps brachii	Deltoid	A
+Biceps brachii is especially important for	Forearm supination	Wrist extension	Hip flexion	Ankle inversion	A
+Triceps brachii is the prime mover for	Elbow extension	Elbow flexion	Wrist flexion	Finger abduction	A
+Median nerve is found in the cubital fossa	Medial to brachial artery	Within carpal tunnel	In Guyon’s canal	In popliteal fossa	A
+Brachial artery is found in the cubital fossa	Medial to biceps tendon	Posterior to ulna	Lateral to radial head	Within tarsal tunnel	A
+Cubital fossa boundaries include	Pronator teres (medial)	Rectus femoris (medial)	Gluteus medius (lateral)	Soleus (superior)	A
+Common contents of cubital fossa (lateral→medial)	Tendon, artery, nerve	Nerve, tendon, artery	Artery, nerve, tendon	Vein, artery, nerve	A
+Elbow joint is primarily a	Hinge joint	Ball-and-socket	Pivot between femur and tibia	Saddle joint	A
+Ligament resisting valgus stress at elbow	Ulnar collateral ligament	ACL	LCL	Deltoid ligament	A
+Bony landmark for triceps insertion	Olecranon	Coracoid	Styloid process	Greater trochanter	A
+“Funny bone” sensation involves the	Ulnar nerve	Median nerve	Radial nerve	Femoral nerve	A
+Radial head articulates with the	Capitulum	Trochlea	Medial epicondyle	Olecranon fossa	A
+Trochlea articulates with the	Trochlear notch of ulna	Head of radius	Scaphoid	Patella	A
+Biceps tendon inserts on the	Radial tuberosity	Ulnar olecranon	Lateral epicondyle	Clavicle	A
+Brachialis inserts on the	Ulnar tuberosity	Greater tubercle	Scapular spine	Fibular head	A
+Musculocutaneous nerve primarily innervates	Flexors of arm	Extensors of forearm	Intrinsic hand muscles	Gluteal muscles	A
+Radial nerve injury classically causes	Wrist drop	Foot drop	Hip drop	Scapular winging	A
+The cubital fossa floor includes	Brachialis and supinator	Rectus abdominis and iliopsoas	Soleus and gastrocnemius	Piriformis and obturator internus	A
+Main blood supply crossing anterior elbow	Brachial artery	Femoral artery	Popliteal artery	Posterior tibial artery	A
+Radius and ulna rotate at the	Proximal radioulnar joint	Acromioclavicular joint	Sacroiliac joint	Knee joint	A
+`.trim(),
+
+5: `
+Most forearm flexors are innervated by	Median nerve	Radial nerve	Femoral nerve	Tibial nerve	A
+Flexor carpi ulnaris is innervated by	Ulnar nerve	Median nerve	Radial nerve	Axillary nerve	A
+Medial half of flexor digitorum profundus is innervated by	Ulnar nerve	Median nerve	Radial nerve	Musculocutaneous nerve	A
+Pronator teres primarily causes	Pronation	Supination	Wrist extension	Thumb abduction	A
+Supinator muscle primarily causes	Supination	Pronation	Elbow extension	Knee flexion	A
+Flexor digitorum superficialis flexes	PIP joints	DIP joints	MCP extension	IP extension	A
+Flexor digitorum profundus flexes	DIP joints	PIP joints	Wrist extension	Elbow extension	A
+Palmaris longus primarily	flexes wrist weakly	extends elbow	abducts hip	extends toes	A
+Brachioradialis is best known for	Elbow flexion in neutral grip	Wrist flexion	Finger abduction	Hip extension	A
+Extensor digitorum primarily	extends fingers	extends hip	flexes knee	inverts ankle	A
+Extensor carpi ulnaris primarily	extends and adducts wrist	flexes wrist	everts foot	extends knee	A
+Extensor carpi radialis longus primarily	extends and abducts wrist	flexes fingers	abducts hip	extends toes	A
+“Carpal tunnel” is formed by carpal bones and	Flexor retinaculum	Extensor retinaculum	Deltoid fascia	Plantar fascia	A
+Radial artery is commonly palpated at	Lateral wrist	Medial ankle	Popliteal fossa	Carotid triangle	A
+Ulnar artery primarily contributes to the	Superficial palmar arch	Popliteal artery	Aortic arch	Vertebral artery	A
+The “anatomical snuffbox” contains the	Radial artery	Ulnar nerve	Median nerve	Femoral vein	A
+Posterior interosseous nerve is a branch of	Radial nerve	Ulnar nerve	Median nerve	Axillary nerve	A
+A key extensor compartment of forearm is innervated by	Radial nerve	Femoral nerve	Obturator nerve	Long thoracic nerve	A
+Flexor pollicis longus is typically innervated by	Anterior interosseous (median)	Axillary	Ulnar	Tibial	A
+Ulnar nerve passes posterior to the	Medial epicondyle	Lateral epicondyle	Patella	Fibular head	A
+`.trim(),
+
+6: `
+Most commonly fractured carpal bone	Scaphoid	Lunate	Triquetrum	Hamate	A
+Carpal tunnel commonly compresses the	Median nerve	Ulnar nerve	Radial nerve	Femoral nerve	A
+Flexor retinaculum forms the roof of the	Carpal tunnel	Cubital fossa	Femoral triangle	Popliteal fossa	A
+Thenar eminence is associated with the	Thumb	Big toe	Little toe	Shoulder	A
+Hypothenar eminence is associated with	Little finger	Thumb	Index finger	Middle toe	A
+Anatomical snuffbox tenderness suggests injury to	Scaphoid	Hamate	Trapezoid	Pisiform	A
+The hook of hamate is clinically relevant due to	Ulnar nerve/artery proximity	Femoral artery proximity	Carotid sinus proximity	Sciatic nerve proximity	A
+Ulnar nerve enters the hand via	Guyon’s canal	Carpal tunnel	Foramen magnum	Obturator canal	A
+Median nerve enters the hand via	Carpal tunnel	Guyon’s canal	Cubital tunnel	Tarsal tunnel	A
+Interossei muscles are best known for	Finger abduction/adduction	Elbow extension	Hip flexion	Ankle inversion	A
+“DAB” mnemonic: dorsal interossei	Abduct fingers	Adduct fingers	Abduct toes	Adduct toes	A
+“PAD” mnemonic: palmar interossei	Adduct fingers	Abduct fingers	Adduct toes	Abduct toes	A
+Lumbricals typically	Flex MCP and extend IP	Extend MCP and flex IP	Supinate forearm	Plantarflex ankle	A
+Flexor pollicis brevis is a	Thenar muscle	Hypothenar muscle	Rotator cuff muscle	Hamstring	A
+Opponens pollicis is a	Thenar muscle	Forearm extensor	Gluteal muscle	Foot inverter	A
+The pisiform is a sesamoid bone in the tendon of	Flexor carpi ulnaris	Extensor carpi ulnaris	Pronator teres	Biceps brachii	A
+Carpal bones in proximal row (lateral→medial)	Scaphoid, lunate, triquetrum, pisiform	Hamate, capitate, trapezoid, trapezium	Talus, calcaneus, navicular, cuboid	Ulna, radius, humerus, scapula	A
+Carpal bones in distal row (lateral→medial)	Trapezium, trapezoid, capitate, hamate	Scaphoid, lunate, triquetrum, pisiform	Talus, navicular, cuboid, calcaneus	Ulna, radius, humerus, clavicle	A
+Superficial palmar arch is primarily from the	Ulnar artery	Radial artery	Brachial artery	Popliteal artery	A
+Deep palmar arch is primarily from the	Radial artery	Ulnar artery	Femoral artery	Aorta	A
+`.trim(),
+
+7: `
+Primary “six-pack” muscle	Rectus abdominis	Transversus abdominis	Gluteus medius	Soleus	A
+External oblique fibers generally run	Inferomedially	Inferolaterally	Vertically	Superiorly	A
+Internal oblique fibers generally run	Superomedially	Superolaterally	Inferomedially	Vertically	A
+Transversus abdominis fibers run	Transversely	Vertically	Inferomedially	Superomedially	A
+Linea alba is a midline	Aponeurotic raphe	Synovial joint	Nerve plexus	Artery	A
+Inguinal ligament runs from	ASIS to pubic tubercle	PSIS to sacrum	Femoral head to tibia	Clavicle to sternum	A
+Inguinal canal contains	Spermatic cord (male)	Median nerve	Radial artery	Sciatic nerve	A
+Femoral triangle boundaries include	Inguinal ligament superior	Achilles tendon superior	Pectoralis major superior	Deltoid superior	A
+Order (lateral→medial) in femoral triangle	Nerve, artery, vein, lymph	Vein, artery, nerve, lymph	Artery, nerve, vein, lymph	Lymph, vein, artery, nerve	A
+Pelvic bone parts include	Ilium, ischium, pubis	Scaphoid, lunate, triquetrum	Atlas, axis, sacrum	Radius, ulna, humerus	A
+Joint between pubic bones	Pubic symphysis	Sacroiliac joint	Glenohumeral joint	Atlantoaxial joint	A
+Hip joint is a	Ball-and-socket	Hinge	Pivot	Saddle	A
+Acetabulum is the socket of the	Hip joint	Shoulder joint	Elbow joint	Knee joint	A
+Primary ligament resisting hyperextension of hip	Iliofemoral ligament	ACL	Deltoid ligament	Radial collateral ligament	A
+Ischiofemoral ligament is located on the	Posterior hip	Anterior elbow	Medial ankle	Posterior knee	A
+Pubofemoral ligament is located on the	Inferior/anterior hip	Lateral knee	Posterior ankle	Medial elbow	A
+Gluteus medius primarily	Abducts hip	Extends knee	Plantarflexes ankle	Flexes wrist	A
+Iliopsoas is a primary	Hip flexor	Knee extensor	Ankle evertor	Shoulder abductor	A
+Femoral canal is clinically relevant for	Femoral hernias	Carpal tunnel	Rotator cuff tears	ACL tears	A
+Greater sciatic notch transmits the	Sciatic nerve	Median nerve	Ulnar nerve	Radial nerve	A
+`.trim(),
+
+8: `
+Gluteus maximus is a powerful	Hip extensor	Knee flexor	Ankle dorsiflexor	Elbow extensor	A
+Gluteus medius is key for	Hip abduction	Knee extension	Wrist flexion	Neck rotation	A
+Trendelenburg sign suggests weakness of	Gluteus medius	Triceps brachii	Serratus anterior	Pronator teres	A
+Piriformis passes through the	Greater sciatic foramen	Lesser sciatic foramen	Carpal tunnel	Inguinal canal	A
+Sciatic nerve exits pelvis usually	Inferior to piriformis	Superior to piriformis	Through obturator canal	Through femoral canal	A
+Quadriceps femoris primarily	Extends knee	Flexes knee	Inverts ankle	Extends elbow	A
+Hamstrings primarily	Extend hip and flex knee	Flex hip and extend knee	Plantarflex wrist	Abduct shoulder	A
+Femoral nerve innervates most of	Anterior thigh	Posterior forearm	Intrinsic hand	Gluteal region	A
+Obturator nerve primarily innervates	Medial thigh adductors	Anterior thigh extensors	Posterior leg flexors	Forearm extensors	A
+Superior gluteal nerve innervates	Gluteus medius/minimus	Gluteus maximus	Quadriceps	Hamstrings	A
+Inferior gluteal nerve innervates	Gluteus maximus	Gluteus medius	Adductors	Iliopsoas	A
+Femoral triangle contents include	Femoral nerve/artery/vein	Popliteal artery/vein	Tibial nerve only	Median nerve only	A
+NAVEL mnemonic (lateral→medial) refers to	Femoral triangle	Carpal tunnel	Cubital fossa	Axilla	A
+Adductor longus is located in the	Medial thigh	Anterior leg	Posterior forearm	Shoulder	A
+Sartorius crosses both	Hip and knee	Elbow and wrist	Shoulder and elbow	Ankle and toes	A
+Rectus femoris crosses	Hip and knee	Only knee	Only hip	Ankle and knee	A
+Vastus medialis primarily	Extends knee	Abducts hip	Plantarflexes ankle	Extends wrist	A
+Vastus lateralis primarily	Extends knee	Flexes hip	Extends elbow	Supinates forearm	A
+Gracilis is a	Medial thigh adductor	Thenar muscle	Rotator cuff muscle	Deep leg extensor	A
+Adductor magnus is innervated mainly by	Obturator nerve	Axillary nerve	Long thoracic nerve	Accessory nerve	A
+`.trim(),
+
+9: `
+ACL primarily prevents	Anterior tibial translation	Posterior tibial translation	Valgus stress	Varus stress	A
+PCL primarily prevents	Posterior tibial translation	Anterior tibial translation	Varus stress	Eversion	A
+MCL resists	Valgus stress	Varus stress	Anterior translation	Plantarflexion	A
+LCL resists	Varus stress	Valgus stress	Posterior translation	Dorsiflexion	A
+Menisci primarily	Improve congruency and shock absorption	Extend the knee	Adduct the hip	Plantarflex ankle	A
+Patellar ligament connects	Patella to tibial tuberosity	Femur to tibia	Tibia to fibula	Talus to calcaneus	A
+Knee is primarily a	Modified hinge	Ball-and-socket	Pivot	Saddle	A
+“Unhappy triad” often involves ACL, MCL, and	Medial meniscus	Lateral meniscus	PCL	Deltoid ligament	A
+Talocrural joint is the	Ankle joint	Shoulder joint	Hip joint	Wrist joint	A
+Ankle dorsiflexion primarily occurs at the	Talocrural joint	Subtalar joint	Hip joint	Interphalangeal joints	A
+Deltoid ligament is on the	Medial ankle	Lateral ankle	Anterior knee	Posterior elbow	A
+ATFL is commonly injured in	Ankle inversion sprain	Hip dislocation	Wrist fracture	Rotator cuff tear	A
+Bone that articulates with tibia in ankle joint	Talus	Calcaneus	Navicular	Cuboid	A
+Largest tarsal bone	Calcaneus	Talus	Navicular	Cuneiform	A
+Navicular is on the	Medial foot	Lateral foot	Proximal phalanx	Patella	A
+Cuboid is on the	Lateral midfoot	Medial midfoot	Forearm	Upper arm	A
+Cuneiform bones are on the	Medial midfoot	Posterior leg	Hand	Skull	A
+First metatarsal is associated with the	Big toe	Little finger	Thumb	Calcaneus	A
+Plantar fascia primarily supports the	Arch of the foot	Elbow joint	Shoulder capsule	Carpal tunnel	A
+Subtalar joint is between	Talus and calcaneus	Tibia and fibula	Femur and tibia	Navicular and cuboid	A
+`.trim(),
+
+10: `
+Tibialis anterior primarily	Dorsiflexes and inverts foot	Plantarflexes and everts foot	Extends knee	Flexes wrist	A
+Extensor hallucis longus primarily	Extends great toe	Flexes great toe	Abducts hip	Pronates forearm	A
+Extensor digitorum longus primarily	Extends toes 2–5	Flexes toes 2–5	Extends elbow	Flexes hip	A
+Fibularis (peroneus) longus primarily	Everts foot	Dorsiflexes foot	Inverts foot	Extends knee	A
+Fibularis (peroneus) brevis primarily	Everts foot	Plantarflexes toes	Extends wrist	Flexes elbow	A
+Gastrocnemius primarily	Plantarflexes ankle	Flexes wrist	Extends elbow	Inverts foot	A
+Soleus primarily	Plantarflexes ankle	Extends knee	Abducts shoulder	Supinates forearm	A
+Achilles tendon connects	Gastrocnemius/soleus to calcaneus	Quadriceps to patella	Biceps to radius	Gluteus medius to femur	A
+Tibialis posterior primarily	Inverts and plantarflexes foot	Everts and dorsiflexes foot	Extends toes	Abducts hip	A
+Flexor hallucis longus primarily	Flexes great toe	Extends great toe	Abducts fingers	Extends knee	A
+Flexor digitorum longus primarily	Flexes toes 2–5	Extends toes 2–5	Extends elbow	Adducts hip	A
+Popliteus primarily	“Unlocks” the knee	Extends the elbow	Opposes thumb	Dorsiflexes foot	A
+Deep posterior compartment includes	Tibialis posterior	Fibularis longus	Tibialis anterior	Extensor digitorum longus	A
+Anterior compartment is innervated mainly by	Deep fibular nerve	Tibial nerve	Femoral nerve	Ulnar nerve	A
+Posterior compartment is innervated mainly by	Tibial nerve	Deep fibular nerve	Radial nerve	Axillary nerve	A
+Common site of tibial nerve compression	Tarsal tunnel	Carpal tunnel	Cubital tunnel	Thoracic outlet	A
+Plantarflexion strength is largely from	Gastrocnemius and soleus	Gluteus medius	Deltoid	Trapezius	A
+Dorsiflexion weakness can cause	Foot drop	Winged scapula	Wrist drop	Trendelenburg gait	A
+Intrinsic foot muscles assist with	Arch support and toe control	Elbow extension	Shoulder abduction	Wrist pronation	A
+Calcaneal (Achilles) reflex tests	S1–S2 spinal segments	C5–C6 spinal segments	T1–T2 spinal segments	L3–L4 spinal segments	A
+`.trim(),
+
+11: `
+The CNS includes brain and	Spinal cord	Peripheral nerves	Heart	Lymph nodes	A
+Outer meningeal layer	Dura mater	Arachnoid mater	Pia mater	Ependyma	A
+CSF is primarily found in the	Ventricles and subarachnoid space	Myelin sheath	Tendons	Periosteum	A
+Largest commissural tract	Corpus callosum	Internal capsule	Optic chiasm	Arcuate fasciculus	A
+The cerebellum is important for	Coordination and balance	Primary hearing	Primary smell	Blood pressure only	A
+Brainstem includes	Midbrain, pons, medulla	Frontal, parietal, occipital	Thalamus, hypothalamus, amygdala	Corpus callosum only	A
+The medulla helps regulate	Breathing and heart rate	Vision only	Hip extension	Elbow flexion	A
+The pons is part of the	Brainstem	Cerebellar cortex	Spinal nerve	Retina	A
+The thalamus is a major	Sensory relay station	Primary motor nucleus	Spinal reflex center	Skull bone	A
+Hypothalamus is crucial for	Homeostasis and autonomic control	Wrist extension	Knee ligaments	Foot arches	A
+Primary motor cortex is in the	Precentral gyrus	Postcentral gyrus	Calcarine sulcus	Insula	A
+Primary somatosensory cortex is in the	Postcentral gyrus	Precentral gyrus	Cingulate gyrus	Cerebellar vermis	A
+Occipital lobe is primarily for	Vision	Hearing	Language production	Balance	A
+Temporal lobe is strongly linked to	Hearing and memory	Primary vision	Balance only	Hip flexion	A
+Parietal lobe is key for	Somatosensory integration	Smell only	Cardiac rhythm	Plantarflexion	A
+The hippocampus is important for	Memory formation	Reflex arcs only	Muscle tone only	Blood clotting	A
+The amygdala is strongly linked to	Emotion processing	Ankle dorsiflexion	Wrist supination	Scapular retraction	A
+The internal capsule carries many	Ascending/descending fibers	Carpal bones	Fascial layers	Vertebrae	A
+Basal ganglia are involved in	Motor control loops	Pelvic stability only	Finger extension only	CSF production only	A
+The lateral ventricles are found in the	Cerebrum	Cerebellum	Spinal cord	Skull sutures	A
+`.trim()
+};
+
 /* =========================
-   Helpers
-   ========================= */
-const $ = s => document.querySelector(s);
-function say(msg){
-  const t=$("#toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  clearTimeout(say._t);
-  say._t = setTimeout(()=>t.classList.remove("show"), 1400);
-}
-function shuffle(arr){
-  const a=[...arr];
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
+   App State
+========================= */
+const $ = (id)=>document.getElementById(id);
+
+const card = $("card");
+const coverImg = $("coverImg");
+const coverTitle = $("coverTitle");
+const coverSub = $("coverSub");
+
+const qLab = $("qLab");
+const qText = $("qText");
+const choicesEl = $("choices");
+const feedbackEl = $("feedback");
+
+const modePill = $("modePill");
+const labPill = $("labPill");
+const progressPill = $("progressPill");
+const timerPill = $("timerPill");
+
+const settingsModalBack = $("settingsModalBack");
+const helpModalBack = $("helpModalBack");
+const resultsModalBack = $("resultsModalBack");
+
+const labsList = $("labsList");
+
+const examFields = $("examFields");
+const examCount = $("examCount");
+const examTime = $("examTime");
+
+const sessionCount = $("sessionCount");
+const remember = $("remember");
+
+const resetBtn = $("resetBtn");
+const startBtn = $("startBtn");
+
+const flipBtn = $("flipBtn");
+const revealBtn = $("revealBtn");
+const submitBtn = $("submitBtn");
+const nextBtn = $("nextBtn");
+
+let state = {
+  selectedLabs: [1,2,3,4,5,6],
+  mode: "learn", // learn | test | exam
+  sessionN: 30,
+  remember: true,
+
+  queue: [],
+  idx: 0,
+  flipped: false,
+
+  selectedChoice: null,
+  submitted: false,
+  revealed: false,
+
+  exam: {
+    active: false,
+    n: 20,
+    timeMin: 0,
+    startTs: 0,
+    endTs: 0,
+    timerId: null,
+    answers: [] // {q, pickedIndex, correctIndex, correctText, pickedText, isCorrect}
   }
-  return a;
+};
+
+function savePrefs(){
+  if(!state.remember) return;
+  const prefs = {
+    selectedLabs: state.selectedLabs,
+    mode: state.mode,
+    sessionN: state.sessionN,
+    examN: state.exam.n,
+    examTimeMin: state.exam.timeMin
+  };
+  localStorage.setItem("kin100_flashcards_prefs", JSON.stringify(prefs));
 }
-function unique(arr){ return [...new Set(arr)]; }
-
-// normalization for short-answer matching (case/punct-insensitive)
-function norm(s){
-  return String(s||"")
-    .toLowerCase()
-    .replace(/[\u2013\u2014]/g,"-")
-    .replace(/[^\p{L}\p{N}\s-]/gu,"")
-    .replace(/\s+/g," ")
-    .trim();
-}
-function isOneWord(s){
-  const parts = norm(s).split(" ").filter(Boolean);
-  return parts.length === 1;
-}
-
-/* =========================
-   Answer mode
-   ========================= */
-let answerMode = "mcq"; // "mcq" or "sa"
-function setMode(mode){
-  if(mode !== "mcq" && mode !== "sa") return;
-  answerMode = mode;
-
-  $("#modeMcq").classList.toggle("active", mode==="mcq");
-  $("#modeSa").classList.toggle("active", mode==="sa");
-
-  $("#mcqSection").classList.toggle("hidden", mode!=="mcq");
-  $("#saSection").classList.toggle("hidden", mode!=="sa");
-
-  if(hasStarted){
-    deck = buildDeck();
-    idx = 0;
-    flipped = false;
-    answered = false;
-    lastChoiceIndex = null;
-    $("#revealBox").classList.remove("show");
-    $("#revealBox").textContent = "";
-    renderCard();
-    say(mode==="mcq" ? "Multiple choice mode" : "Short answer mode");
-    updateStatusLine();
-  }else{
-    renderCard();
-  }
-}
-
-/* =========================
-   Image manifest loading
-   ========================= */
-let images = [];
-let lastImage = null;
-
-async function loadManifest(){
+function loadPrefs(){
   try{
-    const res = await fetch(MANIFEST_URL, { cache:"no-store" });
-    if(!res.ok) throw new Error("Manifest not found");
-    const data = await res.json();
-    const list = Array.isArray(data) ? data : (data.images || []);
-    images = list.filter(Boolean);
-    if(!images.length){
-      $("#statusLine").textContent =
-        "Manifest loaded but contains no images. Add filenames to Anatomy/images/manifest.json.";
-    }
-  }catch(e){
-    images = [];
-    $("#statusLine").textContent =
-      "Could not load Anatomy/images/manifest.json yet. Add it to enable random card-back images.";
-  }
+    const raw = localStorage.getItem("kin100_flashcards_prefs");
+    if(!raw) return;
+    const prefs = JSON.parse(raw);
+    if(Array.isArray(prefs.selectedLabs) && prefs.selectedLabs.length) state.selectedLabs = prefs.selectedLabs;
+    if(["learn","test","exam"].includes(prefs.mode)) state.mode = prefs.mode;
+    if(typeof prefs.sessionN === "number") state.sessionN = prefs.sessionN;
+    if(typeof prefs.examN === "number") state.exam.n = prefs.examN;
+    if(typeof prefs.examTimeMin === "number") state.exam.timeMin = prefs.examTimeMin;
+  }catch(e){}
 }
-function pickRandomImage(){
-  if(!images.length) return null;
-  if(images.length === 1) return images[0];
-  let pick = images[Math.floor(Math.random()*images.length)];
-  let tries=0;
-  while(pick === lastImage && tries < 6){
-    pick = images[Math.floor(Math.random()*images.length)];
-    tries++;
-  }
-  lastImage = pick;
-  return pick;
-}
-function setCardBackImage(){
-  const imgEl = $("#cardImg");
-  const hint = $("#frontHint");
 
-  const filename = pickRandomImage();
-  if(!filename){
-    imgEl.removeAttribute("src");
-    imgEl.style.display="none";
-    $("#card .front").style.background =
-      "radial-gradient(800px 600px at 30% 25%, rgba(110,203,255,.22), transparent 55%)," +
-      "radial-gradient(700px 600px at 70% 70%, rgba(138,125,255,.18), transparent 60%)," +
-      "linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02))";
-    hint.textContent = "Add manifest.json to enable random images";
+function labLabel(ids){
+  if(!ids || !ids.length) return "—";
+  const sorted = [...ids].sort((a,b)=>a-b);
+  if(sorted.length===11) return "All";
+  // compress ranges (e.g., 1–6, 8–10)
+  let out = [];
+  let start = sorted[0], prev = sorted[0];
+  for(let i=1;i<sorted.length;i++){
+    const cur = sorted[i];
+    if(cur===prev+1){ prev=cur; continue; }
+    out.push(start===prev ? `${start}` : `${start}–${prev}`);
+    start=prev=cur;
+  }
+  out.push(start===prev ? `${start}` : `${start}–${prev}`);
+  return out.join(", ");
+}
+
+function setPills(){
+  modePill.textContent = `Mode: ${state.mode.toUpperCase()}`;
+  labPill.textContent = `Labs: ${labLabel(state.selectedLabs)}`;
+  progressPill.textContent = `${Math.min(state.idx+1, state.queue.length)} / ${state.queue.length}`;
+  timerPill.style.display = state.mode==="exam" ? "inline-flex" : "none";
+}
+
+function openSettings(){
+  settingsModalBack.classList.add("show");
+}
+function closeSettings(){
+  settingsModalBack.classList.remove("show");
+}
+function openHelp(){
+  helpModalBack.classList.add("show");
+}
+function closeHelp(){
+  helpModalBack.classList.remove("show");
+}
+function openResults(){
+  resultsModalBack.classList.add("show");
+}
+function closeResults(){
+  resultsModalBack.classList.remove("show");
+}
+
+function flip(toQuestion){
+  if(typeof toQuestion === "boolean"){
+    state.flipped = toQuestion;
+  }else{
+    state.flipped = !state.flipped;
+  }
+  card.classList.toggle("flipped", state.flipped);
+}
+
+function randItem(arr){
+  if(!arr || !arr.length) return null;
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function setCoverForLab(labId){
+  const lab = LABS.find(l=>l.id===labId);
+  coverTitle.textContent = lab ? `${lab.name}: ${lab.topic}` : "KIN100 Flashcards";
+  coverSub.textContent = state.mode==="exam"
+    ? "Exam mode: no feedback until the end."
+    : state.mode==="test"
+      ? "Test mode: select an option, then submit."
+      : "Learn mode: reveal or submit at your pace.";
+
+  const src = randItem(LAB_IMAGES[labId]) || "";
+  if(!src){
+    coverImg.removeAttribute("src");
+    coverImg.style.display = "none";
     return;
   }
-
-  imgEl.style.display="block";
-  hint.textContent = "Click to flip";
-  const url = IMAGE_DIR + encodeURIComponent(filename);
-  imgEl.src = url;
-  imgEl.onerror = () => {
-    imgEl.style.display="none";
-    hint.textContent = "Image not found — check manifest filenames";
+  coverImg.style.display = "block";
+  coverImg.src = src;
+  coverImg.onerror = () => {
+    coverImg.style.display = "none";
+  };
+  coverImg.onload = () => {
+    coverImg.style.display = "block";
   };
 }
 
-/* =========================
-   Labs/topics selection
-   ========================= */
-const ALL_LABS = Array.from({length:11}, (_,i)=>i+1);
-let selectedLabs = new Set([1]);
-let selectedTopics = new Set();
-
-function topicsInLabs(labsSet){
-  const labs = [...labsSet];
-  const topics = CARD_BANK
-    .filter(c => labs.includes(c.lab))
-    .flatMap(c => c.topics || []);
-  return unique(topics).sort((a,b)=>a.localeCompare(b));
+function parseQuestionsForLab(labId){
+  const raw = QUESTION_DATA[labId];
+  if(!raw) return [];
+  return raw.split("\n").map(line=>{
+    const parts = line.split("\t");
+    if(parts.length < 6) return null;
+    const prompt = parts[0].trim();
+    const choices = parts.slice(1,5).map(s=>s.trim());
+    const correctLetter = parts[5].trim().toUpperCase();
+    const correctIndex = ["A","B","C","D"].indexOf(correctLetter);
+    return {labId, prompt, choices, correctIndex};
+  }).filter(Boolean);
 }
 
-function cardValidForMode(c){
-  if(answerMode === "mcq"){
-    return Array.isArray(c.options) && c.options.length >= 2 && Number.isInteger(c.answerIndex);
+function shuffleInPlace(a){
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
   }
-  return typeof c.shortAnswer === "string" && isOneWord(c.shortAnswer);
+  return a;
 }
 
-function buildDeck(){
-  const labs = [...selectedLabs];
-  const topics = [...selectedTopics];
+function makeShuffledQuestion(q){
+  // shuffle choices while preserving correct
+  const indexed = q.choices.map((text, i)=>({text, i}));
+  shuffleInPlace(indexed);
+  const newChoices = indexed.map(x=>x.text);
+  const newCorrect = indexed.findIndex(x=>x.i===q.correctIndex);
+  return {
+    ...q,
+    choices: newChoices,
+    correctIndex: newCorrect
+  };
+}
 
-  const pool = CARD_BANK.filter(c => {
-    const inLab = labs.includes(c.lab);
-    const inTopic = topics.length ? (c.topics || []).some(t => selectedTopics.has(t)) : true;
-    return inLab && inTopic && cardValidForMode(c);
+function buildPool(selectedLabs){
+  let pool = [];
+  for(const id of selectedLabs){
+    pool = pool.concat(parseQuestionsForLab(id));
+  }
+  return pool;
+}
+
+function startSession(){
+  // validate
+  if(!state.selectedLabs.length){
+    alert("Please select at least one lab.");
+    return;
+  }
+
+  // clear exam timer
+  if(state.exam.timerId) { clearInterval(state.exam.timerId); state.exam.timerId=null; }
+
+  state.idx = 0;
+  state.selectedChoice = null;
+  state.submitted = false;
+  state.revealed = false;
+  state.exam.active = (state.mode==="exam");
+  state.exam.answers = [];
+  timerPill.textContent = "Time: —";
+
+  const pool = buildPool(state.selectedLabs);
+  if(!pool.length){
+    alert("No questions found for selected labs.");
+    return;
+  }
+
+  let desiredN;
+  if(state.mode==="exam"){
+    desiredN = Math.max(5, Math.min(Number(state.exam.n)||20, pool.length));
+  }else{
+    const sc = sessionCount.value;
+    desiredN = (sc==="9999") ? pool.length : Math.min(Number(sc)||30, pool.length);
+  }
+
+  shuffleInPlace(pool);
+  const chosen = pool.slice(0, desiredN).map(makeShuffledQuestion);
+
+  state.queue = chosen;
+
+  // set cover based on first question lab
+  setCoverForLab(state.queue[0].labId);
+  renderCurrent();
+  flip(false);
+  setPills();
+  closeSettings();
+
+  if(state.mode==="exam"){
+    setupExamTimer();
+  }
+}
+
+function setupExamTimer(){
+  const minutes = Number(state.exam.timeMin)||0;
+  if(minutes <= 0){
+    timerPill.textContent = "Time: ∞";
+    return;
+  }
+  state.exam.startTs = Date.now();
+  state.exam.endTs = state.exam.startTs + minutes*60*1000;
+
+  function tick(){
+    const now = Date.now();
+    const remaining = Math.max(0, state.exam.endTs - now);
+    const mm = Math.floor(remaining/60000);
+    const ss = Math.floor((remaining%60000)/1000);
+    timerPill.textContent = `Time: ${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
+    if(remaining<=0){
+      clearInterval(state.exam.timerId);
+      state.exam.timerId=null;
+      finishExam(true);
+    }
+  }
+  tick();
+  state.exam.timerId = setInterval(tick, 250);
+}
+
+function renderCurrent(){
+  const q = state.queue[state.idx];
+  if(!q) return;
+
+  const lab = LABS.find(l=>l.id===q.labId);
+  qLab.textContent = lab ? `${lab.name}: ${lab.topic}` : `Lab ${q.labId}`;
+  qText.textContent = q.prompt;
+
+  // reset local question state
+  state.selectedChoice = null;
+  state.submitted = false;
+  state.revealed = false;
+
+  // buttons behavior per mode
+  revealBtn.style.display = (state.mode==="learn") ? "inline-block" : "none";
+  submitBtn.style.display = (state.mode==="learn") ? "inline-block" : "inline-block";
+  nextBtn.style.display = "inline-block";
+
+  feedbackEl.className = "feedback";
+  feedbackEl.textContent = "";
+  feedbackEl.classList.remove("show","good","bad","warn");
+
+  // cover image updates per question (keeps the “cue card cover” tied to lab)
+  setCoverForLab(q.labId);
+
+  // choices
+  choicesEl.innerHTML = "";
+  const letters = ["A","B","C","D"];
+  q.choices.forEach((choiceText, i)=>{
+    const btn = document.createElement("div");
+    btn.className = "choice";
+    btn.setAttribute("role","button");
+    btn.setAttribute("tabindex","0");
+    btn.dataset.index = String(i);
+    btn.innerHTML = `<strong>${letters[i]}</strong><div class="label">${escapeHtml(choiceText)}</div>`;
+    btn.addEventListener("click", ()=>selectChoice(i));
+    btn.addEventListener("keydown", (e)=>{
+      if(e.key==="Enter" || e.key===" "){
+        e.preventDefault();
+        selectChoice(i);
+      }
+    });
+    choicesEl.appendChild(btn);
   });
 
-  return shuffle(pool);
+  setPills();
 }
 
-/* =========================
-   UI state
-   ========================= */
-let deck = [];
-let idx = 0;
-let flipped = false;
-let answered = false;
-let lastChoiceIndex = null;
-let hasStarted = false;
-
-function currentCard(){ return deck[idx] || null; }
-
-function updateProgress(){
-  $("#counter").textContent = deck.length ? `${idx+1} / ${deck.length}` : `0 / 0`;
-  $("#barFill").style.width = deck.length ? `${Math.round(((idx+1)/deck.length)*100)}%` : "0%";
+function escapeHtml(s){
+  return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;");
 }
 
-function clearConfetti(){
-  $("#confettiMcq").innerHTML = "";
-  $("#confettiSa").innerHTML = "";
-}
-
-function confettiBurst(layerEl){
-  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  layerEl.innerHTML = "";
-  const colors = ["#6ecbff","#8a7dff","#22c55e","#f59e0b","#ef4444","#ffffff"];
-  const W = layerEl.clientWidth || 520;
-  const H = layerEl.clientHeight || 220;
-
-  const n = 26;
-  for(let i=0;i<n;i++){
-    const bit = document.createElement("span");
-    bit.className = "confettiBit";
-    bit.style.left = (Math.random()*W) + "px";
-    bit.style.top  = (Math.random()*H*0.25) + "px";
-    bit.style.background = colors[Math.floor(Math.random()*colors.length)];
-    bit.style.animationDelay = (Math.random()*0.08) + "s";
-    layerEl.appendChild(bit);
-  }
-  setTimeout(()=>layerEl.innerHTML="", 1000);
-}
-
-/* =========================
-   Render back content
-   ========================= */
-function renderChoices(cardObj){
-  const wrap = $("#choicesWrap");
-  [...wrap.querySelectorAll(".choiceBtn")].forEach(x=>x.remove());
-
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  (cardObj.options || []).forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "choiceBtn";
-    btn.setAttribute("data-index", String(i));
-    btn.innerHTML = `<span class="badge">${letters[i] || (i+1)}</span><span class="choiceText">${opt}</span>`;
-    btn.addEventListener("click", () => chooseAnswer(i));
-    wrap.appendChild(btn);
+function selectChoice(i){
+  if(state.submitted && state.mode!=="learn") return; // lock after submit in test/exam
+  state.selectedChoice = i;
+  [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
+    el.classList.toggle("selected", Number(el.dataset.index)===i);
   });
-}
-
-function lockChoices(lock=true){
-  const btns = [...$("#choicesWrap").querySelectorAll(".choiceBtn")];
-  btns.forEach(b => b.disabled = lock);
-}
-
-function markChoices(cardObj, chosenIndex, revealOnly=false){
-  const btns = [...$("#choicesWrap").querySelectorAll(".choiceBtn")];
-  btns.forEach((b, i) => {
-    b.classList.remove("correct","wrong");
-    if(i === cardObj.answerIndex) b.classList.add("correct");
-    if(!revealOnly && chosenIndex === i && chosenIndex !== cardObj.answerIndex) b.classList.add("wrong");
-  });
-}
-
-function setQuestionUI(){
-  const c = currentCard();
-  $("#revealBox").classList.remove("show");
-  $("#revealBox").textContent = "";
-  clearConfetti();
-
-  if(!c){
-    $("#metaLine").textContent = "No cards match your selection";
-    $("#question").textContent = "Change labs/topics (or switch mode) to begin.";
-
-    [...$("#choicesWrap").querySelectorAll(".choiceBtn")].forEach(x=>x.remove());
-    $("#saInput").value = "";
-    $("#saInput").disabled = true;
-    return;
-  }
-
-  $("#metaLine").textContent = `Lab ${c.lab} • ${(c.topics||[]).join(" • ")}`;
-  $("#question").textContent = c.stem;
-
-  answered = false;
-  lastChoiceIndex = null;
-
-  if(answerMode === "mcq"){
-    renderChoices(c);
-    lockChoices(!flipped);
-    $("#saInput").value = "";
-    $("#saInput").disabled = true;
-  }else{
-    [...$("#choicesWrap").querySelectorAll(".choiceBtn")].forEach(x=>x.remove());
-    $("#saInput").value = "";
-    $("#saInput").placeholder = "Type ONE word, then press Enter…";
-    $("#saInput").disabled = !flipped;
-  }
-}
-
-function renderCard(){
-  updateProgress();
-  setCardBackImage();
-  setQuestionUI();
-  $("#card").classList.toggle("isFlipped", flipped);
-
-  if(answerMode === "sa" && flipped && currentCard()){
-    setTimeout(()=>$("#saInput").focus(), 220);
-  }
-}
-
-function updateStatusLine(){
-  if(!hasStarted){
-    $("#statusLine").textContent = "Pick labs/topics to start.";
-    return;
-  }
-  const labsTxt = [...selectedLabs].sort((a,b)=>a-b).join(", ");
-  const topicsTxt = [...selectedTopics].sort((a,b)=>a.localeCompare(b)).join(", ");
-  const modeTxt = (answerMode==="mcq") ? "Multiple choice" : "Short answer (one word, Enter to submit)";
-  if(deck.length){
-    $("#statusLine").textContent = `Mode: ${modeTxt}. Studying labs: ${labsTxt}. Topics: ${topicsTxt}.`;
-  }else{
-    $("#statusLine").textContent =
-      `Mode: ${modeTxt}. No cards match your selection in this mode. (Short Answer keys must be one word.)`;
-  }
-}
-
-/* =========================
-   Answer logic
-   ========================= */
-function ensureFlipped(){
-  if(!deck.length){ say("Pick labs/topics first."); return false; }
-  if(!flipped){ say("Flip the card first."); return false; }
-  return true;
-}
-
-/* MCQ */
-function chooseAnswer(choiceIndex){
-  const c = currentCard();
-  if(!c) return;
-  if(answerMode !== "mcq") return;
-  if(!ensureFlipped()) return;
-  if(answered) return;
-
-  answered = true;
-  lastChoiceIndex = choiceIndex;
-
-  const correct = choiceIndex === c.answerIndex;
-
-  if(correct){
-    say("Correct.");
-    markChoices(c, choiceIndex, false);
-    confettiBurst($("#confettiMcq"));
-  }else{
-    say("Not quite.");
-    markChoices(c, choiceIndex, false);
-  }
-  lockChoices(true);
-}
-
-/* Short answer
-   IMPORTANT: no correctness is shown until ENTER is pressed.
-*/
-function submitShortAnswer(){
-  const c = currentCard();
-  if(!c) return;
-  if(answerMode !== "sa") return;
-  if(!ensureFlipped()) return;
-
-  const raw = $("#saInput").value || "";
-  const cleaned = norm(raw);
-
-  if(!cleaned){
-    say("Type an answer, then press Enter.");
-    return;
-  }
-  const parts = cleaned.split(" ").filter(Boolean);
-  if(parts.length !== 1){
-    say("One word only.");
-    return;
-  }
-
-  const key = norm(c.shortAnswer);
-  if(cleaned === key){
-    say("Correct.");
-    $("#saInput").disabled = true;
-    confettiBurst($("#confettiSa"));
-  }else{
-    say("Not quite.");
-  }
 }
 
 function revealAnswer(){
-  const c = currentCard();
-  if(!c) return;
-  if(!ensureFlipped()) return;
+  if(state.mode!=="learn") return;
+  const q = state.queue[state.idx];
+  if(!q) return;
+  state.revealed = true;
 
-  if(answerMode === "mcq"){
-    markChoices(c, lastChoiceIndex, true);
-    lockChoices(true);
-    const expl = c.explanation ? `<div style="margin-top:6px; opacity:.95">${c.explanation}</div>` : "";
-    $("#revealBox").innerHTML = `<strong>Correct answer:</strong> ${c.options[c.answerIndex] || "—"}${expl}`;
-    $("#revealBox").classList.add("show");
+  [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
+    const idx = Number(el.dataset.index);
+    el.classList.remove("wrong","correct");
+    if(idx === q.correctIndex) el.classList.add("correct");
+  });
+
+  feedbackEl.className = "feedback show warn";
+  feedbackEl.textContent = `Reveal: Correct answer is “${q.choices[q.correctIndex]}”.`;
+}
+
+function submitAnswer(){
+  const q = state.queue[state.idx];
+  if(!q) return;
+
+  if(state.selectedChoice === null || state.selectedChoice === undefined){
+    feedbackEl.className = "feedback show warn";
+    feedbackEl.textContent = "Select an option first (keys 1–4 or tap), then press Submit / Enter.";
     return;
   }
 
-  const expl = c.explanation ? `<div style="margin-top:6px; opacity:.95">${c.explanation}</div>` : "";
-  $("#revealBox").innerHTML = `<strong>Correct answer:</strong> ${c.shortAnswer || "—"}${expl}`;
-  $("#revealBox").classList.add("show");
-  $("#saInput").disabled = true;
-}
+  // Learn mode can show feedback immediately; Test mode shows correctness; Exam mode records only
+  const isCorrect = (state.selectedChoice === q.correctIndex);
 
-function nextCard(){
-  if(!deck.length) return;
-  idx = (idx + 1) % deck.length;
-  flipped = false;
-  answered = false;
-  lastChoiceIndex = null;
-  $("#saInput").disabled = true;
-  $("#saInput").value = "";
-  $("#revealBox").classList.remove("show");
-  $("#revealBox").textContent = "";
-  renderCard();
-  say("Next");
-}
-
-/* =========================
-   Modal (labs/topics picker)
-   ========================= */
-const modal = $("#pickerModal");
-
-function openModal(step="labs"){
-  modal.classList.add("show");
-  $("#stepLabs").style.display = (step==="labs") ? "block" : "none";
-  $("#stepTopics").style.display = (step==="topics") ? "block" : "none";
-}
-function closeModal(){ modal.classList.remove("show"); }
-
-function renderLabChips(){
-  const host = $("#labChips");
-  host.innerHTML = "";
-  ALL_LABS.forEach(n=>{
-    const label = document.createElement("label");
-    label.className = "chip";
-    label.innerHTML = `<input type="checkbox" value="${n}">Lab ${n}`;
-    label.querySelector("input").checked = selectedLabs.has(n);
-    host.appendChild(label);
-  });
-}
-
-function renderTopicChips(){
-  const host = $("#topicChips");
-  host.innerHTML = "";
-
-  const topics = topicsInLabs(selectedLabs);
-  if(!topics.length){
-    const p=document.createElement("div");
-    p.style.color="rgba(155,182,211,.9)";
-    p.style.fontWeight="950";
-    p.textContent = "No topics found for those labs (check your CARD_BANK topics).";
-    host.appendChild(p);
-    return;
-  }
-
-  if(selectedTopics.size === 0){
-    topics.forEach(t=>selectedTopics.add(t));
-  }
-
-  topics.forEach(t=>{
-    const label = document.createElement("label");
-    label.className = "chip";
-    label.innerHTML = `<input type="checkbox" value="${t}">${t}`;
-    label.querySelector("input").checked = selectedTopics.has(t);
-    host.appendChild(label);
-  });
-}
-
-function applyLabsFromModal(){
-  const cbs = [...$("#labChips").querySelectorAll("input[type=checkbox]:checked")];
-  const labs = cbs.map(cb=>parseInt(cb.value,10)).filter(n=>Number.isFinite(n));
-  if(!labs.length){ say("Pick at least one lab."); return false; }
-  selectedLabs = new Set(labs);
-  selectedTopics = new Set();
-  return true;
-}
-
-function applyTopicsFromModal(){
-  const cbs = [...$("#topicChips").querySelectorAll("input[type=checkbox]:checked")];
-  const topics = cbs.map(cb=>cb.value).filter(Boolean);
-  if(!topics.length){ say("Pick at least one topic (or Select all)."); return false; }
-  selectedTopics = new Set(topics);
-  return true;
-}
-
-function startWithSelections(){
-  hasStarted = true;
-  deck = buildDeck();
-  idx = 0;
-  flipped = false;
-  answered = false;
-  lastChoiceIndex = null;
-
-  renderCard();
-  updateStatusLine();
-
-  if(deck.length){
-    say(`Loaded ${deck.length} cards.`);
+  if(state.mode==="exam"){
+    state.submitted = true;
+    // record
+    const pickedText = q.choices[state.selectedChoice];
+    const correctText = q.choices[q.correctIndex];
+    state.exam.answers[state.idx] = {
+      q,
+      pickedIndex: state.selectedChoice,
+      correctIndex: q.correctIndex,
+      pickedText,
+      correctText,
+      isCorrect
+    };
+    // no feedback now
+    feedbackEl.className = "feedback show";
+    feedbackEl.textContent = "Answer recorded. (Exam mode: feedback shown at the end.)";
   }else{
-    say("No matching cards.");
+    state.submitted = true;
+
+    [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
+      const idx = Number(el.dataset.index);
+      el.classList.remove("wrong","correct");
+      if(idx === q.correctIndex) el.classList.add("correct");
+      if(idx === state.selectedChoice && idx !== q.correctIndex) el.classList.add("wrong");
+    });
+
+    feedbackEl.className = "feedback show " + (isCorrect ? "good" : "bad");
+    feedbackEl.textContent = isCorrect
+      ? "Correct."
+      : `Incorrect. Correct answer: “${q.choices[q.correctIndex]}”.`;
   }
 }
 
-/* =========================
-   Events
-   ========================= */
-$("#modeMcq").addEventListener("click", ()=>setMode("mcq"));
-$("#modeSa").addEventListener("click", ()=>setMode("sa"));
-
-$("#changeBtn").addEventListener("click", ()=>{ renderLabChips(); openModal("labs"); });
-
-$("#shuffleBtn").addEventListener("click", ()=>{
-  if(!hasStarted){ say("Pick labs/topics first."); return; }
-  if(!deck.length){ say("No cards in this mode."); return; }
-  deck = shuffle(deck);
-  idx = 0;
-  flipped = false;
-  answered = false;
-  lastChoiceIndex = null;
-  $("#saInput").disabled = true;
-  $("#saInput").value = "";
-  $("#revealBox").classList.remove("show");
-  $("#revealBox").textContent = "";
-  renderCard();
-  say("Shuffled");
-});
-
-$("#resetBtn").addEventListener("click", ()=>{
-  if(!hasStarted){ say("Pick labs/topics first."); return; }
-  idx = 0;
-  flipped = false;
-  answered = false;
-  lastChoiceIndex = null;
-  $("#saInput").disabled = true;
-  $("#saInput").value = "";
-  $("#revealBox").classList.remove("show");
-  $("#revealBox").textContent = "";
-  renderCard();
-  say("Reset");
-});
-
-$("#card").addEventListener("click", ()=>{
-  if(!hasStarted){ say("Pick labs/topics first."); return; }
-  if(!deck.length){ say("No cards in this mode."); return; }
-  if(flipped) return;
-  flipped = true;
-  renderCard();
-  if(answerMode === "mcq") lockChoices(false);
-  if(answerMode === "sa"){ $("#saInput").disabled = false; setTimeout(()=>$("#saInput").focus(), 220); }
-});
-
-$("#card").addEventListener("keydown", (e)=>{
-  if(e.key === " "){
-    e.preventDefault();
-    if(!hasStarted){ say("Pick labs/topics first."); return; }
-    if(!deck.length){ say("No cards in this mode."); return; }
-    flipped = !flipped;
-    answered = false;
-    lastChoiceIndex = null;
-    $("#saInput").disabled = !flipped || answerMode!=="sa";
-    $("#saInput").value = "";
-    $("#revealBox").classList.remove("show");
-    $("#revealBox").textContent = "";
-    renderCard();
-    if(answerMode === "mcq") lockChoices(!flipped);
-  }
-
-  // MCQ quick keys: 1-6
-  const n = parseInt(e.key,10);
-  if(Number.isFinite(n) && n >= 1 && n <= 6){
-    if(flipped && answerMode==="mcq"){
-      const c=currentCard(); if(!c) return;
-      if(n-1 < (c.options||[]).length) chooseAnswer(n-1);
+function nextQuestion(){
+  if(state.mode==="exam"){
+    // In exam mode, require an answer before moving on
+    const recorded = state.exam.answers[state.idx];
+    if(!recorded){
+      feedbackEl.className = "feedback show warn";
+      feedbackEl.textContent = "Exam mode: submit an answer before moving on.";
+      return;
+    }
+  }else if(state.mode==="test"){
+    // Test mode: require submit before moving on
+    if(!state.submitted){
+      feedbackEl.className = "feedback show warn";
+      feedbackEl.textContent = "Test mode: submit your answer before moving on.";
+      return;
     }
   }
 
-  // Enter submits short answer (only shows correctness after Enter)
-  if(e.key === "Enter" && flipped && answerMode==="sa"){
-    e.preventDefault();
-    submitShortAnswer();
+  if(state.idx >= state.queue.length - 1){
+    if(state.mode==="exam"){
+      finishExam(false);
+      return;
+    }
+    // loop by reshuffling
+    shuffleInPlace(state.queue);
+    state.idx = 0;
+    renderCurrent();
+    flip(false);
+    return;
   }
 
-  // R reveal, -> next
-  if(e.key.toLowerCase() === "r"){ e.preventDefault(); revealAnswer(); }
-  if(e.key === "ArrowRight"){ e.preventDefault(); nextCard(); }
+  state.idx++;
+  renderCurrent();
+  flip(false);
+}
+
+function finishExam(forcedByTime){
+  if(state.exam.timerId){ clearInterval(state.exam.timerId); state.exam.timerId=null; }
+
+  // ensure all answered? If not, mark unanswered as incorrect
+  for(let i=0;i<state.queue.length;i++){
+    if(!state.exam.answers[i]){
+      const q = state.queue[i];
+      state.exam.answers[i] = {
+        q,
+        pickedIndex: null,
+        correctIndex: q.correctIndex,
+        pickedText: "(no answer)",
+        correctText: q.choices[q.correctIndex],
+        isCorrect: false
+      };
+    }
+  }
+
+  const total = state.exam.answers.length;
+  const correct = state.exam.answers.filter(a=>a.isCorrect).length;
+  const pct = Math.round((correct/total)*100);
+
+  $("resultsSummary").textContent =
+    `${forcedByTime ? "Time is up. " : ""}Score: ${correct} / ${total} (${pct}%). Review below.`;
+
+  const list = $("resultsList");
+  list.innerHTML = "";
+  state.exam.answers.forEach((a, i)=>{
+    const lab = LABS.find(l=>l.id===a.q.labId);
+    const div = document.createElement("div");
+    div.className = "resultCard";
+    div.innerHTML = `
+      <div class="meta">
+        Q${i+1} • ${lab ? lab.name : "Lab"} • ${lab ? lab.topic : ""}
+        <span class="badge ${a.isCorrect ? "good" : "bad"}">${a.isCorrect ? "Correct" : "Incorrect"}</span>
+      </div>
+      <p class="qt">${escapeHtml(a.q.prompt)}</p>
+      <div class="ans"><strong>Your answer:</strong> ${escapeHtml(a.pickedText || "(no answer)")}</div>
+      <div class="ans"><strong>Correct:</strong> ${escapeHtml(a.correctText)}</div>
+    `;
+    list.appendChild(div);
+  });
+
+  openResults();
+}
+
+/* =========================
+   UI Wiring
+========================= */
+$("settingsBtn").addEventListener("click", openSettings);
+$("closeSettingsBtn").addEventListener("click", closeSettings);
+
+$("helpBtn").addEventListener("click", openHelp);
+$("closeHelpBtn").addEventListener("click", closeHelp);
+
+$("closeResultsBtn").addEventListener("click", closeResults);
+$("restartBtn").addEventListener("click", ()=>{
+  closeResults();
+  openSettings();
 });
 
-// Enter submits when typing in the input as well
-$("#saInput").addEventListener("keydown", (e)=>{
+flipBtn.addEventListener("click", ()=>flip());
+$("coverSide").addEventListener("click", ()=>flip(true));
+
+revealBtn.addEventListener("click", revealAnswer);
+submitBtn.addEventListener("click", submitAnswer);
+nextBtn.addEventListener("click", nextQuestion);
+
+resetBtn.addEventListener("click", ()=>{
+  localStorage.removeItem("kin100_flashcards_prefs");
+  state.selectedLabs = [1,2,3,4,5,6];
+  state.mode = "learn";
+  state.sessionN = 30;
+  state.exam.n = 20;
+  state.exam.timeMin = 0;
+  remember.value = "yes";
+  renderSettings();
+});
+
+startBtn.addEventListener("click", ()=>{
+  // pull settings from modal
+  state.remember = (remember.value === "yes");
+  state.sessionN = Number(sessionCount.value)==9999 ? 9999 : Number(sessionCount.value)||30;
+  state.exam.n = Number(examCount.value)||20;
+  state.exam.timeMin = Number(examTime.value)||0;
+  savePrefs();
+  startSession();
+});
+
+$("restartBtn").addEventListener("click", ()=>{
+  closeResults();
+  openSettings();
+});
+
+function renderSettings(){
+  // labs
+  labsList.innerHTML = "";
+  LABS.forEach(l=>{
+    const div = document.createElement("label");
+    div.className = "labOpt";
+    div.innerHTML = `
+      <input type="checkbox" value="${l.id}">
+      <div>
+        <div class="labName">${l.name}</div>
+        <div class="labTopic">${l.topic}</div>
+      </div>
+    `;
+    const cb = div.querySelector("input");
+    cb.checked = state.selectedLabs.includes(l.id);
+    cb.addEventListener("change", ()=>{
+      const id = Number(cb.value);
+      if(cb.checked){
+        if(!state.selectedLabs.includes(id)) state.selectedLabs.push(id);
+      }else{
+        state.selectedLabs = state.selectedLabs.filter(x=>x!==id);
+      }
+      setPills();
+    });
+    labsList.appendChild(div);
+  });
+
+  // mode radios
+  document.querySelectorAll('input[name="mode"]').forEach(r=>{
+    r.checked = (r.value === state.mode);
+    r.addEventListener("change", ()=>{
+      state.mode = r.value;
+      examFields.style.display = (state.mode==="exam") ? "block" : "none";
+      $("studyFields").style.display = (state.mode==="exam") ? "none" : "block";
+      setPills();
+    });
+  });
+
+  // fields
+  examCount.value = String(state.exam.n || 20);
+  examTime.value = String(state.exam.timeMin || 0);
+
+  // session count
+  if(state.sessionN===9999) sessionCount.value = "9999";
+  else sessionCount.value = String(state.sessionN || 30);
+
+  remember.value = state.remember ? "yes" : "no";
+
+  examFields.style.display = (state.mode==="exam") ? "block" : "none";
+  $("studyFields").style.display = (state.mode==="exam") ? "none" : "block";
+  setPills();
+}
+
+/* =========================
+   Keyboard Shortcuts
+========================= */
+document.addEventListener("keydown", (e)=>{
+  // If a modal is open, keep shortcuts minimal
+  const settingsOpen = settingsModalBack.classList.contains("show");
+  const helpOpen = helpModalBack.classList.contains("show");
+  const resultsOpen = resultsModalBack.classList.contains("show");
+
+  if(e.key === "Escape"){
+    if(helpOpen) closeHelp();
+    else if(resultsOpen) closeResults();
+    else if(settingsOpen) closeSettings();
+    else openSettings();
+    return;
+  }
+  if(e.key === "?" || (e.shiftKey && e.key === "/")){
+    if(!helpOpen) openHelp(); else closeHelp();
+    return;
+  }
+
+  if(settingsOpen || helpOpen || resultsOpen) return;
+
+  if(e.key === " "){
+    e.preventDefault();
+    flip();
+    return;
+  }
+  if(e.key.toLowerCase() === "n"){
+    nextQuestion();
+    return;
+  }
+  if(e.key.toLowerCase() === "r"){
+    revealAnswer();
+    return;
+  }
   if(e.key === "Enter"){
-    e.preventDefault();
-    submitShortAnswer();
+    // if already submitted in test/exam, Enter advances; otherwise submits
+    if(state.mode==="exam"){
+      const recorded = state.exam.answers[state.idx];
+      if(recorded) nextQuestion(); else submitAnswer();
+    }else if(state.mode==="test"){
+      if(state.submitted) nextQuestion(); else submitAnswer();
+    }else{
+      // Learn: if revealed or submitted, advance; else submit
+      if(state.revealed || state.submitted) nextQuestion();
+      else submitAnswer();
+    }
+    return;
   }
-});
 
-$("#revealBtn").addEventListener("click", revealAnswer);
-$("#nextBtn").addEventListener("click", nextCard);
-
-/* Modal buttons */
-$("#labsSelectAll").addEventListener("click", ()=>{
-  const allSelected = ALL_LABS.every(n=>$("#labChips input[value='"+n+"']").checked);
-  ALL_LABS.forEach(n=>{ $("#labChips input[value='"+n+"']").checked = !allSelected; });
-});
-
-$("#toTopics").addEventListener("click", ()=>{
-  if(!applyLabsFromModal()) return;
-  renderTopicChips();
-  openModal("topics");
-});
-
-$("#backToLabs").addEventListener("click", ()=>openModal("labs"));
-
-$("#topicsSelectAll").addEventListener("click", ()=>{
-  const inputs = [...$("#topicChips").querySelectorAll("input[type=checkbox]")];
-  const allSelected = inputs.length && inputs.every(x=>x.checked);
-  inputs.forEach(x=>x.checked = !allSelected);
-});
-
-$("#startBtn").addEventListener("click", ()=>{
-  if(!applyTopicsFromModal()) return;
-  closeModal();
-  startWithSelections();
+  // 1–4 selects option (but does not auto-submit)
+  const k = e.key;
+  if(["1","2","3","4"].includes(k)){
+    const idx = Number(k)-1;
+    selectChoice(idx);
+    return;
+  }
 });
 
 /* =========================
    Init
-   ========================= */
-(async function init(){
-  $("#statusLine").textContent = "Loading images…";
-  await loadManifest();
-  renderLabChips();
-  openModal("labs");
-  setMode("mcq");
-  deck = [];
-  idx = 0;
-  flipped = false;
-  renderCard();
-  updateStatusLine();
-})();
+========================= */
+loadPrefs();
+state.remember = true; // default; modal controls whether to persist
+renderSettings();
+
+// initial UI state
+setPills();
+setCoverForLab(state.selectedLabs[0] || 1);
+renderCurrent();
+openSettings();
 </script>
 </body>
 </html>
