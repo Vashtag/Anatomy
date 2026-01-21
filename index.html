@@ -36,7 +36,6 @@
     overflow-x:hidden;
   }
 
-  /* subtle stars */
   .stars{
     position:fixed; inset:0; pointer-events:none; z-index:0;
     background-image:
@@ -327,11 +326,11 @@
   }
   input[disabled]{opacity:.6; cursor:not-allowed}
 
-  .saBtns{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    justify-content:center;
+  .saHint{
+    color:rgba(155,182,211,.9);
+    font-weight:900;
+    text-align:center;
+    font-size:.95rem;
   }
 
   /* Reveal */
@@ -516,14 +515,9 @@
           <div class="saWrap" aria-label="Short answer">
             <div class="inputWrap">
               <div class="confettiLayer" id="confettiSa" aria-hidden="true"></div>
-              <input id="saInput" type="text" autocomplete="off" spellcheck="false" placeholder="Type ONE word…" disabled />
+              <input id="saInput" type="text" autocomplete="off" spellcheck="false" placeholder="Type ONE word, then press Enter…" disabled />
             </div>
-            <div class="saBtns">
-              <button id="saCheck" type="button">Check</button>
-            </div>
-            <div style="color:rgba(155,182,211,.9); font-weight:900; text-align:center; font-size:.95rem;">
-              Short answer accepts exactly one word.
-            </div>
+            <div class="saHint">Type one word, then press Enter to submit.</div>
           </div>
         </div>
 
@@ -584,7 +578,6 @@ const MANIFEST_URL = IMAGE_DIR + "manifest.json";
    - shortAnswer must be EXACTLY ONE WORD for Short Answer mode
 */
 const CARD_BANK = [
-  // Sample cards adjusted so shortAnswer is one word (per your rule)
   {
     lab: 1,
     topics:["muscles","innervation"],
@@ -621,7 +614,6 @@ const CARD_BANK = [
     shortAnswer:"Profunda",
     explanation:"Triangular interval contains the radial nerve and profunda brachii (deep brachial) artery."
   }
-  // Add labs 3–11 similarly...
 ];
 
 /* =========================
@@ -670,11 +662,9 @@ function setMode(mode){
   $("#modeMcq").classList.toggle("active", mode==="mcq");
   $("#modeSa").classList.toggle("active", mode==="sa");
 
-  // Toggle UI panels
   $("#mcqSection").classList.toggle("hidden", mode!=="mcq");
   $("#saSection").classList.toggle("hidden", mode!=="sa");
 
-  // Rebuild deck for this mode (so invalid cards are excluded cleanly)
   if(hasStarted){
     deck = buildDeck();
     idx = 0;
@@ -771,7 +761,6 @@ function cardValidForMode(c){
   if(answerMode === "mcq"){
     return Array.isArray(c.options) && c.options.length >= 2 && Number.isInteger(c.answerIndex);
   }
-  // short answer: must exist and be exactly one word
   return typeof c.shortAnswer === "string" && isOneWord(c.shortAnswer);
 }
 
@@ -894,7 +883,7 @@ function setQuestionUI(){
   }else{
     [...$("#choicesWrap").querySelectorAll(".choiceBtn")].forEach(x=>x.remove());
     $("#saInput").value = "";
-    $("#saInput").placeholder = "Type ONE word…";
+    $("#saInput").placeholder = "Type ONE word, then press Enter…";
     $("#saInput").disabled = !flipped;
   }
 }
@@ -917,12 +906,12 @@ function updateStatusLine(){
   }
   const labsTxt = [...selectedLabs].sort((a,b)=>a-b).join(", ");
   const topicsTxt = [...selectedTopics].sort((a,b)=>a.localeCompare(b)).join(", ");
-  const modeTxt = (answerMode==="mcq") ? "Multiple choice" : "Short answer (one word)";
+  const modeTxt = (answerMode==="mcq") ? "Multiple choice" : "Short answer (one word, Enter to submit)";
   if(deck.length){
     $("#statusLine").textContent = `Mode: ${modeTxt}. Studying labs: ${labsTxt}. Topics: ${topicsTxt}.`;
   }else{
     $("#statusLine").textContent =
-      `Mode: ${modeTxt}. No cards match your selection in this mode. (For Short Answer, keys must be one word.)`;
+      `Mode: ${modeTxt}. No cards match your selection in this mode. (Short Answer keys must be one word.)`;
   }
 }
 
@@ -959,8 +948,10 @@ function chooseAnswer(choiceIndex){
   lockChoices(true);
 }
 
-/* Short answer */
-function checkShortAnswer(){
+/* Short answer
+   IMPORTANT: no correctness is shown until ENTER is pressed.
+*/
+function submitShortAnswer(){
   const c = currentCard();
   if(!c) return;
   if(answerMode !== "sa") return;
@@ -970,7 +961,7 @@ function checkShortAnswer(){
   const cleaned = norm(raw);
 
   if(!cleaned){
-    say("Type an answer.");
+    say("Type an answer, then press Enter.");
     return;
   }
   const parts = cleaned.split(" ").filter(Boolean);
@@ -1003,7 +994,6 @@ function revealAnswer(){
     return;
   }
 
-  // short answer
   const expl = c.explanation ? `<div style="margin-top:6px; opacity:.95">${c.explanation}</div>` : "";
   $("#revealBox").innerHTML = `<strong>Correct answer:</strong> ${c.shortAnswer || "—"}${expl}`;
   $("#revealBox").classList.add("show");
@@ -1151,7 +1141,7 @@ $("#resetBtn").addEventListener("click", ()=>{
 $("#card").addEventListener("click", ()=>{
   if(!hasStarted){ say("Pick labs/topics first."); return; }
   if(!deck.length){ say("No cards in this mode."); return; }
-  if(flipped) return; // prevent accidental flip-back
+  if(flipped) return;
   flipped = true;
   renderCard();
   if(answerMode === "mcq") lockChoices(false);
@@ -1183,10 +1173,10 @@ $("#card").addEventListener("keydown", (e)=>{
     }
   }
 
-  // Enter checks short answer when flipped
+  // Enter submits short answer (only shows correctness after Enter)
   if(e.key === "Enter" && flipped && answerMode==="sa"){
     e.preventDefault();
-    checkShortAnswer();
+    submitShortAnswer();
   }
 
   // R reveal, -> next
@@ -1194,11 +1184,11 @@ $("#card").addEventListener("keydown", (e)=>{
   if(e.key === "ArrowRight"){ e.preventDefault(); nextCard(); }
 });
 
-$("#saCheck").addEventListener("click", checkShortAnswer);
+// Enter submits when typing in the input as well
 $("#saInput").addEventListener("keydown", (e)=>{
   if(e.key === "Enter"){
     e.preventDefault();
-    checkShortAnswer();
+    submitShortAnswer();
   }
 });
 
@@ -1239,7 +1229,7 @@ $("#startBtn").addEventListener("click", ()=>{
   await loadManifest();
   renderLabChips();
   openModal("labs");
-  setMode("mcq"); // default mode
+  setMode("mcq");
   deck = [];
   idx = 0;
   flipped = false;
