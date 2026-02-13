@@ -200,6 +200,200 @@
     }
     .explanation strong{color: var(--accent); font-weight:700}
 
+    /* Streak counter */
+    .streak-pill{
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all .3s cubic-bezier(.2,.8,.2,1);
+    }
+    .streak-fire{
+      display: inline-block;
+      font-size: 14px;
+      transition: all .3s;
+    }
+    .streak-pill.hot .streak-fire{ font-size: 18px }
+    .streak-pill.blazing .streak-fire{ font-size: 22px }
+    @keyframes fireShake{
+      0%,100%{ transform: rotate(0deg) scale(1) }
+      25%{ transform: rotate(-6deg) scale(1.15) }
+      50%{ transform: rotate(4deg) scale(1.2) }
+      75%{ transform: rotate(-3deg) scale(1.1) }
+    }
+    .streak-pill.blazing .streak-fire{
+      animation: fireShake .4s ease-in-out;
+    }
+    @keyframes streakPop{
+      0%{ transform: scale(1) }
+      50%{ transform: scale(1.25) }
+      100%{ transform: scale(1) }
+    }
+    .streak-pill.pop{
+      animation: streakPop .3s ease-out;
+    }
+
+    /* Hint button */
+    .choice.eliminated{
+      opacity: .25;
+      pointer-events: none;
+      text-decoration: line-through;
+      border-style: dashed;
+    }
+
+    /* Fill-in-the-blank */
+    .blank-input-wrap{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .blank-input{
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(0,0,0,.2);
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 700;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .blank-input:focus{
+      border-color: rgba(105,179,255,.5);
+    }
+    .blank-input.correct-input{
+      border-color: rgba(61,220,151,.6);
+      background: rgba(61,220,151,.08);
+    }
+    .blank-input.wrong-input{
+      border-color: rgba(255,107,107,.6);
+      background: rgba(255,107,107,.08);
+    }
+    .similarity-badge{
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+    }
+
+    /* Matching mode */
+    .match-container{
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .match-row{
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+    .match-prompt{
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+    }
+    .match-prompt .match-num{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px; height: 22px;
+      border-radius: 7px;
+      background: rgba(105,179,255,.15);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    .match-answer{
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+      cursor: pointer;
+      user-select: none;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+    }
+    .match-answer:hover{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.2);
+    }
+    .match-answer.match-selected{
+      outline: 2px solid rgba(105,179,255,.55);
+      background: rgba(105,179,255,.10);
+    }
+    .match-answer.match-correct{
+      outline: 2px solid rgba(61,220,151,.55);
+      background: rgba(61,220,151,.10);
+    }
+    .match-answer.match-wrong{
+      outline: 2px solid rgba(255,107,107,.55);
+      background: rgba(255,107,107,.10);
+    }
+    .match-answer .match-tag{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px; height: 22px;
+      border-radius: 7px;
+      background: rgba(255,209,102,.15);
+      color: var(--warn);
+      font-size: 12px;
+      font-weight: 900;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    .match-connector{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      color: rgba(232,238,247,.2);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .match-connector.linked{ color: var(--accent) }
+    .match-score-bar{
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    /* Sound toggle */
+    .sound-toggle{
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: rgba(232,238,247,.5);
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .sound-toggle.on{
+      color: var(--accent);
+      border-color: rgba(105,179,255,.3);
+      background: rgba(105,179,255,.08);
+    }
+
     .actions{
       padding: 12px 14px 14px 14px;
       border-top: 1px solid rgba(255,255,255,.10);
@@ -711,6 +905,7 @@
     <div class="right">
       <span class="pill" id="labPill">Labs: —</span>
       <span class="pill" id="progressPill">0 / 0</span>
+      <span class="pill streak-pill" id="streakPill" style="display:none;"><span class="streak-fire">&#x1f525;</span> <span id="streakNum">0</span></span>
       <span class="pill" id="timerPill" style="display:none;">Time: —</span>
     </div>
   </div>
@@ -750,8 +945,10 @@
             <div class="group">
               <button class="btn small ghost" id="flipBtn" title="Flip (Space)">Flip</button>
               <button class="btn small warn" id="revealBtn" title="Reveal (R) - Learn mode only">Reveal</button>
+              <button class="btn small" id="hintBtn" title="Hint (H) - Eliminate one wrong answer">Hint</button>
             </div>
             <div class="group">
+              <button class="sound-toggle" id="soundToggle" title="Toggle sound">&#x1f508;</button>
               <button class="btn small primary" id="submitBtn" title="Submit (Enter)">Submit</button>
               <button class="btn small good" id="nextBtn" title="Next (N)">Next</button>
             </div>
@@ -798,24 +995,36 @@
 
         <!-- Mode -->
         <div class="section-label">Mode</div>
-        <div class="mode-row" id="modeRow">
+        <div class="mode-row" id="modeRow" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
           <label class="mode-card" data-mode="learn">
             <input type="radio" name="mode" value="learn">
             <div class="mode-icon">&#x1f9e0;</div>
             <div class="mode-title">Learn</div>
-            <div class="mode-desc">Reveal answers at your pace. No pressure.</div>
+            <div class="mode-desc">Reveal at your pace.</div>
           </label>
           <label class="mode-card" data-mode="test">
             <input type="radio" name="mode" value="test">
             <div class="mode-icon">&#x1f4dd;</div>
             <div class="mode-title">Test</div>
-            <div class="mode-desc">Submit to see feedback. Builds accountability.</div>
+            <div class="mode-desc">Submit to see feedback.</div>
           </label>
           <label class="mode-card" data-mode="exam">
             <input type="radio" name="mode" value="exam">
             <div class="mode-icon">&#x23f1;&#xfe0f;</div>
             <div class="mode-title">Exam</div>
-            <div class="mode-desc">No feedback until the end. Timed. Real stakes.</div>
+            <div class="mode-desc">No feedback. Timed.</div>
+          </label>
+          <label class="mode-card" data-mode="blank">
+            <input type="radio" name="mode" value="blank">
+            <div class="mode-icon">&#x270d;&#xfe0f;</div>
+            <div class="mode-title">Fill-in</div>
+            <div class="mode-desc">Type the answer. No choices.</div>
+          </label>
+          <label class="mode-card" data-mode="match">
+            <input type="radio" name="mode" value="match">
+            <div class="mode-icon">&#x1f500;</div>
+            <div class="mode-title">Match</div>
+            <div class="mode-desc">Pair 5 prompts to answers.</div>
           </label>
         </div>
 
@@ -1251,7 +1460,7 @@ const nextBtn = $("nextBtn");
 
 let state = {
   selectedLabs: [1,2,3,4,5,6],
-  mode: "learn", // learn | test | exam
+  mode: "learn", // learn | test | exam | blank | match
   sessionN: 30,
   remember: true,
 
@@ -1262,6 +1471,14 @@ let state = {
   selectedChoice: null,
   submitted: false,
   revealed: false,
+
+  streak: 0,
+  bestStreak: 0,
+  hintsUsed: 0,
+  soundOn: true,
+
+  // Matching mode
+  matchSet: null, // {prompts:[], answers:[], shuffledAnswers:[], links:{}, selectedPrompt:null, submitted:false}
 
   exam: {
     active: false,
@@ -1291,7 +1508,7 @@ function loadPrefs(){
     if(!raw) return;
     const prefs = JSON.parse(raw);
     if(Array.isArray(prefs.selectedLabs) && prefs.selectedLabs.length) state.selectedLabs = prefs.selectedLabs;
-    if(["learn","test","exam"].includes(prefs.mode)) state.mode = prefs.mode;
+    if(["learn","test","exam","blank","match"].includes(prefs.mode)) state.mode = prefs.mode;
     if(typeof prefs.sessionN === "number") state.sessionN = prefs.sessionN;
     if(typeof prefs.examN === "number") state.exam.n = prefs.examN;
     if(typeof prefs.examTimeMin === "number") state.exam.timeMin = prefs.examTimeMin;
@@ -1417,6 +1634,366 @@ function makeShuffledQuestion(q){
   };
 }
 
+/* =========================
+   Sound Effects (Web Audio API)
+========================= */
+let audioCtx = null;
+function getAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTone(freq, dur, type, vol){
+  if(!state.soundOn) return;
+  try{
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type || "sine";
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(vol || 0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + dur);
+  }catch(e){}
+}
+function sfxCorrect(){
+  playTone(523, 0.12, "sine", 0.15);
+  setTimeout(()=>playTone(659, 0.12, "sine", 0.15), 80);
+  setTimeout(()=>playTone(784, 0.18, "sine", 0.12), 160);
+}
+function sfxWrong(){
+  playTone(200, 0.2, "square", 0.08);
+  setTimeout(()=>playTone(160, 0.3, "square", 0.06), 150);
+}
+function sfxHint(){
+  playTone(440, 0.08, "triangle", 0.1);
+}
+function sfxMatch(){
+  playTone(600, 0.1, "sine", 0.1);
+}
+
+/* =========================
+   Streak Display
+========================= */
+const streakPill = $("streakPill");
+const streakNum = $("streakNum");
+
+function updateStreak(correct){
+  if(correct){
+    state.streak++;
+    if(state.streak > state.bestStreak) state.bestStreak = state.streak;
+  } else {
+    state.streak = 0;
+  }
+  renderStreak();
+}
+function renderStreak(){
+  streakPill.style.display = (state.streak > 0) ? "inline-flex" : "none";
+  streakNum.textContent = state.streak;
+  streakPill.classList.remove("hot","blazing","pop");
+  if(state.streak >= 10) streakPill.classList.add("blazing");
+  else if(state.streak >= 5) streakPill.classList.add("hot");
+  if(state.streak > 0){
+    // trigger pop animation
+    void streakPill.offsetWidth; // reflow
+    streakPill.classList.add("pop");
+  }
+}
+
+/* =========================
+   Hint System
+========================= */
+function giveHint(){
+  if(state.submitted || state.revealed) return;
+  const q = state.queue[state.idx];
+  if(!q) return;
+  if(state.mode === "exam" || state.mode === "blank" || state.mode === "match") return;
+
+  const choiceEls = [...choicesEl.querySelectorAll(".choice")];
+  // find wrong choices that haven't been eliminated yet
+  const available = choiceEls.filter(el => {
+    const idx = Number(el.dataset.index);
+    return idx !== q.correctIndex && !el.classList.contains("eliminated");
+  });
+  if(available.length <= 1) return; // keep at least one wrong + the correct
+
+  // eliminate one random wrong choice
+  const target = available[Math.floor(Math.random() * available.length)];
+  target.classList.add("eliminated");
+  state.hintsUsed++;
+  sfxHint();
+}
+
+/* =========================
+   Fill-in-the-Blank Mode
+========================= */
+function fuzzyMatch(input, answer){
+  // Normalize both strings
+  const normalize = s => s.toLowerCase().trim()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, " ");
+  const a = normalize(input);
+  const b = normalize(answer);
+  if(!a) return {match: false, similarity: 0};
+  if(a === b) return {match: true, similarity: 100};
+  // Check if input is a substantial substring of the answer or vice-versa
+  if(b.includes(a) && a.length >= b.length * 0.6) return {match: true, similarity: 90};
+  if(a.includes(b)) return {match: true, similarity: 90};
+  // Levenshtein distance
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m+1}, ()=>Array(n+1).fill(0));
+  for(let i=0;i<=m;i++) dp[i][0]=i;
+  for(let j=0;j<=n;j++) dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      dp[i][j] = Math.min(
+        dp[i-1][j]+1,
+        dp[i][j-1]+1,
+        dp[i-1][j-1] + (a[i-1]===b[j-1] ? 0 : 1)
+      );
+    }
+  }
+  const dist = dp[m][n];
+  const maxLen = Math.max(m,n);
+  const similarity = Math.round((1 - dist/maxLen)*100);
+  // Accept if similarity >= 75%
+  return {match: similarity >= 75, similarity};
+}
+
+function renderBlankMode(q){
+  choicesEl.innerHTML = "";
+  const wrap = document.createElement("div");
+  wrap.className = "blank-input-wrap";
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "blank-input";
+  input.placeholder = "Type your answer...";
+  input.id = "blankInput";
+  input.autocomplete = "off";
+  input.spellcheck = false;
+  input.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter"){
+      e.preventDefault();
+      e.stopPropagation();
+      if(state.submitted) nextQuestion();
+      else submitBlank();
+    }
+  });
+  wrap.appendChild(input);
+  choicesEl.appendChild(wrap);
+  // Focus after flip animation
+  setTimeout(()=>input.focus(), 600);
+}
+
+function submitBlank(){
+  const q = state.queue[state.idx];
+  if(!q) return;
+  const input = $("blankInput");
+  if(!input) return;
+  const typed = input.value.trim();
+  if(!typed){
+    feedbackEl.className = "feedback show warn";
+    feedbackEl.textContent = "Type an answer first.";
+    return;
+  }
+  state.submitted = true;
+  const correctText = q.choices[q.correctIndex];
+  const result = fuzzyMatch(typed, correctText);
+  input.disabled = true;
+
+  if(result.match){
+    input.classList.add("correct-input");
+    feedbackEl.className = "feedback show good";
+    const simBadge = result.similarity < 100
+      ? ` <span class="similarity-badge">${result.similarity}% match</span>` : "";
+    feedbackEl.innerHTML = `Correct!${simBadge}`
+      + (q.explanation ? `<div class="explanation"><strong>Why?</strong> ${escapeHtml(q.explanation)}</div>` : "");
+    updateStreak(true);
+    sfxCorrect();
+  } else {
+    input.classList.add("wrong-input");
+    feedbackEl.className = "feedback show bad";
+    const simBadge = result.similarity > 0
+      ? ` <span class="similarity-badge">${result.similarity}% match</span>` : "";
+    feedbackEl.innerHTML = `Incorrect.${simBadge} Correct answer: "${escapeHtml(correctText)}".`
+      + (q.explanation ? `<div class="explanation"><strong>Why?</strong> ${escapeHtml(q.explanation)}</div>` : "");
+    updateStreak(false);
+    sfxWrong();
+  }
+}
+
+/* =========================
+   Matching Mode
+========================= */
+function startMatchRound(){
+  const pool = state.queue;
+  if(pool.length < 5){
+    feedbackEl.className = "feedback show warn";
+    feedbackEl.textContent = "Need at least 5 questions for matching mode.";
+    return;
+  }
+
+  // Pick 5 questions starting from current index
+  const start = state.idx;
+  const items = [];
+  for(let i=0;i<5 && (start+i)<pool.length;i++){
+    items.push(pool[start+i]);
+  }
+  if(items.length < 5){
+    // wrap around
+    for(let i=0;items.length<5 && i<pool.length;i++){
+      if(!items.includes(pool[i])) items.push(pool[i]);
+    }
+  }
+
+  const prompts = items.map((q,i)=>({idx:i, text: q.prompt, answer: q.choices[q.correctIndex]}));
+  const answers = prompts.map((p,i)=>({idx:i, text: p.answer}));
+  const shuffledAnswers = [...answers];
+  shuffleInPlace(shuffledAnswers);
+
+  state.matchSet = {
+    prompts,
+    answers,
+    shuffledAnswers,
+    links: {}, // promptIdx -> answerIdx
+    selectedPrompt: null,
+    submitted: false,
+    items
+  };
+
+  renderMatchMode();
+}
+
+function renderMatchMode(){
+  const ms = state.matchSet;
+  if(!ms) return;
+
+  // Hide normal question header, repurpose qBody
+  qLab.textContent = "Matching Mode";
+  qText.textContent = "Tap a number, then tap its answer to link them.";
+
+  choicesEl.innerHTML = "";
+  feedbackEl.className = "feedback";
+  feedbackEl.textContent = "";
+
+  const container = document.createElement("div");
+  container.className = "match-container";
+
+  ms.prompts.forEach((p, pi)=>{
+    const row = document.createElement("div");
+    row.className = "match-row";
+
+    // Prompt side
+    const promptEl = document.createElement("div");
+    promptEl.className = "match-prompt";
+    if(ms.selectedPrompt === pi) promptEl.style.borderColor = "rgba(105,179,255,.5)";
+    promptEl.innerHTML = `<span class="match-num">${pi+1}</span>${escapeHtml(p.text)}`;
+    promptEl.style.cursor = "pointer";
+    promptEl.addEventListener("click", ()=>{
+      if(ms.submitted) return;
+      ms.selectedPrompt = pi;
+      renderMatchMode();
+    });
+
+    // Connector
+    const conn = document.createElement("div");
+    conn.className = "match-connector" + (ms.links[pi] !== undefined ? " linked" : "");
+    conn.textContent = ms.links[pi] !== undefined ? "\u2194" : "\u2022";
+
+    // Answer side
+    const ai = ms.shuffledAnswers[pi];
+    const ansEl = document.createElement("div");
+    ansEl.className = "match-answer";
+    if(ms.submitted){
+      // Check if this answer is correctly linked
+      const linkedPrompt = Object.entries(ms.links).find(([k,v])=>v===pi);
+      if(linkedPrompt){
+        const pIdx = Number(linkedPrompt[0]);
+        const isCorrect = ms.shuffledAnswers[pi].idx === pIdx;
+        ansEl.classList.add(isCorrect ? "match-correct" : "match-wrong");
+      }
+    }
+    // Show which prompt it's linked to
+    const linkedBy = Object.entries(ms.links).find(([k,v])=>v===pi);
+    const tag = linkedBy ? String(Number(linkedBy[0])+1) : "?";
+    ansEl.innerHTML = `<span class="match-tag">${tag}</span>${escapeHtml(ai.text)}`;
+    ansEl.addEventListener("click", ()=>{
+      if(ms.submitted) return;
+      if(ms.selectedPrompt === null){
+        feedbackEl.className = "feedback show warn";
+        feedbackEl.textContent = "Select a question number on the left first.";
+        return;
+      }
+      // Link selectedPrompt to this answer slot
+      // Remove any previous link to this answer slot
+      Object.keys(ms.links).forEach(k=>{
+        if(ms.links[k]===pi) delete ms.links[k];
+      });
+      ms.links[ms.selectedPrompt] = pi;
+      ms.selectedPrompt = null;
+      sfxMatch();
+      renderMatchMode();
+    });
+
+    row.appendChild(promptEl);
+    row.appendChild(conn);
+    row.appendChild(ansEl);
+    container.appendChild(row);
+  });
+
+  choicesEl.appendChild(container);
+
+  // Show link count
+  const linkCount = Object.keys(ms.links).length;
+  if(linkCount > 0 && linkCount < 5 && !ms.submitted){
+    feedbackEl.className = "feedback show";
+    feedbackEl.textContent = `${linkCount}/5 paired. Link all 5, then submit.`;
+  }
+}
+
+function submitMatch(){
+  const ms = state.matchSet;
+  if(!ms || ms.submitted) return;
+  if(Object.keys(ms.links).length < 5){
+    feedbackEl.className = "feedback show warn";
+    feedbackEl.textContent = "Link all 5 pairs before submitting.";
+    return;
+  }
+  ms.submitted = true;
+
+  let correct = 0;
+  for(let pi=0;pi<5;pi++){
+    const ansSlot = ms.links[pi];
+    if(ansSlot !== undefined && ms.shuffledAnswers[ansSlot].idx === pi) correct++;
+  }
+
+  const allCorrect = correct === 5;
+  if(allCorrect) sfxCorrect(); else sfxWrong();
+  for(let i=0;i<correct;i++) updateStreak(true);
+  if(!allCorrect) updateStreak(false);
+
+  feedbackEl.className = "feedback show " + (allCorrect ? "good" : "bad");
+  feedbackEl.innerHTML = allCorrect
+    ? "Perfect! All 5 matched correctly."
+    : `${correct}/5 correct. Wrong pairs are highlighted in red.`;
+
+  renderMatchMode();
+}
+
+function nextMatch(){
+  state.idx = Math.min(state.idx + 5, state.queue.length - 1);
+  if(state.idx >= state.queue.length - 5){
+    shuffleInPlace(state.queue);
+    state.idx = 0;
+  }
+  state.matchSet = null;
+  state.submitted = false;
+  startMatchRound();
+  flip(true);
+}
+
 function buildPool(selectedLabs){
   let pool = [];
   for(const id of selectedLabs){
@@ -1439,9 +2016,14 @@ function startSession(){
   state.selectedChoice = null;
   state.submitted = false;
   state.revealed = false;
+  state.streak = 0;
+  state.bestStreak = 0;
+  state.hintsUsed = 0;
+  state.matchSet = null;
   state.exam.active = (state.mode==="exam");
   state.exam.answers = [];
   timerPill.textContent = "Time: —";
+  renderStreak();
 
   const pool = buildPool(state.selectedLabs);
   if(!pool.length){
@@ -1471,6 +2053,10 @@ function startSession(){
 
   if(state.mode==="exam"){
     setupExamTimer();
+  }
+  if(state.mode==="match"){
+    startMatchRound();
+    flip(true);
   }
 }
 
@@ -1513,18 +2099,31 @@ function renderCurrent(){
   state.revealed = false;
 
   // buttons behavior per mode
+  const isBlank = (state.mode==="blank");
+  const isMatch = (state.mode==="match");
   revealBtn.style.display = (state.mode==="learn") ? "inline-block" : "none";
-  submitBtn.style.display = (state.mode==="learn") ? "inline-block" : "inline-block";
+  $("hintBtn").style.display = (!isBlank && !isMatch && state.mode!=="exam") ? "inline-block" : "none";
+  submitBtn.style.display = "inline-block";
   nextBtn.style.display = "inline-block";
 
   feedbackEl.className = "feedback";
   feedbackEl.textContent = "";
   feedbackEl.classList.remove("show","good","bad","warn");
 
-  // cover image updates per question (keeps the “cue card cover” tied to lab)
+  // cover image updates per question (keeps the "cue card cover" tied to lab)
   setCoverForLab(q.labId);
 
-  // choices
+  // For matching mode, don't render normal choices
+  if(isMatch) { setPills(); return; }
+
+  // Fill-in-the-blank mode
+  if(isBlank){
+    renderBlankMode(q);
+    setPills();
+    return;
+  }
+
+  // Normal multiple choice
   choicesEl.innerHTML = "";
   const letters = ["A","B","C","D"];
   q.choices.forEach((choiceText, i)=>{
@@ -1577,6 +2176,10 @@ function revealAnswer(){
 }
 
 function submitAnswer(){
+  // Handle special modes
+  if(state.mode==="blank") return submitBlank();
+  if(state.mode==="match") return submitMatch();
+
   const q = state.queue[state.idx];
   if(!q) return;
 
@@ -1621,10 +2224,24 @@ function submitAnswer(){
       : `Incorrect. Correct answer: "${escapeHtml(q.choices[q.correctIndex])}".`;
     feedbackEl.innerHTML = base
       + (q.explanation ? `<div class="explanation"><strong>Why?</strong> ${escapeHtml(q.explanation)}</div>` : "");
+
+    updateStreak(isCorrect);
+    if(isCorrect) sfxCorrect(); else sfxWrong();
   }
 }
 
 function nextQuestion(){
+  // Matching mode has its own next
+  if(state.mode==="match"){
+    if(state.matchSet && !state.matchSet.submitted){
+      feedbackEl.className = "feedback show warn";
+      feedbackEl.textContent = "Submit your matches first.";
+      return;
+    }
+    nextMatch();
+    return;
+  }
+
   if(state.mode==="exam"){
     // In exam mode, require an answer before moving on
     const recorded = state.exam.answers[state.idx];
@@ -1633,11 +2250,11 @@ function nextQuestion(){
       feedbackEl.textContent = "Exam mode: submit an answer before moving on.";
       return;
     }
-  }else if(state.mode==="test"){
-    // Test mode: require submit before moving on
+  }else if(state.mode==="test" || state.mode==="blank"){
+    // Test/blank mode: require submit before moving on
     if(!state.submitted){
       feedbackEl.className = "feedback show warn";
-      feedbackEl.textContent = "Test mode: submit your answer before moving on.";
+      feedbackEl.textContent = "Submit your answer before moving on.";
       return;
     }
   }
@@ -1726,8 +2343,18 @@ flipBtn.addEventListener("click", ()=>flip());
 $("coverSide").addEventListener("click", ()=>flip(true));
 
 revealBtn.addEventListener("click", revealAnswer);
+$("hintBtn").addEventListener("click", giveHint);
 submitBtn.addEventListener("click", submitAnswer);
 nextBtn.addEventListener("click", nextQuestion);
+
+// Sound toggle
+const soundToggle = $("soundToggle");
+soundToggle.classList.add("on");
+soundToggle.addEventListener("click", ()=>{
+  state.soundOn = !state.soundOn;
+  soundToggle.classList.toggle("on", state.soundOn);
+  soundToggle.innerHTML = state.soundOn ? "&#x1f50a;" : "&#x1f507;";
+});
 
 resetBtn.addEventListener("click", ()=>{
   localStorage.removeItem("kin100_flashcards_prefs");
@@ -1809,7 +2436,8 @@ function updateModeCards(){
     card.querySelector("input").checked = (state.mode === mode);
   });
   examFields.style.display = (state.mode==="exam") ? "block" : "none";
-  $("studyFields").style.display = (state.mode==="exam") ? "none" : "block";
+  const showStudy = !["exam","match"].includes(state.mode);
+  $("studyFields").style.display = showStudy ? "block" : "none";
 }
 
 // Region bar clicks
@@ -1925,6 +2553,10 @@ document.addEventListener("keydown", (e)=>{
   }
   if(e.key.toLowerCase() === "r"){
     revealAnswer();
+    return;
+  }
+  if(e.key.toLowerCase() === "h"){
+    giveHint();
     return;
   }
   if(e.key === "Enter"){
