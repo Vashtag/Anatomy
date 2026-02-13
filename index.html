@@ -229,6 +229,412 @@
     }
     .modal h2{margin: 4px 0 10px 0; font-size: 18px}
     .modal p{margin: 0 0 10px 0; color: rgba(232,238,247,.78); font-size: 13px; line-height:1.35}
+
+    /* ── Settings: Full-screen editorial takeover ── */
+    #settingsModalBack{
+      background: rgba(6,8,12,.92);
+      backdrop-filter: blur(30px) saturate(1.4);
+      -webkit-backdrop-filter: blur(30px) saturate(1.4);
+      padding: 0;
+    }
+    #settingsModalBack .modal{
+      width: 100%; max-width: 100%; max-height: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .setup-scroll{
+      flex:1; overflow:auto;
+      padding: 0 20px 40px 20px;
+    }
+    @media (min-width: 760px){
+      .setup-scroll{ padding: 0 48px 60px 48px }
+    }
+
+    /* Hero */
+    .setup-hero{
+      padding: 48px 20px 0 20px;
+      text-align: center;
+      position: relative;
+    }
+    @media (min-width: 760px){
+      .setup-hero{ padding: 56px 48px 0 48px }
+    }
+    .setup-hero .overline{
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(105,179,255,.7);
+      margin-bottom: 10px;
+    }
+    .setup-hero h1{
+      margin: 0;
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #e8eef7 0%, #69b3ff 40%, #3ddc97 70%, #ffd166 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .setup-hero .sub{
+      margin: 12px auto 0 auto;
+      max-width: 420px;
+      font-size: 14px;
+      color: rgba(232,238,247,.5);
+      line-height: 1.45;
+      font-weight: 500;
+    }
+    .setup-topbar{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px 0 20px;
+    }
+    @media (min-width: 760px){
+      .setup-topbar{ padding: 20px 48px 0 48px }
+    }
+    .setup-topbar .ghost-close{
+      appearance: none; border: none; background: none;
+      color: rgba(232,238,247,.4);
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .setup-topbar .ghost-close:hover{ color: rgba(232,238,247,.8) }
+    .setup-version{
+      font-size: 11px;
+      color: rgba(232,238,247,.25);
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    /* Region quick-select bar */
+    .region-bar{
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 28px 0 8px 0;
+    }
+    .region-chip{
+      appearance: none;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: rgba(232,238,247,.65);
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .region-chip:hover{
+      background: rgba(255,255,255,.08);
+      color: rgba(232,238,247,.9);
+      border-color: rgba(255,255,255,.2);
+    }
+    .region-chip.active{
+      background: rgba(105,179,255,.15);
+      border-color: rgba(105,179,255,.4);
+      color: var(--accent);
+    }
+
+    /* Section headers */
+    .section-label{
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(232,238,247,.3);
+      margin: 32px 0 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after{
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,.06);
+    }
+
+    /* Lab tiles grid */
+    .lab-grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 480px){
+      .lab-grid{ grid-template-columns: 1fr 1fr }
+    }
+    @media (min-width: 760px){
+      .lab-grid{ grid-template-columns: 1fr 1fr 1fr }
+    }
+
+    .lab-tile{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 14px 14px 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.03);
+      cursor: pointer;
+      transition: all .25s cubic-bezier(.2,.8,.2,1);
+      overflow: hidden;
+      user-select: none;
+    }
+    .lab-tile::before{
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .lab-tile:hover{
+      border-color: rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      transform: translateY(-2px);
+    }
+    .lab-tile.selected{
+      border-color: rgba(105,179,255,.35);
+      background: rgba(105,179,255,.08);
+    }
+    .lab-tile.selected::before{
+      opacity: 1;
+      background: linear-gradient(135deg, rgba(105,179,255,.06), transparent 60%);
+    }
+    .lab-tile .tile-num{
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1;
+      color: rgba(232,238,247,.12);
+      transition: color .25s;
+      margin-bottom: 8px;
+    }
+    .lab-tile.selected .tile-num{
+      color: rgba(105,179,255,.35);
+    }
+    .lab-tile .tile-name{
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(232,238,247,.85);
+      margin-bottom: 3px;
+    }
+    .lab-tile .tile-topic{
+      font-size: 11px;
+      color: rgba(232,238,247,.4);
+      line-height: 1.3;
+      font-weight: 500;
+    }
+    .lab-tile .tile-check{
+      position: absolute;
+      top: 10px; right: 12px;
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      font-size: 12px;
+      color: transparent;
+    }
+    .lab-tile.selected .tile-check{
+      border-color: var(--accent);
+      background: rgba(105,179,255,.2);
+      color: var(--accent);
+    }
+
+    /* Count badge */
+    .select-count{
+      text-align: center;
+      margin: 16px 0 0 0;
+      font-size: 13px;
+      color: rgba(232,238,247,.35);
+      font-weight: 600;
+    }
+    .select-count strong{
+      color: var(--accent);
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    /* Mode cards */
+    .mode-row{
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 520px){
+      .mode-row{ grid-template-columns: 1fr }
+    }
+    .mode-card{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px 14px 16px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.07);
+      background: rgba(255,255,255,.03);
+      cursor: pointer;
+      transition: all .25s cubic-bezier(.2,.8,.2,1);
+      user-select: none;
+    }
+    .mode-card:hover{
+      border-color: rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      transform: translateY(-2px);
+    }
+    .mode-card.selected{
+      border-color: rgba(105,179,255,.35);
+      background: rgba(105,179,255,.08);
+    }
+    .mode-card .mode-icon{
+      font-size: 28px;
+      margin-bottom: 8px;
+      filter: grayscale(.6);
+      transition: filter .25s;
+    }
+    .mode-card.selected .mode-icon{ filter: grayscale(0) }
+    .mode-card .mode-title{
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -.3px;
+      color: rgba(232,238,247,.85);
+    }
+    .mode-card .mode-desc{
+      font-size: 11px;
+      color: rgba(232,238,247,.4);
+      line-height: 1.35;
+      margin-top: 4px;
+    }
+    .mode-card input[type="radio"]{ display: none }
+
+    /* Config panel */
+    .config-panel{
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 16px;
+      padding: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .config-row{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .config-field{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      min-width: 130px;
+    }
+    .config-field label{
+      font-size: 11px;
+      color: rgba(232,238,247,.4);
+      font-weight: 600;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .config-field input,
+    .config-field select{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.2);
+      color: var(--text);
+      outline: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .config-field input:focus,
+    .config-field select:focus{
+      border-color: rgba(105,179,255,.35);
+    }
+
+    /* Launch button */
+    .launch-row{
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      margin: 32px 0 0 0;
+    }
+    .btn-launch{
+      appearance: none;
+      border: none;
+      padding: 14px 48px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      cursor: pointer;
+      color: #0b0f14;
+      background: linear-gradient(135deg, #69b3ff, #3ddc97);
+      box-shadow: 0 4px 24px rgba(105,179,255,.25), 0 0 0 1px rgba(105,179,255,.15);
+      transition: all .25s cubic-bezier(.2,.8,.2,1);
+    }
+    .btn-launch:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(105,179,255,.35), 0 0 0 1px rgba(105,179,255,.25);
+    }
+    .btn-launch:active{ transform: translateY(0) }
+    .btn-reset{
+      appearance: none;
+      border: 1px solid rgba(255,107,107,.2);
+      background: rgba(255,107,107,.06);
+      color: rgba(255,107,107,.7);
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-reset:hover{
+      background: rgba(255,107,107,.12);
+      color: rgba(255,107,107,.9);
+    }
+
+    .setup-footer{
+      text-align: center;
+      margin-top: 24px;
+      font-size: 11px;
+      color: rgba(232,238,247,.2);
+      letter-spacing: 1px;
+    }
+
+    /* Stagger animation */
+    @keyframes tileIn{
+      from{ opacity:0; transform: translateY(12px) }
+      to{ opacity:1; transform: translateY(0) }
+    }
+    .lab-tile, .mode-card{
+      animation: tileIn .4s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    /* Legacy panel/grid/labs kept for non-settings modals */
     .grid{
       display:grid;
       grid-template-columns: 1fr;
@@ -244,25 +650,6 @@
       padding: 12px;
     }
     .panel h3{margin:0 0 10px 0; font-size:14px; color: rgba(232,238,247,.92)}
-    .labs{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    @media (min-width: 520px){
-      .labs{grid-template-columns: 1fr 1fr}
-    }
-    .labOpt{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:10px 10px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      cursor:pointer;
-    }
-    .labOpt input{margin-top:3px}
-    .labName{font-weight:800; font-size: 13px}
-    .labTopic{color: rgba(232,238,247,.75); font-size: 12px; margin-top: 2px; line-height:1.25}
 
     .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     .field{
@@ -377,90 +764,112 @@
   <!-- SETTINGS MODAL -->
   <div class="modalBack" id="settingsModalBack" role="dialog" aria-modal="true">
     <div class="modal">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-        <h2>Study Setup</h2>
-        <button class="btn small ghost" id="closeSettingsBtn">Close</button>
-      </div>
-      <p>Select labs (body regions), choose a mode, then start. This runs entirely in one HTML file; progress settings can be remembered on this device.</p>
 
-      <div class="grid">
-        <div class="panel">
-          <h3>Labs</h3>
-          <div class="labs" id="labsList"></div>
-          <div class="help">
-            Tip: for an “Upper Limb” session, select Labs 1–6. For “Lower Limb,” select Labs 7–10.
-          </div>
+      <div class="setup-topbar">
+        <span class="setup-version">KIN 100</span>
+        <button class="ghost-close" id="closeSettingsBtn">ESC</button>
+      </div>
+
+      <div class="setup-hero">
+        <span class="overline">Anatomy Lab</span>
+        <h1>What are we<br>studying today?</h1>
+        <p class="sub">Pick your regions. Choose your pain threshold. Begin.</p>
+      </div>
+
+      <div class="setup-scroll">
+
+        <!-- Region quick-select -->
+        <div class="region-bar" id="regionBar">
+          <button class="region-chip" data-region="all">Everything</button>
+          <button class="region-chip" data-region="upper">Upper Limb</button>
+          <button class="region-chip" data-region="lower">Lower Limb</button>
+          <button class="region-chip" data-region="core">Trunk &amp; Pelvis</button>
+          <button class="region-chip" data-region="neuro">Neuro</button>
+          <button class="region-chip" data-region="none">Clear</button>
         </div>
 
-        <div class="panel">
-          <h3>Mode</h3>
-          <div class="row" style="margin-bottom:10px;">
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="mode" value="learn" style="margin-right:8px;"> Learn
-            </label>
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="mode" value="test" style="margin-right:8px;"> Test
-            </label>
-            <label class="pill" style="cursor:pointer;">
-              <input type="radio" name="mode" value="exam" style="margin-right:8px;"> Exam
-            </label>
-          </div>
+        <div class="select-count" id="selectCount">
+          <strong>0</strong> labs selected &middot; <strong>0</strong> questions in pool
+        </div>
 
-          <div class="hr"></div>
+        <!-- Lab tiles -->
+        <div class="section-label">Select Labs</div>
+        <div class="lab-grid" id="labsList"></div>
 
+        <!-- Mode -->
+        <div class="section-label">Mode</div>
+        <div class="mode-row" id="modeRow">
+          <label class="mode-card" data-mode="learn">
+            <input type="radio" name="mode" value="learn">
+            <div class="mode-icon">&#x1f9e0;</div>
+            <div class="mode-title">Learn</div>
+            <div class="mode-desc">Reveal answers at your pace. No pressure.</div>
+          </label>
+          <label class="mode-card" data-mode="test">
+            <input type="radio" name="mode" value="test">
+            <div class="mode-icon">&#x1f4dd;</div>
+            <div class="mode-title">Test</div>
+            <div class="mode-desc">Submit to see feedback. Builds accountability.</div>
+          </label>
+          <label class="mode-card" data-mode="exam">
+            <input type="radio" name="mode" value="exam">
+            <div class="mode-icon">&#x23f1;&#xfe0f;</div>
+            <div class="mode-title">Exam</div>
+            <div class="mode-desc">No feedback until the end. Timed. Real stakes.</div>
+          </label>
+        </div>
+
+        <!-- Config -->
+        <div class="section-label">Configure</div>
+        <div class="config-panel">
           <div id="examFields" style="display:none;">
-            <h3 style="margin-top:0;">Exam settings</h3>
-            <div class="row">
-              <div class="field">
-                <label for="examCount">Number of questions</label>
+            <div class="config-row">
+              <div class="config-field">
+                <label for="examCount">Questions</label>
                 <input id="examCount" type="number" min="5" max="220" value="20" />
               </div>
-              <div class="field">
-                <label for="examTime">Time limit (minutes, optional)</label>
+              <div class="config-field">
+                <label for="examTime">Time limit (min)</label>
                 <input id="examTime" type="number" min="0" max="180" value="0" />
               </div>
             </div>
-            <div class="help" style="margin-top:8px;">
-              Exam mode shows no correctness feedback until the end. You’ll see a score summary and review list.
-            </div>
-            <div class="hr"></div>
           </div>
-
           <div id="studyFields">
-            <h3 style="margin-top:0;">Session settings</h3>
-            <div class="row">
-              <div class="field">
-                <label for="sessionCount">Questions this session</label>
+            <div class="config-row">
+              <div class="config-field">
+                <label for="sessionCount">Questions</label>
                 <select id="sessionCount">
                   <option value="20">20</option>
                   <option value="30" selected>30</option>
                   <option value="50">50</option>
-                  <option value="9999">All (selected labs)</option>
+                  <option value="9999">All available</option>
                 </select>
               </div>
-              <div class="field">
-                <label for="remember">Remember my settings</label>
+              <div class="config-field">
+                <label for="remember">Remember</label>
                 <select id="remember">
                   <option value="yes" selected>Yes</option>
                   <option value="no">No</option>
                 </select>
               </div>
             </div>
-            <div class="help" style="margin-top:8px;">
-              Learn mode allows “Reveal.” Test mode requires Submit to see feedback.
-            </div>
-            <div class="hr"></div>
-          </div>
-
-          <div class="row" style="justify-content:space-between;">
-            <button class="btn danger" id="resetBtn">Reset</button>
-            <button class="btn primary" id="startBtn">Start</button>
           </div>
         </div>
-      </div>
 
-      <div class="help" style="margin-top:12px;">
-        Keyboard shortcuts: <span class="kbd">Space</span> flip, <span class="kbd">1–4</span> select option, <span class="kbd">Enter</span> submit/advance, <span class="kbd">N</span> next, <span class="kbd">R</span> reveal (learn), <span class="kbd">Esc</span> settings, <span class="kbd">?</span> shortcuts.
+        <!-- Launch -->
+        <div class="launch-row">
+          <button class="btn-reset" id="resetBtn">Reset</button>
+          <button class="btn-launch" id="startBtn">Begin Session</button>
+        </div>
+
+        <div class="setup-footer">
+          <span class="kbd">Space</span> flip &middot;
+          <span class="kbd">1-4</span> choose &middot;
+          <span class="kbd">Enter</span> submit &middot;
+          <span class="kbd">N</span> next &middot;
+          <span class="kbd">?</span> help
+        </div>
+
       </div>
     </div>
   </div>
@@ -1346,56 +1755,139 @@ $("restartBtn").addEventListener("click", ()=>{
   openSettings();
 });
 
-function renderSettings(){
-  // labs
-  labsList.innerHTML = "";
-  LABS.forEach(l=>{
-    const div = document.createElement("label");
-    div.className = "labOpt";
-    div.innerHTML = `
-      <input type="checkbox" value="${l.id}">
-      <div>
-        <div class="labName">${l.name}</div>
-        <div class="labTopic">${l.topic}</div>
-      </div>
-    `;
-    const cb = div.querySelector("input");
-    cb.checked = state.selectedLabs.includes(l.id);
-    cb.addEventListener("change", ()=>{
-      const id = Number(cb.value);
-      if(cb.checked){
-        if(!state.selectedLabs.includes(id)) state.selectedLabs.push(id);
-      }else{
-        state.selectedLabs = state.selectedLabs.filter(x=>x!==id);
-      }
-      setPills();
-    });
-    labsList.appendChild(div);
+/* =========================
+   Region quick-select mapping
+========================= */
+const REGION_MAP = {
+  upper: [1,2,3,4,5,6],
+  lower: [7,8,9,10],
+  core:  [7],
+  neuro: [11],
+  all:   [1,2,3,4,5,6,7,8,9,10,11],
+  none:  []
+};
+
+function getPoolCount(labIds){
+  let n = 0;
+  for(const id of labIds) n += (parseQuestionsForLab(id)).length;
+  return n;
+}
+
+function updateSelectCount(){
+  const n = state.selectedLabs.length;
+  const q = getPoolCount(state.selectedLabs);
+  $("selectCount").innerHTML = `<strong>${n}</strong> lab${n!==1?"s":""} selected &middot; <strong>${q}</strong> question${q!==1?"s":""} in pool`;
+}
+
+function updateLabTiles(){
+  document.querySelectorAll(".lab-tile").forEach(tile=>{
+    const id = Number(tile.dataset.labId);
+    tile.classList.toggle("selected", state.selectedLabs.includes(id));
   });
+  updateSelectCount();
+  updateRegionChips();
+  setPills();
+}
 
-  // mode radios
-  document.querySelectorAll('input[name="mode"]').forEach(r=>{
-    r.checked = (r.value === state.mode);
-    r.addEventListener("change", ()=>{
-      state.mode = r.value;
-      examFields.style.display = (state.mode==="exam") ? "block" : "none";
-      $("studyFields").style.display = (state.mode==="exam") ? "none" : "block";
-      setPills();
-    });
+function updateRegionChips(){
+  document.querySelectorAll(".region-chip").forEach(chip=>{
+    const region = chip.dataset.region;
+    const ids = REGION_MAP[region];
+    if(!ids || region==="none") {
+      chip.classList.remove("active");
+      return;
+    }
+    const allSelected = ids.every(id => state.selectedLabs.includes(id));
+    chip.classList.toggle("active", allSelected);
   });
+}
 
-  // fields
-  examCount.value = String(state.exam.n || 20);
-  examTime.value = String(state.exam.timeMin || 0);
-
-  // session count
-  if(state.sessionN===9999) sessionCount.value = "9999";
-  else sessionCount.value = String(state.sessionN || 30);
-
-  remember.value = state.remember ? "yes" : "no";
-
+function updateModeCards(){
+  document.querySelectorAll(".mode-card").forEach(card=>{
+    const mode = card.dataset.mode;
+    card.classList.toggle("selected", state.mode === mode);
+    card.querySelector("input").checked = (state.mode === mode);
+  });
   examFields.style.display = (state.mode==="exam") ? "block" : "none";
   $("studyFields").style.display = (state.mode==="exam") ? "none" : "block";
+}
+
+// Region bar clicks
+$("regionBar").addEventListener("click", (e)=>{
+  const chip = e.target.closest(".region-chip");
+  if(!chip) return;
+  const region = chip.dataset.region;
+  const ids = REGION_MAP[region];
+  if(!ids) return;
+
+  if(region === "none"){
+    state.selectedLabs = [];
+  } else if(region === "all"){
+    state.selectedLabs = [...REGION_MAP.all];
+  } else {
+    // Toggle: if all in region are selected, deselect them; otherwise select them
+    const allSelected = ids.every(id => state.selectedLabs.includes(id));
+    if(allSelected){
+      state.selectedLabs = state.selectedLabs.filter(id => !ids.includes(id));
+    } else {
+      for(const id of ids){
+        if(!state.selectedLabs.includes(id)) state.selectedLabs.push(id);
+      }
+    }
+  }
+  updateLabTiles();
+});
+
+// Mode card clicks
+$("modeRow").addEventListener("click", (e)=>{
+  const card = e.target.closest(".mode-card");
+  if(!card) return;
+  const mode = card.dataset.mode;
+  state.mode = mode;
+  updateModeCards();
+  setPills();
+});
+
+function renderSettings(){
+  // Lab tiles
+  labsList.innerHTML = "";
+  LABS.forEach((l, i)=>{
+    const tile = document.createElement("div");
+    tile.className = "lab-tile" + (state.selectedLabs.includes(l.id) ? " selected" : "");
+    tile.dataset.labId = String(l.id);
+    tile.style.animationDelay = `${i * 0.04}s`;
+    tile.innerHTML = `
+      <div class="tile-check">\u2713</div>
+      <div class="tile-num">${String(l.id).padStart(2,"0")}</div>
+      <div class="tile-name">${l.name}</div>
+      <div class="tile-topic">${l.topic}</div>
+    `;
+    tile.addEventListener("click", ()=>{
+      const id = l.id;
+      if(state.selectedLabs.includes(id)){
+        state.selectedLabs = state.selectedLabs.filter(x=>x!==id);
+      } else {
+        state.selectedLabs.push(id);
+      }
+      updateLabTiles();
+    });
+    labsList.appendChild(tile);
+  });
+
+  // Mode cards
+  document.querySelectorAll(".mode-card").forEach((card, i)=>{
+    card.style.animationDelay = `${0.44 + i * 0.06}s`;
+  });
+  updateModeCards();
+
+  // Fields
+  examCount.value = String(state.exam.n || 20);
+  examTime.value = String(state.exam.timeMin || 0);
+  if(state.sessionN===9999) sessionCount.value = "9999";
+  else sessionCount.value = String(state.sessionN || 30);
+  remember.value = state.remember ? "yes" : "no";
+
+  updateLabTiles();
   setPills();
 }
 
