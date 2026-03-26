@@ -53,5 +53,14 @@ const LABS_LECTURE = [
   {id:17, name:"Lecture 17", topic:"Hip Joint, Thigh, and Bones of the Leg"},
   {id:18, name:"Lecture 18", topic:"Muscles of the Anterior and Medial Thigh"},
   {id:19, name:"Lecture 19", topic:"Femoral Triangle and Vessels of the Lower Limb"},
-  {id:20, name:"Lecture 20", topic:"Muscles of the Gluteal Region"}
+  {id:20, name:"Lecture 20", topic:"Muscles of the Gluteal Region"},
+  {id:21, name:"Lecture 21", topic:"Posterior Thigh and Popliteal Fossa"},
+  {id:22, name:"Lecture 22", topic:"Knee Joint"},
+  {id:23, name:"Lecture 23", topic:"Bones and Joints of the Ankle and Foot"},
+  {id:24, name:"Lecture 24", topic:"Anterior Compartment of the Leg"},
+  {id:25, name:"Lecture 25", topic:"Lateral Compartment of the Leg"},
+  {id:26, name:"Lecture 26", topic:"Posterior Compartment of the Leg"},
+  {id:27, name:"Lecture 27", topic:"The Foot"},
+  {id:28, name:"Lecture 28", topic:"Introduction to Neuroanatomy"},
+  {id:29, name:"Lecture 29", topic:"Cranial Nerves"}
 ];
