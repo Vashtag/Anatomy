@@ -43,5 +43,15 @@ const LABS_LECTURE = [
   {id:7,  name:"Lecture 7",  topic:"Axilla and Brachial Plexus"},
   {id:8,  name:"Lecture 8",  topic:"Arm"},
   {id:9,  name:"Lecture 9",  topic:"Cubital Fossa, Elbow, and Radioulnar Joints"},
-  {id:10, name:"Lecture 10", topic:"Bones and Joints of the Wrist and Hand"}
+  {id:10, name:"Lecture 10", topic:"Bones and Joints of the Wrist and Hand"},
+  {id:11, name:"Lecture 11", topic:"Muscles of the Anterior Forearm"},
+  {id:12, name:"Lecture 12", topic:"Muscles of the Posterior Forearm"},
+  {id:13, name:"Lecture 13", topic:"Tendons, Nerves, and Vessels of the Forearm and Hand"},
+  {id:14, name:"Lecture 14", topic:"The Hand"},
+  {id:15, name:"Lecture 15", topic:"Muscles of the Abdominal Walls"},
+  {id:16, name:"Lecture 16", topic:"Pelvic Girdle"},
+  {id:17, name:"Lecture 17", topic:"Hip Joint, Thigh, and Bones of the Leg"},
+  {id:18, name:"Lecture 18", topic:"Muscles of the Anterior and Medial Thigh"},
+  {id:19, name:"Lecture 19", topic:"Femoral Triangle and Vessels of the Lower Limb"},
+  {id:20, name:"Lecture 20", topic:"Muscles of the Gluteal Region"}
 ];
