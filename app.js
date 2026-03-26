@@ -183,8 +183,14 @@ function parseQuestionsForLab(labId){
   if(!raw) return [];
   return raw.split("\n").map(line=>{
     const parts = line.split("\t");
-    if(parts.length < 6) return null;
+    if(parts.length < 2) return null;
     const prompt = parts[0].trim();
+    // Fill-in-the-blank: prompt<TAB>FILL<TAB>answer
+    if(parts[1].trim().toUpperCase() === "FILL"){
+      const answer = (parts[2] || "").trim();
+      return {labId, prompt, type:"fill", choices:[answer,"","",""], correctIndex:0, explanation:""};
+    }
+    if(parts.length < 6) return null;
     const choices = parts.slice(1,5).map(s=>s.trim());
     const correctLetter = parts[5].trim().toUpperCase();
     const correctIndex = ["A","B","C","D"].indexOf(correctLetter);
@@ -383,6 +389,21 @@ function submitBlank(){
   const correctText = q.choices[q.correctIndex];
   const result = fuzzyMatch(typed, correctText);
   input.disabled = true;
+
+  // In exam mode, record the answer and show minimal feedback
+  if(state.mode === "exam"){
+    state.exam.answers[state.idx] = {
+      q,
+      pickedIndex: null,
+      correctIndex: q.correctIndex,
+      pickedText: typed,
+      correctText,
+      isCorrect: result.match
+    };
+    feedbackEl.className = "feedback show";
+    feedbackEl.textContent = "Answer recorded. (Exam mode: feedback shown at the end.)";
+    return;
+  }
 
   if(result.match){
     input.classList.add("correct-input");
@@ -682,8 +703,9 @@ function renderCurrent(){
   // buttons behavior per mode
   const isBlank = (state.mode==="blank");
   const isMatch = (state.mode==="match");
-  revealBtn.style.display = (state.mode==="learn") ? "inline-block" : "none";
-  $("hintBtn").style.display = (!isBlank && !isMatch && state.mode!=="exam") ? "inline-block" : "none";
+  const isFill = (q.type === "fill");
+  revealBtn.style.display = (state.mode==="learn" && !isFill) ? "inline-block" : "none";
+  $("hintBtn").style.display = (!isBlank && !isFill && !isMatch && state.mode!=="exam") ? "inline-block" : "none";
   submitBtn.style.display = "inline-block";
   nextBtn.style.display = "inline-block";
 
@@ -697,8 +719,8 @@ function renderCurrent(){
   // For matching mode, don't render normal choices
   if(isMatch) { setPills(); return; }
 
-  // Fill-in-the-blank mode
-  if(isBlank){
+  // Fill-in-the-blank mode (either selected mode or fill-type question)
+  if(isBlank || isFill){
     renderBlankMode(q);
     setPills();
     return;
@@ -757,8 +779,10 @@ function revealAnswer(){
 }
 
 function submitAnswer(){
-  // Handle special modes
+  // Handle special modes / fill-type questions
   if(state.mode==="blank") return submitBlank();
+  const _q = state.queue[state.idx];
+  if(_q && _q.type === "fill") return submitBlank();
   if(state.mode==="match") return submitMatch();
 
   const q = state.queue[state.idx];
