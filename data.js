@@ -34,5 +34,14 @@ const LABS_LAB = [
    KIN 100 LECTURE — labs/topics (populated separately)
 ========================================================= */
 const LABS_LECTURE = [
-  /* Topics will be added here once questions are provided */
+  {id:1,  name:"Lecture 1",  topic:"Introduction to Anatomy"},
+  {id:2,  name:"Lecture 2",  topic:"Skeletal System and Muscular System"},
+  {id:3,  name:"Lecture 3",  topic:"The Back"},
+  {id:4,  name:"Lecture 4",  topic:"Bones and Joints of the Pectoral Girdle"},
+  {id:5,  name:"Lecture 5",  topic:"Axio-Appendicular Muscles"},
+  {id:6,  name:"Lecture 6",  topic:"Scapulohumeral Muscles"},
+  {id:7,  name:"Lecture 7",  topic:"Axilla and Brachial Plexus"},
+  {id:8,  name:"Lecture 8",  topic:"Arm"},
+  {id:9,  name:"Lecture 9",  topic:"Cubital Fossa, Elbow, and Radioulnar Joints"},
+  {id:10, name:"Lecture 10", topic:"Bones and Joints of the Wrist and Hand"}
 ];

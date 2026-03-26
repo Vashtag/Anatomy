@@ -99,7 +99,7 @@ function loadPrefs(){
 function labLabel(ids){
   if(!ids || !ids.length) return "—";
   const sorted = [...ids].sort((a,b)=>a-b);
-  if(sorted.length===11) return "All";
+  if(sorted.length===LABS.length) return "All";
   // compress ranges (e.g., 1–6, 8–10)
   let out = [];
   let start = sorted[0], prev = sorted[0];
