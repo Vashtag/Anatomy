@@ -115,7 +115,8 @@ function labLabel(ids){
 
 function setPills(){
   modePill.textContent = `Mode: ${state.mode.toUpperCase()}`;
-  labPill.textContent = `Labs: ${labLabel(state.selectedLabs)}`;
+  const isLecture = (LABS === LABS_LECTURE);
+  labPill.textContent = `${isLecture ? "Topics" : "Labs"}: ${labLabel(state.selectedLabs)}`;
   progressPill.textContent = `${Math.min(state.idx+1, state.queue.length)} / ${state.queue.length}`;
   timerPill.style.display = state.mode==="exam" ? "inline-flex" : "none";
 }
@@ -598,8 +599,15 @@ function nextMatch(){
 
 function buildPool(selectedLabs){
   let pool = [];
-  for(const id of selectedLabs){
-    pool = pool.concat(parseQuestionsForLab(id));
+  if(LABS === LABS_LECTURE && typeof LECTURE_TOPIC_MAP !== "undefined"){
+    // Lecture mode: map topic IDs → lecture IDs, deduplicating shared lectures
+    const lectureIds = new Set();
+    for(const topicId of selectedLabs){
+      (LECTURE_TOPIC_MAP[topicId] || []).forEach(id => lectureIds.add(id));
+    }
+    for(const id of lectureIds) pool = pool.concat(parseQuestionsForLab(id));
+  } else {
+    for(const id of selectedLabs) pool = pool.concat(parseQuestionsForLab(id));
   }
   return pool;
 }
@@ -1000,6 +1008,15 @@ const REGION_MAP = {
 };
 
 function getPoolCount(labIds){
+  if(LABS === LABS_LECTURE && typeof LECTURE_TOPIC_MAP !== "undefined"){
+    const lectureIds = new Set();
+    for(const topicId of labIds){
+      (LECTURE_TOPIC_MAP[topicId] || []).forEach(id => lectureIds.add(id));
+    }
+    let n = 0;
+    for(const id of lectureIds) n += parseQuestionsForLab(id).length;
+    return n;
+  }
   let n = 0;
   for(const id of labIds) n += (parseQuestionsForLab(id)).length;
   return n;
