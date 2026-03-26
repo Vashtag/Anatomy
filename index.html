@@ -896,6 +896,74 @@
     }
     .badge.good{border-color: rgba(61,220,151,.35); background: rgba(61,220,151,.10)}
     .badge.bad{border-color: rgba(255,107,107,.35); background: rgba(255,107,107,.10)}
+
+    /* ── Course Selection Modal ── */
+    #courseModalBack .modal{
+      width: min(560px, 96vw);
+      max-height: min(86vh, 600px);
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 28px 36px 28px;
+      text-align: center;
+      gap: 0;
+    }
+    .course-overline{
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); opacity: .75; margin-bottom: 10px;
+    }
+    #courseModalBack h1{
+      margin: 0 0 10px 0;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 900; line-height: 1.1;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    #courseModalBack .sub{
+      margin: 0 auto 32px auto; max-width: 340px;
+      color: rgba(232,238,247,.55); font-size: 13px; line-height: 1.4;
+    }
+    .course-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+    }
+    @media (max-width: 420px){
+      .course-grid{ grid-template-columns: 1fr }
+    }
+    .course-card{
+      appearance: none;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px;
+      padding: 28px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      cursor: pointer;
+      transition: all .25s;
+      text-align: center;
+    }
+    .course-card:hover{
+      border-color: rgba(105,179,255,.45);
+      background: rgba(105,179,255,.09);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(105,179,255,.15);
+    }
+    .course-card:active{ transform: translateY(0) }
+    .course-card .course-icon{ font-size: 36px; line-height: 1 }
+    .course-card .course-title{
+      font-size: 22px; font-weight: 900;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .course-card .course-desc{ font-size: 13px; font-weight: 700; color: rgba(232,238,247,.75) }
+    .course-card .course-sub{ font-size: 11px; font-weight: 400; color: rgba(232,238,247,.4) }
   </style>
 </head>
 <body>
@@ -958,6 +1026,27 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COURSE SELECTION MODAL -->
+  <div class="modalBack show" id="courseModalBack" role="dialog" aria-modal="true">
+    <div class="modal">
+      <span class="course-overline">Welcome</span>
+      <h1>Which course are<br>you studying?</h1>
+      <p class="sub">Select your course to load the right question set.</p>
+      <div class="course-grid">
+        <button class="course-card" id="selectLecture" data-course="lecture">
+          <div class="course-icon">&#x1f4da;</div>
+          <div class="course-title">KIN 100</div>
+          <div class="course-desc">Lecture<br><span class="course-sub">General kinesiology concepts</span></div>
+        </button>
+        <button class="course-card" id="selectLab" data-course="lab">
+          <div class="course-icon">&#x1f52c;</div>
+          <div class="course-title">KIN 100L</div>
+          <div class="course-desc">Lab<br><span class="course-sub">Anatomy lab practicals</span></div>
+        </button>
       </div>
     </div>
   </div>
@@ -1147,7 +1236,7 @@ const LAB_IMAGES = {
  11: ["images/lab11_01.jpg","images/lab11_02.jpg"]
 };
 
-const LABS = [
+const LABS_LAB = [
   {id:1,  name:"Lab 1",  topic:"Back and Pectoral Girdle"},
   {id:2,  name:"Lab 2",  topic:"Axio-Appendicular and Scapulohumeral Muscles"},
   {id:3,  name:"Lab 3",  topic:"Axilla, Brachial Plexus, and Heart"},
@@ -1162,11 +1251,22 @@ const LABS = [
 ];
 
 /* =========================================================
+   KIN 100 LECTURE — labs/topics (populated separately)
+========================================================= */
+const LABS_LECTURE = [
+  /* Topics will be added here once questions are provided */
+];
+
+/* Active LABS and QUESTION_DATA — switched by course selection */
+let LABS = LABS_LAB;
+let QUESTION_DATA;
+
+/* =========================================================
    QUESTION BANK (20 per lab, MC)
    Format per line:
    prompt<TAB>A<TAB>B<TAB>C<TAB>D<TAB>CorrectLetter
 ========================================================= */
-const QUESTION_DATA = {
+const QUESTION_DATA_LAB = {
 1: `
 Scapular protraction is mainly produced by	Serratus anterior	Rhomboid major	Trapezius	Levator scapulae	A	Serratus anterior attaches along the medial border of the scapula and pulls it anterolaterally against the thoracic wall.
 Scapular retraction is strongly produced by	Rhomboid major	Serratus anterior	Pectoralis minor	Subscapularis	A	Rhomboid major runs from the spinous processes to the medial scapular border, pulling the scapula toward the midline.
@@ -1419,6 +1519,13 @@ The internal capsule carries many	Ascending/descending fibers	Carpal bones	Fasci
 Basal ganglia are involved in	Motor control loops	Pelvic stability only	Finger extension only	CSF production only	A	The basal ganglia (caudate, putamen, globus pallidus) modulate motor control through inhibitory loops, helping initiate and regulate voluntary movements.
 The lateral ventricles are found in the	Cerebrum	Cerebellum	Spinal cord	Skull sutures	A	The lateral ventricles are the largest CSF-filled cavities, located within each cerebral hemisphere and connecting to the third ventricle via the interventricular foramina.
 `.trim()
+};
+
+/* =========================================================
+   KIN 100 LECTURE — question bank (populated separately)
+========================================================= */
+const QUESTION_DATA_LECTURE = {
+  /* Questions will be added here once provided */
 };
 
 /* =========================
@@ -2455,7 +2562,7 @@ $("regionBar").addEventListener("click", (e)=>{
   if(region === "none"){
     state.selectedLabs = [];
   } else if(region === "all"){
-    state.selectedLabs = [...REGION_MAP.all];
+    state.selectedLabs = LABS.map(l=>l.id);
   } else {
     // Toggle: if all in region are selected, deselect them; otherwise select them
     const allSelected = ids.every(id => state.selectedLabs.includes(id));
@@ -2630,17 +2737,46 @@ document.addEventListener("keydown", (e)=>{
 })();
 
 /* =========================
+   Course Selection
+========================= */
+const courseModalBack = $("courseModalBack");
+
+function selectCourse(course){
+  if(course === "lecture"){
+    LABS = LABS_LECTURE;
+    QUESTION_DATA = QUESTION_DATA_LECTURE;
+  } else {
+    LABS = LABS_LAB;
+    QUESTION_DATA = QUESTION_DATA_LAB;
+  }
+  // Update the settings title to reflect the course
+  const versionEl = document.querySelector(".setup-version");
+  if(versionEl) versionEl.textContent = course === "lecture" ? "KIN 100" : "KIN 100L";
+  // Show region bar only for lab mode (anatomy regions don't apply to lecture)
+  const regionBar = $("regionBar");
+  if(regionBar) regionBar.style.display = course === "lab" ? "" : "none";
+
+  courseModalBack.classList.remove("show");
+  state.selectedLabs = [];
+  renderSettings();
+  setPills();
+  setCoverForLab((LABS[0] || {id:1}).id);
+  renderCurrent();
+  openSettings();
+}
+
+$("selectLecture").addEventListener("click", ()=> selectCourse("lecture"));
+$("selectLab").addEventListener("click",     ()=> selectCourse("lab"));
+
+/* =========================
    Init
 ========================= */
 loadPrefs();
 state.remember = true; // default; modal controls whether to persist
-renderSettings();
 
-// initial UI state
+// initial UI state (behind the course modal)
 setPills();
-setCoverForLab(state.selectedLabs[0] || 1);
 renderCurrent();
-openSettings();
 </script>
 </body>
 </html>
