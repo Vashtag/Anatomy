@@ -20,13 +20,8 @@ const timerPill = $("timerPill");
 
 const settingsModalBack = $("settingsModalBack");
 const helpModalBack = $("helpModalBack");
-const resultsModalBack = $("resultsModalBack");
 
 const labsList = $("labsList");
-
-const examFields = $("examFields");
-const examCount = $("examCount");
-const examTime = $("examTime");
 
 const sessionCount = $("sessionCount");
 const remember = $("remember");
@@ -34,14 +29,12 @@ const remember = $("remember");
 const resetBtn = $("resetBtn");
 const startBtn = $("startBtn");
 
-const flipBtn = $("flipBtn");
-const revealBtn = $("revealBtn");
 const submitBtn = $("submitBtn");
 const nextBtn = $("nextBtn");
 
 let state = {
   selectedLabs: [1,2,3,4,5,6],
-  mode: "learn", // learn | test | exam | blank | match
+  mode: "test", // test | blank | match
   sessionN: 30,
   remember: true,
 
@@ -59,17 +52,7 @@ let state = {
   soundOn: true,
 
   // Matching mode
-  matchSet: null, // {prompts:[], answers:[], shuffledAnswers:[], links:{}, selectedPrompt:null, submitted:false}
-
-  exam: {
-    active: false,
-    n: 20,
-    timeMin: 0,
-    startTs: 0,
-    endTs: 0,
-    timerId: null,
-    answers: [] // {q, pickedIndex, correctIndex, correctText, pickedText, isCorrect}
-  }
+  matchSet: null // {prompts:[], answers:[], shuffledAnswers:[], links:{}, selectedPrompt:null, submitted:false}
 };
 
 function savePrefs(){
@@ -77,9 +60,7 @@ function savePrefs(){
   const prefs = {
     selectedLabs: state.selectedLabs,
     mode: state.mode,
-    sessionN: state.sessionN,
-    examN: state.exam.n,
-    examTimeMin: state.exam.timeMin
+    sessionN: state.sessionN
   };
   localStorage.setItem("kin100_flashcards_prefs", JSON.stringify(prefs));
 }
@@ -89,10 +70,8 @@ function loadPrefs(){
     if(!raw) return;
     const prefs = JSON.parse(raw);
     if(Array.isArray(prefs.selectedLabs) && prefs.selectedLabs.length) state.selectedLabs = prefs.selectedLabs;
-    if(["learn","test","exam","blank","match"].includes(prefs.mode)) state.mode = prefs.mode;
+    if(["test","blank","match"].includes(prefs.mode)) state.mode = prefs.mode;
     if(typeof prefs.sessionN === "number") state.sessionN = prefs.sessionN;
-    if(typeof prefs.examN === "number") state.exam.n = prefs.examN;
-    if(typeof prefs.examTimeMin === "number") state.exam.timeMin = prefs.examTimeMin;
   }catch(e){}
 }
 
@@ -114,11 +93,12 @@ function labLabel(ids){
 }
 
 function setPills(){
-  modePill.textContent = `Mode: ${state.mode.toUpperCase()}`;
+  const modeLabel = {test:"Multiple Choice", blank:"Short Answer", match:"Matching"}[state.mode] || state.mode;
+  modePill.textContent = `Mode: ${modeLabel}`;
   const isLecture = (LABS === LABS_LECTURE);
   labPill.textContent = `${isLecture ? "Topics" : "Labs"}: ${labLabel(state.selectedLabs)}`;
   progressPill.textContent = `${Math.min(state.idx+1, state.queue.length)} / ${state.queue.length}`;
-  timerPill.style.display = state.mode==="exam" ? "inline-flex" : "none";
+  timerPill.style.display = "none";
 }
 
 function openSettings(){
@@ -133,12 +113,7 @@ function openHelp(){
 function closeHelp(){
   helpModalBack.classList.remove("show");
 }
-function openResults(){
-  resultsModalBack.classList.add("show");
-}
-function closeResults(){
-  resultsModalBack.classList.remove("show");
-}
+
 
 function flip(toQuestion, instant){
   if(typeof toQuestion === "boolean"){
@@ -164,11 +139,7 @@ function randItem(arr){
 function setCoverForLab(labId){
   const lab = LABS.find(l=>l.id===labId);
   coverTitle.textContent = lab ? `${lab.name}: ${lab.topic}` : "KIN100 Flashcards";
-  coverSub.textContent = state.mode==="exam"
-    ? "Exam mode: no feedback until the end."
-    : state.mode==="test"
-      ? "Test mode: select an option, then submit."
-      : "Learn mode: reveal or submit at your pace.";
+  coverSub.textContent = "Select an option, then submit.";
 
   const src = randItem(LAB_IMAGES[labId]) || "";
   if(!src){
@@ -304,7 +275,7 @@ function giveHint(){
   if(state.submitted || state.revealed) return;
   const q = state.queue[state.idx];
   if(!q) return;
-  if(state.mode === "exam" || state.mode === "blank" || state.mode === "match") return;
+  if(state.mode === "blank" || state.mode === "match") return;
 
   const choiceEls = [...choicesEl.querySelectorAll(".choice")];
   // find wrong choices that haven't been eliminated yet
@@ -397,21 +368,6 @@ function submitBlank(){
   const correctText = q.choices[q.correctIndex];
   const result = fuzzyMatch(typed, correctText);
   input.disabled = true;
-
-  // In exam mode, record the answer and show minimal feedback
-  if(state.mode === "exam"){
-    state.exam.answers[state.idx] = {
-      q,
-      pickedIndex: null,
-      correctIndex: q.correctIndex,
-      pickedText: typed,
-      correctText,
-      isCorrect: result.match
-    };
-    feedbackEl.className = "feedback show";
-    feedbackEl.textContent = "Answer recorded. (Exam mode: feedback shown at the end.)";
-    return;
-  }
 
   if(result.match){
     input.classList.add("correct-input");
@@ -626,9 +582,6 @@ function startSession(){
     return;
   }
 
-  // clear exam timer
-  if(state.exam.timerId) { clearInterval(state.exam.timerId); state.exam.timerId=null; }
-
   state.idx = 0;
   state.selectedChoice = null;
   state.submitted = false;
@@ -637,9 +590,6 @@ function startSession(){
   state.bestStreak = 0;
   state.hintsUsed = 0;
   state.matchSet = null;
-  state.exam.active = (state.mode==="exam");
-  state.exam.answers = [];
-  timerPill.textContent = "Time: —";
   renderStreak();
 
   const pool = buildPool(state.selectedLabs);
@@ -648,58 +598,24 @@ function startSession(){
     return;
   }
 
-  let desiredN;
-  if(state.mode==="exam"){
-    desiredN = Math.max(5, Math.min(Number(state.exam.n)||20, pool.length));
-  }else{
-    const sc = sessionCount.value;
-    desiredN = (sc==="9999") ? pool.length : Math.min(Number(sc)||30, pool.length);
-  }
+  const sc = sessionCount.value;
+  const desiredN = (sc==="9999") ? pool.length : Math.min(Number(sc)||30, pool.length);
 
   shuffleInPlace(pool);
   const chosen = pool.slice(0, desiredN).map(makeShuffledQuestion);
 
   state.queue = chosen;
 
-  // set cover based on first question lab
   setCoverForLab(state.queue[0].labId);
   renderCurrent();
-  if(state.mode === "learn") flip(false); else flip(true, true);
+  flip(true, true);
   setPills();
   closeSettings();
 
-  if(state.mode==="exam"){
-    setupExamTimer();
-  }
   if(state.mode==="match"){
     startMatchRound();
-    flip(true);
+    flip(true, true);
   }
-}
-
-function setupExamTimer(){
-  const minutes = Number(state.exam.timeMin)||0;
-  if(minutes <= 0){
-    timerPill.textContent = "Time: ∞";
-    return;
-  }
-  state.exam.startTs = Date.now();
-  state.exam.endTs = state.exam.startTs + minutes*60*1000;
-
-  function tick(){
-    const now = Date.now();
-    const remaining = Math.max(0, state.exam.endTs - now);
-    const mm = Math.floor(remaining/60000);
-    const ss = Math.floor((remaining%60000)/1000);
-    timerPill.textContent = `Time: ${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;
-    if(remaining<=0){
-      clearInterval(state.exam.timerId);
-      state.exam.timerId=null;
-      finishExam(true);
-    }
-  }
-  tick();
-  state.exam.timerId = setInterval(tick, 250);
 }
 
 function renderCurrent(){
@@ -716,42 +632,17 @@ function renderCurrent(){
   state.revealed = false;
 
   // buttons behavior per mode
-  const isLearn = (state.mode==="learn");
   const isBlank = (state.mode==="blank");
   const isMatch = (state.mode==="match");
   const isFill = (q.type === "fill");
-  flipBtn.style.display = isLearn ? "inline-block" : "none";
-  revealBtn.style.display = "none";
-  $("hintBtn").style.display = (!isLearn && !isBlank && !isFill && !isMatch && state.mode!=="exam") ? "inline-block" : "none";
-  submitBtn.style.display = isLearn ? "none" : "inline-block";
+  $("hintBtn").style.display = (!isBlank && !isFill && !isMatch) ? "inline-block" : "none";
+  submitBtn.style.display = "inline-block";
   nextBtn.style.display = "inline-block";
 
   feedbackEl.className = "feedback";
   feedbackEl.textContent = "";
   feedbackEl.classList.remove("show","good","bad","warn");
 
-  // ── LEARN MODE: term card (cover) → context card (front) ──
-  if(isLearn){
-    $("coverSide").classList.add("learn-term");
-    coverImg.style.display = "none";
-    coverTitle.textContent = q.choices[q.correctIndex];
-    coverSub.textContent = lab ? `${lab.name} · ${lab.topic}` : "";
-
-    // Front shows the question as context + optional explanation
-    qText.textContent = q.prompt;
-    choicesEl.innerHTML = "";
-    if(q.explanation){
-      const expDiv = document.createElement("div");
-      expDiv.className = "explanation show";
-      expDiv.innerHTML = `<strong>Why?</strong> ${escapeHtml(q.explanation)}`;
-      choicesEl.appendChild(expDiv);
-    }
-    setPills();
-    return;
-  }
-
-  // Non-learn modes: restore normal cover
-  $("coverSide").classList.remove("learn-term");
   setCoverForLab(q.labId);
 
   // For matching mode, don't render normal choices
@@ -792,31 +683,13 @@ function escapeHtml(s){
 }
 
 function selectChoice(i){
-  if(state.submitted && state.mode!=="learn") return; // lock after submit in test/exam
+  if(state.submitted) return; // lock after submit
   state.selectedChoice = i;
   [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
     el.classList.toggle("selected", Number(el.dataset.index)===i);
   });
 }
 
-function revealAnswer(){
-  if(state.mode!=="learn") return;
-  const q = state.queue[state.idx];
-  if(!q) return;
-  // New learn mode has no choices rendered — nothing to reveal
-  if(!choicesEl.querySelector(".choice")) return;
-  state.revealed = true;
-
-  [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
-    const idx = Number(el.dataset.index);
-    el.classList.remove("wrong","correct");
-    if(idx === q.correctIndex) el.classList.add("correct");
-  });
-
-  feedbackEl.className = "feedback show warn";
-  feedbackEl.innerHTML = `Reveal: Correct answer is "${escapeHtml(q.choices[q.correctIndex])}".`
-    + (q.explanation ? `<div class="explanation"><strong>Why?</strong> ${escapeHtml(q.explanation)}</div>` : "");
-}
 
 function submitAnswer(){
   // Handle special modes / fill-type questions
@@ -834,45 +707,25 @@ function submitAnswer(){
     return;
   }
 
-  // Learn mode can show feedback immediately; Test mode shows correctness; Exam mode records only
   const isCorrect = (state.selectedChoice === q.correctIndex);
+  state.submitted = true;
 
-  if(state.mode==="exam"){
-    state.submitted = true;
-    // record
-    const pickedText = q.choices[state.selectedChoice];
-    const correctText = q.choices[q.correctIndex];
-    state.exam.answers[state.idx] = {
-      q,
-      pickedIndex: state.selectedChoice,
-      correctIndex: q.correctIndex,
-      pickedText,
-      correctText,
-      isCorrect
-    };
-    // no feedback now
-    feedbackEl.className = "feedback show";
-    feedbackEl.textContent = "Answer recorded. (Exam mode: feedback shown at the end.)";
-  }else{
-    state.submitted = true;
+  [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
+    const idx = Number(el.dataset.index);
+    el.classList.remove("wrong","correct");
+    if(idx === q.correctIndex) el.classList.add("correct");
+    if(idx === state.selectedChoice && idx !== q.correctIndex) el.classList.add("wrong");
+  });
 
-    [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
-      const idx = Number(el.dataset.index);
-      el.classList.remove("wrong","correct");
-      if(idx === q.correctIndex) el.classList.add("correct");
-      if(idx === state.selectedChoice && idx !== q.correctIndex) el.classList.add("wrong");
-    });
+  feedbackEl.className = "feedback show " + (isCorrect ? "good" : "bad");
+  const base = isCorrect
+    ? "Correct!"
+    : `Incorrect. Correct answer: "${escapeHtml(q.choices[q.correctIndex])}".`;
+  feedbackEl.innerHTML = base
+    + (q.explanation ? `<div class="explanation"><strong>Why?</strong> ${escapeHtml(q.explanation)}</div>` : "");
 
-    feedbackEl.className = "feedback show " + (isCorrect ? "good" : "bad");
-    const base = isCorrect
-      ? "Correct!"
-      : `Incorrect. Correct answer: "${escapeHtml(q.choices[q.correctIndex])}".`;
-    feedbackEl.innerHTML = base
-      + (q.explanation ? `<div class="explanation"><strong>Why?</strong> ${escapeHtml(q.explanation)}</div>` : "");
-
-    updateStreak(isCorrect);
-    if(isCorrect) sfxCorrect(); else sfxWrong();
-  }
+  updateStreak(isCorrect);
+  if(isCorrect) sfxCorrect(); else sfxWrong();
 }
 
 function nextQuestion(){
@@ -887,87 +740,26 @@ function nextQuestion(){
     return;
   }
 
-  if(state.mode==="exam"){
-    // In exam mode, require an answer before moving on
-    const recorded = state.exam.answers[state.idx];
-    if(!recorded){
-      feedbackEl.className = "feedback show warn";
-      feedbackEl.textContent = "Exam mode: submit an answer before moving on.";
-      return;
-    }
-  }else if(state.mode==="test" || state.mode==="blank"){
-    // Test/blank mode: require submit before moving on
-    if(!state.submitted){
-      feedbackEl.className = "feedback show warn";
-      feedbackEl.textContent = "Submit your answer before moving on.";
-      return;
-    }
+  if(!state.submitted){
+    feedbackEl.className = "feedback show warn";
+    feedbackEl.textContent = "Submit your answer before moving on.";
+    return;
   }
 
   if(state.idx >= state.queue.length - 1){
-    if(state.mode==="exam"){
-      finishExam(false);
-      return;
-    }
     // loop by reshuffling
     shuffleInPlace(state.queue);
     state.idx = 0;
     renderCurrent();
-    if(state.mode === "learn") flip(false); else flip(true, true);
+    flip(true, true);
     return;
   }
 
   state.idx++;
   renderCurrent();
-  if(state.mode === "learn") flip(false); else flip(true, true);
+  flip(true, true);
 }
 
-function finishExam(forcedByTime){
-  if(state.exam.timerId){ clearInterval(state.exam.timerId); state.exam.timerId=null; }
-
-  // ensure all answered? If not, mark unanswered as incorrect
-  for(let i=0;i<state.queue.length;i++){
-    if(!state.exam.answers[i]){
-      const q = state.queue[i];
-      state.exam.answers[i] = {
-        q,
-        pickedIndex: null,
-        correctIndex: q.correctIndex,
-        pickedText: "(no answer)",
-        correctText: q.choices[q.correctIndex],
-        isCorrect: false
-      };
-    }
-  }
-
-  const total = state.exam.answers.length;
-  const correct = state.exam.answers.filter(a=>a.isCorrect).length;
-  const pct = Math.round((correct/total)*100);
-
-  $("resultsSummary").textContent =
-    `${forcedByTime ? "Time is up. " : ""}Score: ${correct} / ${total} (${pct}%). Review below.`;
-
-  const list = $("resultsList");
-  list.innerHTML = "";
-  state.exam.answers.forEach((a, i)=>{
-    const lab = LABS.find(l=>l.id===a.q.labId);
-    const div = document.createElement("div");
-    div.className = "resultCard";
-    div.innerHTML = `
-      <div class="meta">
-        Q${i+1} • ${lab ? lab.name : "Lab"} • ${lab ? lab.topic : ""}
-        <span class="badge ${a.isCorrect ? "good" : "bad"}">${a.isCorrect ? "Correct" : "Incorrect"}</span>
-      </div>
-      <p class="qt">${escapeHtml(a.q.prompt)}</p>
-      <div class="ans"><strong>Your answer:</strong> ${escapeHtml(a.pickedText || "(no answer)")}</div>
-      <div class="ans"><strong>Correct:</strong> ${escapeHtml(a.correctText)}</div>
-      ${a.q.explanation ? `<div class="explanation"><strong>Why?</strong> ${escapeHtml(a.q.explanation)}</div>` : ""}
-    `;
-    list.appendChild(div);
-  });
-
-  openResults();
-}
 
 /* =========================
    UI Wiring
@@ -978,16 +770,6 @@ $("closeSettingsBtn").addEventListener("click", closeSettings);
 $("helpBtn").addEventListener("click", openHelp);
 $("closeHelpBtn").addEventListener("click", closeHelp);
 
-$("closeResultsBtn").addEventListener("click", closeResults);
-$("restartBtn").addEventListener("click", ()=>{
-  closeResults();
-  openSettings();
-});
-
-flipBtn.addEventListener("click", ()=>{ if(state.mode==="learn") flip(); });
-$("coverSide").addEventListener("click", ()=>{ if(state.mode==="learn") flip(true); });
-
-revealBtn.addEventListener("click", revealAnswer);
 $("hintBtn").addEventListener("click", giveHint);
 submitBtn.addEventListener("click", submitAnswer);
 nextBtn.addEventListener("click", nextQuestion);
@@ -1004,10 +786,8 @@ soundToggle.addEventListener("click", ()=>{
 resetBtn.addEventListener("click", ()=>{
   localStorage.removeItem("kin100_flashcards_prefs");
   state.selectedLabs = [1,2,3,4,5,6];
-  state.mode = "learn";
+  state.mode = "test";
   state.sessionN = 30;
-  state.exam.n = 20;
-  state.exam.timeMin = 0;
   remember.value = "yes";
   renderSettings();
 });
@@ -1016,15 +796,8 @@ startBtn.addEventListener("click", ()=>{
   // pull settings from modal
   state.remember = (remember.value === "yes");
   state.sessionN = Number(sessionCount.value)==9999 ? 9999 : Number(sessionCount.value)||30;
-  state.exam.n = Number(examCount.value)||20;
-  state.exam.timeMin = Number(examTime.value)||0;
   savePrefs();
   startSession();
-});
-
-$("restartBtn").addEventListener("click", ()=>{
-  closeResults();
-  openSettings();
 });
 
 /* =========================
@@ -1089,9 +862,7 @@ function updateModeCards(){
     card.classList.toggle("selected", state.mode === mode);
     card.querySelector("input").checked = (state.mode === mode);
   });
-  examFields.style.display = (state.mode==="exam") ? "block" : "none";
-  const showStudy = !["exam","match"].includes(state.mode);
-  $("studyFields").style.display = showStudy ? "block" : "none";
+  $("studyFields").style.display = (state.mode === "match") ? "none" : "block";
 }
 
 // Region bar clicks
@@ -1163,8 +934,6 @@ function renderSettings(){
   updateModeCards();
 
   // Fields
-  examCount.value = String(state.exam.n || 20);
-  examTime.value = String(state.exam.timeMin || 0);
   if(state.sessionN===9999) sessionCount.value = "9999";
   else sessionCount.value = String(state.sessionN || 30);
   remember.value = state.remember ? "yes" : "no";
@@ -1180,11 +949,9 @@ document.addEventListener("keydown", (e)=>{
   // If a modal is open, keep shortcuts minimal
   const settingsOpen = settingsModalBack.classList.contains("show");
   const helpOpen = helpModalBack.classList.contains("show");
-  const resultsOpen = resultsModalBack.classList.contains("show");
 
   if(e.key === "Escape"){
     if(helpOpen) closeHelp();
-    else if(resultsOpen) closeResults();
     else if(settingsOpen) closeSettings();
     else openSettings();
     return;
@@ -1194,19 +961,10 @@ document.addEventListener("keydown", (e)=>{
     return;
   }
 
-  if(settingsOpen || helpOpen || resultsOpen) return;
+  if(settingsOpen || helpOpen) return;
 
-  if(e.key === " "){
-    e.preventDefault();
-    if(state.mode==="learn") flip();
-    return;
-  }
   if(e.key.toLowerCase() === "n"){
     nextQuestion();
-    return;
-  }
-  if(e.key.toLowerCase() === "r"){
-    revealAnswer();
     return;
   }
   if(e.key.toLowerCase() === "h"){
@@ -1214,17 +972,7 @@ document.addEventListener("keydown", (e)=>{
     return;
   }
   if(e.key === "Enter"){
-    // if already submitted in test/exam, Enter advances; otherwise submits
-    if(state.mode==="exam"){
-      const recorded = state.exam.answers[state.idx];
-      if(recorded) nextQuestion(); else submitAnswer();
-    }else if(state.mode==="test"){
-      if(state.submitted) nextQuestion(); else submitAnswer();
-    }else{
-      // Learn: if revealed or submitted, advance; else submit
-      if(state.revealed || state.submitted) nextQuestion();
-      else submitAnswer();
-    }
+    if(state.submitted) nextQuestion(); else submitAnswer();
     return;
   }
 
@@ -1268,9 +1016,8 @@ document.addEventListener("keydown", (e)=>{
     if(absDx < MIN_DIST && absDy < MIN_DIST) return;
 
     if(absDy > absDx){
-      // Vertical swipe — swipe up to flip to question, swipe down to flip to cover
-      if(dy < 0) flip(true);                                    // swipe up → show question
-      else if(state.mode==="learn") flip(false);                // swipe down → cover (learn only)
+      // Vertical swipe — swipe up to show question side
+      if(dy < 0) flip(true);
     }else{
       // Horizontal swipe — swipe left for next
       if(dx < 0) nextQuestion();
