@@ -657,7 +657,7 @@ function startSession(){
   // set cover based on first question lab
   setCoverForLab(state.queue[0].labId);
   renderCurrent();
-  flip(false);
+  flip(state.mode !== "learn");  // learn: show cover first; others: show question directly
   setPills();
   closeSettings();
 
@@ -709,10 +709,12 @@ function renderCurrent(){
   state.revealed = false;
 
   // buttons behavior per mode
+  const isLearn = (state.mode==="learn");
   const isBlank = (state.mode==="blank");
   const isMatch = (state.mode==="match");
   const isFill = (q.type === "fill");
-  revealBtn.style.display = (state.mode==="learn" && !isFill) ? "inline-block" : "none";
+  flipBtn.style.display = isLearn ? "inline-block" : "none";
+  revealBtn.style.display = (isLearn && !isFill) ? "inline-block" : "none";
   $("hintBtn").style.display = (!isBlank && !isFill && !isMatch && state.mode!=="exam") ? "inline-block" : "none";
   submitBtn.style.display = "inline-block";
   nextBtn.style.display = "inline-block";
@@ -881,13 +883,13 @@ function nextQuestion(){
     shuffleInPlace(state.queue);
     state.idx = 0;
     renderCurrent();
-    flip(false);
+    flip(state.mode !== "learn");
     return;
   }
 
   state.idx++;
   renderCurrent();
-  flip(false);
+  flip(state.mode !== "learn");
 }
 
 function finishExam(forcedByTime){
@@ -952,8 +954,8 @@ $("restartBtn").addEventListener("click", ()=>{
   openSettings();
 });
 
-flipBtn.addEventListener("click", ()=>flip());
-$("coverSide").addEventListener("click", ()=>flip(true));
+flipBtn.addEventListener("click", ()=>{ if(state.mode==="learn") flip(); });
+$("coverSide").addEventListener("click", ()=>{ if(state.mode==="learn") flip(true); });
 
 revealBtn.addEventListener("click", revealAnswer);
 $("hintBtn").addEventListener("click", giveHint);
@@ -1166,7 +1168,7 @@ document.addEventListener("keydown", (e)=>{
 
   if(e.key === " "){
     e.preventDefault();
-    flip();
+    if(state.mode==="learn") flip();
     return;
   }
   if(e.key.toLowerCase() === "n"){
@@ -1237,8 +1239,8 @@ document.addEventListener("keydown", (e)=>{
 
     if(absDy > absDx){
       // Vertical swipe — swipe up to flip to question, swipe down to flip to cover
-      if(dy < 0) flip(true);   // swipe up → show question
-      else flip(false);         // swipe down → show cover
+      if(dy < 0) flip(true);                                    // swipe up → show question
+      else if(state.mode==="learn") flip(false);                // swipe down → cover (learn only)
     }else{
       // Horizontal swipe — swipe left for next
       if(dx < 0) nextQuestion();
