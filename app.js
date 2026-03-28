@@ -140,13 +140,20 @@ function closeResults(){
   resultsModalBack.classList.remove("show");
 }
 
-function flip(toQuestion){
+function flip(toQuestion, instant){
   if(typeof toQuestion === "boolean"){
     state.flipped = toQuestion;
   }else{
     state.flipped = !state.flipped;
   }
-  card.classList.toggle("flipped", state.flipped);
+  if(instant){
+    card.style.transition = "none";
+    card.classList.toggle("flipped", state.flipped);
+    void card.offsetWidth; // force reflow before re-enabling transition
+    card.style.transition = "";
+  } else {
+    card.classList.toggle("flipped", state.flipped);
+  }
 }
 
 function randItem(arr){
@@ -657,7 +664,7 @@ function startSession(){
   // set cover based on first question lab
   setCoverForLab(state.queue[0].labId);
   renderCurrent();
-  flip(state.mode !== "learn");  // learn: show cover first; others: show question directly
+  if(state.mode === "learn") flip(false); else flip(true, true);
   setPills();
   closeSettings();
 
@@ -883,13 +890,13 @@ function nextQuestion(){
     shuffleInPlace(state.queue);
     state.idx = 0;
     renderCurrent();
-    flip(state.mode !== "learn");
+    if(state.mode === "learn") flip(false); else flip(true, true);
     return;
   }
 
   state.idx++;
   renderCurrent();
-  flip(state.mode !== "learn");
+  if(state.mode === "learn") flip(false); else flip(true, true);
 }
 
 function finishExam(forcedByTime){
