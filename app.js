@@ -466,7 +466,6 @@ function renderMatchMode(){
     // Connector
     const conn = document.createElement("div");
     conn.className = "match-connector" + (ms.links[pi] !== undefined ? " linked" : "");
-    conn.textContent = ms.links[pi] !== undefined ? "\u2194" : "\u2022";
 
     // Answer side
     const ai = ms.shuffledAnswers[pi];
