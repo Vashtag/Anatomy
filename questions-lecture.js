@@ -238,7 +238,7 @@ Semimembranosus inserts into the ___ aspect of the medial tibial condyle.	FILL	p
 
 22: `
 The knee joint is classified as which type of joint?	Ball and socket, synovial	Modified hinge, synovial	Plane, synovial	Pivot, fibrous	B
-The fibula ___ (is / is not) involved in the knee joint.	FILL	is not
+The fibula _____ involved in the knee joint.	FILL	is not
 Which of the following is an EXTRINSIC ligament of the knee?	Patellar ligament	Oblique popliteal ligament	Anterior cruciate ligament	Arcuate popliteal ligament	C
 The ACL attaches to the ___ aspect of the intercondylar eminence and passes to the ___ femoral condyle.	FILL	anterior; lateral
 A valgus force to the knee refers to impact on which side?	Medial aspect	Posterior aspect	Lateral aspect	Anterior aspect	C
