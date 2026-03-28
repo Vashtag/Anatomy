@@ -957,4 +957,33 @@
     }
     .course-card .course-desc{ font-size: 13px; font-weight: 700; color: rgba(232,238,247,.75) }
     .course-card .course-sub{ font-size: 11px; font-weight: 400; color: rgba(232,238,247,.4) }
-  </style>
+
+    /* ── Learn mode: term card ── */
+    .side.cover.learn-term{
+      justify-content: center;
+      background: linear-gradient(135deg,
+        rgba(105,179,255,.12) 0%,
+        rgba(61,220,151,.08) 100%);
+    }
+    .side.cover.learn-term .coverOverlay{ display: none; }
+    .side.cover.learn-term .coverMeta{
+      position: relative;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .side.cover.learn-term .coverTitle{
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin: 0 0 12px 0;
+    }
+    .side.cover.learn-term .coverSub{
+      font-size: 12px;
+      color: rgba(232,238,247,.5);
+      margin: 0;
+    }
+    .side.cover.learn-term .tapHint{ justify-content: center; margin-top: 16px; }

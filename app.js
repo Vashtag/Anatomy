@@ -721,16 +721,37 @@ function renderCurrent(){
   const isMatch = (state.mode==="match");
   const isFill = (q.type === "fill");
   flipBtn.style.display = isLearn ? "inline-block" : "none";
-  revealBtn.style.display = (isLearn && !isFill) ? "inline-block" : "none";
-  $("hintBtn").style.display = (!isBlank && !isFill && !isMatch && state.mode!=="exam") ? "inline-block" : "none";
-  submitBtn.style.display = "inline-block";
+  revealBtn.style.display = "none";
+  $("hintBtn").style.display = (!isLearn && !isBlank && !isFill && !isMatch && state.mode!=="exam") ? "inline-block" : "none";
+  submitBtn.style.display = isLearn ? "none" : "inline-block";
   nextBtn.style.display = "inline-block";
 
   feedbackEl.className = "feedback";
   feedbackEl.textContent = "";
   feedbackEl.classList.remove("show","good","bad","warn");
 
-  // cover image updates per question (keeps the "cue card cover" tied to lab)
+  // ── LEARN MODE: term card (cover) → context card (front) ──
+  if(isLearn){
+    $("coverSide").classList.add("learn-term");
+    coverImg.style.display = "none";
+    coverTitle.textContent = q.choices[q.correctIndex];
+    coverSub.textContent = lab ? `${lab.name} · ${lab.topic}` : "";
+
+    // Front shows the question as context + optional explanation
+    qText.textContent = q.prompt;
+    choicesEl.innerHTML = "";
+    if(q.explanation){
+      const expDiv = document.createElement("div");
+      expDiv.className = "explanation show";
+      expDiv.innerHTML = `<strong>Why?</strong> ${escapeHtml(q.explanation)}`;
+      choicesEl.appendChild(expDiv);
+    }
+    setPills();
+    return;
+  }
+
+  // Non-learn modes: restore normal cover
+  $("coverSide").classList.remove("learn-term");
   setCoverForLab(q.labId);
 
   // For matching mode, don't render normal choices
@@ -782,6 +803,8 @@ function revealAnswer(){
   if(state.mode!=="learn") return;
   const q = state.queue[state.idx];
   if(!q) return;
+  // New learn mode has no choices rendered — nothing to reveal
+  if(!choicesEl.querySelector(".choice")) return;
   state.revealed = true;
 
   [...choicesEl.querySelectorAll(".choice")].forEach(el=>{
