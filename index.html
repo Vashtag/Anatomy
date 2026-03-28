@@ -55,8 +55,6 @@
 
           <div class="actions">
             <div class="group">
-              <button class="btn small ghost" id="flipBtn" title="Flip (Space)">Flip</button>
-              <button class="btn small warn" id="revealBtn" title="Reveal (R) - Learn mode only">Reveal</button>
               <button class="btn small" id="hintBtn" title="Hint (H) - Eliminate one wrong answer">Hint</button>
             </div>
             <div class="group">
@@ -129,28 +127,16 @@
         <!-- Mode -->
         <div class="section-label">Mode</div>
         <div class="mode-row" id="modeRow" style="grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));">
-          <label class="mode-card" data-mode="learn">
-            <input type="radio" name="mode" value="learn">
-            <div class="mode-icon">&#x1f9e0;</div>
-            <div class="mode-title">Learn</div>
-            <div class="mode-desc">Reveal at your pace.</div>
-          </label>
           <label class="mode-card" data-mode="test">
             <input type="radio" name="mode" value="test">
             <div class="mode-icon">&#x1f4dd;</div>
-            <div class="mode-title">Test</div>
-            <div class="mode-desc">Submit to see feedback.</div>
-          </label>
-          <label class="mode-card" data-mode="exam">
-            <input type="radio" name="mode" value="exam">
-            <div class="mode-icon">&#x23f1;&#xfe0f;</div>
-            <div class="mode-title">Exam</div>
-            <div class="mode-desc">No feedback. Timed.</div>
+            <div class="mode-title">Multiple Choice</div>
+            <div class="mode-desc">Select an answer and submit.</div>
           </label>
           <label class="mode-card" data-mode="blank">
             <input type="radio" name="mode" value="blank">
             <div class="mode-icon">&#x270d;&#xfe0f;</div>
-            <div class="mode-title">Fill-in</div>
+            <div class="mode-title">Short Answer</div>
             <div class="mode-desc">Type the answer. No choices.</div>
           </label>
           <label class="mode-card" data-mode="match">
@@ -164,18 +150,6 @@
         <!-- Config -->
         <div class="section-label">Configure</div>
         <div class="config-panel">
-          <div id="examFields" style="display:none;">
-            <div class="config-row">
-              <div class="config-field">
-                <label for="examCount">Questions</label>
-                <input id="examCount" type="number" min="5" max="220" value="20" />
-              </div>
-              <div class="config-field">
-                <label for="examTime">Time limit (min)</label>
-                <input id="examTime" type="number" min="0" max="180" value="0" />
-              </div>
-            </div>
-          </div>
           <div id="studyFields">
             <div class="config-row">
               <div class="config-field">
@@ -205,7 +179,6 @@
         </div>
 
         <div class="setup-footer">
-          <span class="kbd">Space</span> flip &middot;
           <span class="kbd">1-4</span> choose &middot;
           <span class="kbd">Enter</span> submit &middot;
           <span class="kbd">N</span> next &middot;
@@ -226,13 +199,12 @@
       <div class="panel">
         <div class="help" style="font-size:13px;">
           <div class="row" style="gap:14px;">
-            <span><span class="kbd">Space</span> Flip card</span>
             <span><span class="kbd">1</span>–<span class="kbd">4</span> Select choice</span>
             <span><span class="kbd">Enter</span> Submit (or advance if already submitted)</span>
           </div>
           <div class="row" style="gap:14px; margin-top:10px;">
             <span><span class="kbd">N</span> Next</span>
-            <span><span class="kbd">R</span> Reveal (Learn mode)</span>
+            <span><span class="kbd">H</span> Hint (eliminate wrong answer)</span>
             <span><span class="kbd">Esc</span> Settings</span>
             <span><span class="kbd">?</span> Open this help</span>
           </div>
@@ -241,21 +213,6 @@
     </div>
   </div>
 
-  <!-- EXAM RESULTS MODAL -->
-  <div class="modalBack" id="resultsModalBack" role="dialog" aria-modal="true">
-    <div class="modal">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-        <h2>Exam Results</h2>
-        <button class="btn small ghost" id="closeResultsBtn">Close</button>
-      </div>
-      <p id="resultsSummary">—</p>
-      <div class="resultsList" id="resultsList"></div>
-      <div class="hr"></div>
-      <div class="row" style="justify-content:flex-end;">
-        <button class="btn primary" id="restartBtn">Start New Session</button>
-      </div>
-    </div>
-  </div>
 
   <!-- Scripts: data first, then questions, then app logic -->
   <script src="data.js"></script>
