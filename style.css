@@ -288,8 +288,8 @@
       flex-direction: column;
       gap: 6px;
     }
-    .match-left{ padding-right: 4px; }
-    .match-right{ padding-left: 4px; }
+    .match-left{ padding-right: 22px; }
+    .match-right{ padding-left: 22px; }
     .match-item{
       padding: 8px 10px;
       border-radius: 10px;
