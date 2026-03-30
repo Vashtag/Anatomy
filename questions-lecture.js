@@ -127,102 +127,102 @@ The carpal tunnel is created deep to the __________ retinaculum.	FILL	flexor	The
 `.trim(),
 
 12: `
-The 'common extensor origin' is located on which bony landmark?	Medial epicondyle of humerus	Lateral epicondyle of humerus	Olecranon process	Lateral supraepicondylar ridge	B
-Brachioradialis is innervated by which nerve?	Median nerve	Ulnar nerve	Radial nerve	Anterior interosseous nerve	C
-Which muscle inserts onto the base of the 5th metacarpal?	Extensor Carpi Radialis Longus	Extensor Carpi Radialis Brevis	Extensor Carpi Ulnaris	Extensor Digitorum	C
-The floor of the anatomical snuff box is formed by the scaphoid and which other bone?	Lunate	Trapezoid	Trapezium	Capitate	C
-Extensor Pollicis Longus inserts onto the __________ phalanx of the thumb.	FILL	distal
-The tendon of Extensor Digitorum splits into a median band and two __________ bands at the extensor expansion.	FILL	lateral
-The radial artery passes through the anatomical snuff box and becomes the __________ palmar arch in the hand.	FILL	deep
-Abductor Pollicis Longus inserts onto the base of the __________ metacarpal.	FILL	1st
+The 'common extensor origin' is located on which bony landmark?	Medial epicondyle of humerus	Lateral epicondyle of humerus	Olecranon process	Lateral supraepicondylar ridge	B	All superficial posterior forearm extensors share the lateral epicondyle as their common origin.
+Brachioradialis is innervated by which nerve?	Median nerve	Ulnar nerve	Radial nerve	Anterior interosseous nerve	C	Brachioradialis lies in the posterior compartment and is innervated by the radial nerve.
+Which muscle inserts onto the base of the 5th metacarpal?	Extensor Carpi Radialis Longus	Extensor Carpi Radialis Brevis	Extensor Carpi Ulnaris	Extensor Digitorum	C	ECU runs along the ulnar side and inserts at the 5th metacarpal base to extend and adduct the wrist.
+The floor of the anatomical snuff box is formed by the scaphoid and which other bone?	Lunate	Trapezoid	Trapezium	Capitate	C	The snuff box floor is formed by scaphoid proximally and trapezium distally.
+Extensor Pollicis Longus inserts onto the __________ phalanx of the thumb.	FILL	distal	EPL forms the ulnar border of the snuff box and extends the thumb's distal phalanx.
+The tendon of Extensor Digitorum splits into a median band and two __________ bands at the extensor expansion.	FILL	lateral	The extensor expansion has a central median slip and two lateral bands that extend the IP joints.
+The radial artery passes through the anatomical snuff box and becomes the __________ palmar arch in the hand.	FILL	deep	The radial artery dives between the first dorsal interosseous to form the deep palmar arch.
+Abductor Pollicis Longus inserts onto the base of the __________ metacarpal.	FILL	1st	APL abducts the thumb by inserting onto the lateral base of the first metacarpal.
 `.trim(),
 
 13: `
-The brachial artery bifurcates just distal to which structure?	Axilla	Carpal tunnel	Cubital fossa	Anatomical snuff box	C
-The ulnar nerve passes __________ to the flexor retinaculum (does NOT pass through the carpal tunnel).	Deep	Superficial	Anterior	Posterior	B
-Carpal tunnel syndrome most commonly causes paresthesia in the skin of which digits?	Medial 1½ digits	Lateral 3½ digits	All 5 digits	Digits IV and V only	B
-The deep branch of the radial nerve pierces which muscle as it enters the posterior forearm?	Brachioradialis	Extensor carpi ulnaris	Supinator	Pronator teres	C
-The ulnar artery continues in the hand as the __________ palmar arch.	FILL	superficial
-The median nerve courses through the forearm between flexor digitorum superficialis and __________.	FILL	flexor digitorum profundus
-In the forearm, the ulnar nerve supplies flexor carpi ulnaris and the __________ half of flexor digitorum profundus.	FILL	medial
-Carpal tunnel syndrome can be surgically treated by cutting the __________ retinaculum.	FILL	flexor
+The brachial artery bifurcates just distal to which structure?	Axilla	Carpal tunnel	Cubital fossa	Anatomical snuff box	C	The brachial artery divides into radial and ulnar arteries just below the cubital fossa.
+The ulnar nerve passes __________ to the flexor retinaculum (does NOT pass through the carpal tunnel).	Deep	Superficial	Anterior	Posterior	B	The ulnar nerve travels through Guyon's canal superficial to the flexor retinaculum, avoiding the carpal tunnel.
+Carpal tunnel syndrome most commonly causes paresthesia in the skin of which digits?	Medial 1½ digits	Lateral 3½ digits	All 5 digits	Digits IV and V only	B	The median nerve supplies the lateral 3½ digits; compression in carpal tunnel causes tingling there.
+The deep branch of the radial nerve pierces which muscle as it enters the posterior forearm?	Brachioradialis	Extensor carpi ulnaris	Supinator	Pronator teres	C	The posterior interosseous nerve (deep radial) passes through the supinator to enter the posterior forearm.
+The ulnar artery continues in the hand as the __________ palmar arch.	FILL	superficial	The ulnar artery is the main supply to the superficial palmar arch in the hand.
+The median nerve courses through the forearm between flexor digitorum superficialis and __________.	FILL	flexor digitorum profundus	The median nerve runs in the plane between FDS and FDP through the forearm.
+In the forearm, the ulnar nerve supplies flexor carpi ulnaris and the __________ half of flexor digitorum profundus.	FILL	medial	The ulnar nerve innervates FCU and the medial (ulnar) half of FDP for digits IV and V.
+Carpal tunnel syndrome can be surgically treated by cutting the __________ retinaculum.	FILL	flexor	Dividing the flexor retinaculum decompresses the carpal tunnel, relieving median nerve pressure.
 `.trim(),
 
 14: `
-The thenar muscles are innervated by which nerve?	Deep branch of ulnar nerve	Superficial branch of ulnar nerve	Recurrent branch of median nerve	Anterior interosseous nerve	C
-Lumbricals originate from the tendons of which muscle?	Flexor Digitorum Superficialis	Flexor Digitorum Profundus	Flexor Pollicis Longus	Extensor Digitorum	B
-The 3rd and 4th lumbricals are innervated by which nerve?	Median nerve	Superficial branch of ulnar nerve	Deep branch of ulnar nerve	Radial nerve	C
-Palmar interossei perform adduction of digits II, IV, and V. Which digit CANNOT adduct?	Index (II)	Middle (III)	Ring (IV)	Little (V)	B
-The palmar aponeurosis is continuous proximally with the flexor retinaculum and the tendon of __________.	FILL	palmaris longus
-There are __________ dorsal interossei in the hand.	FILL	4
-Adductor pollicis, the only muscle in the adductor compartment, is innervated by the __________ branch of the ulnar nerve.	FILL	deep
-Lumbricals insert into the __________ expansions of digits II–V.	FILL	extensor
+The thenar muscles are innervated by which nerve?	Deep branch of ulnar nerve	Superficial branch of ulnar nerve	Recurrent branch of median nerve	Anterior interosseous nerve	C	The recurrent (thenar) branch of the median nerve hooks back to supply the thenar eminence muscles.
+Lumbricals originate from the tendons of which muscle?	Flexor Digitorum Superficialis	Flexor Digitorum Profundus	Flexor Pollicis Longus	Extensor Digitorum	B	Lumbricals arise from FDP tendons, allowing them to flex MCPs and extend IP joints simultaneously.
+The 3rd and 4th lumbricals are innervated by which nerve?	Median nerve	Superficial branch of ulnar nerve	Deep branch of ulnar nerve	Radial nerve	C	The ulnar nerve (deep branch) innervates the lateral two lumbricals (3rd and 4th).
+Palmar interossei perform adduction of digits II, IV, and V. Which digit CANNOT adduct?	Index (II)	Middle (III)	Ring (IV)	Little (V)	B	Digit III is the reference axis; adduction moves toward it, so digit III itself cannot adduct.
+The palmar aponeurosis is continuous proximally with the flexor retinaculum and the tendon of __________.	FILL	palmaris longus	Palmaris longus blends into the palmar aponeurosis at the wrist, tensioning the fascial sheet.
+There are __________ dorsal interossei in the hand.	FILL	4	Four dorsal interossei fill the four spaces between the five metacarpals and abduct the fingers.
+Adductor pollicis, the only muscle in the adductor compartment, is innervated by the __________ branch of the ulnar nerve.	FILL	deep	The deep branch of the ulnar nerve innervates all hypothenar, interossei, and adductor pollicis.
+Lumbricals insert into the __________ expansions of digits II–V.	FILL	extensor	Lumbricals attach to the extensor expansions on the dorsum, enabling IP extension while flexing MCPs.
 `.trim(),
 
 15: `
-The fibre direction of External Oblique is best described as:	Horizontal	Anterosuperior	Anteroinferior ('hands in pockets')	Vertical	C
-Which opening in the diaphragm is at the level of T8?	Aortic hiatus	Esophageal hiatus	Caval opening	Lumbar hiatus	C
-The aponeuroses of the anterolateral abdominal muscles meet at the midline to form the:	Rectus sheath only	Inguinal ligament	Linea alba	Tendinous intersection	C
-Which posterior abdominal wall muscle inserts onto the iliac crest?	Psoas major	Iliacus	Quadratus lumborum	Rectus abdominis	C
-The inferior edge of the aponeurosis of external oblique forms the __________ ligament.	FILL	inguinal
-The diaphragm's muscle fibres converge to form the __________ tendon, which supports the weight of the heart.	FILL	central
-The aortic hiatus in the diaphragm is at vertebral level __________.	FILL	T12
-The lumbar plexus is formed within the __________ major muscle.	FILL	psoas
+The fibre direction of External Oblique is best described as:	Horizontal	Anterosuperior	Anteroinferior ('hands in pockets')	Vertical	C	External oblique fibres run like hands sliding into front pockets, i.e., anteroinferiorly.
+Which opening in the diaphragm is at the level of T8?	Aortic hiatus	Esophageal hiatus	Caval opening	Lumbar hiatus	C	The caval opening at T8 transmits the inferior vena cava through the central tendon.
+The aponeuroses of the anterolateral abdominal muscles meet at the midline to form the:	Rectus sheath only	Inguinal ligament	Linea alba	Tendinous intersection	C	The three flat muscle aponeuroses interdigitate at the midline creating the avascular linea alba.
+Which posterior abdominal wall muscle inserts onto the iliac crest?	Psoas major	Iliacus	Quadratus lumborum	Rectus abdominis	C	Quadratus lumborum spans from the 12th rib and lumbar vertebrae down to the iliac crest.
+The inferior edge of the aponeurosis of external oblique forms the __________ ligament.	FILL	inguinal	The free inferior border of external oblique aponeurosis folds back on itself to form the inguinal ligament.
+The diaphragm's muscle fibres converge to form the __________ tendon, which supports the weight of the heart.	FILL	central	Diaphragm muscle fibres insert into the central tendon, which bears the weight of the pericardium.
+The aortic hiatus in the diaphragm is at vertebral level __________.	FILL	T12	The aortic hiatus at T12 transmits the aorta and thoracic duct posterior to the diaphragm.
+The lumbar plexus is formed within the __________ major muscle.	FILL	psoas	The lumbar plexus (L1–L4) forms within the substance of the psoas major muscle.
 `.trim(),
 
 16: `
-Each hip bone is formed by the fusion of which three bones?	Ilium, fibula, pubis	Ilium, ischium, pubis	Sacrum, ilium, ischium	Femur, ilium, pubis	B
-Compared to the male pelvis, the female pelvic inlet is:	Heart-shaped and narrow	Oval/rounded and wide	Triangular	Identical in shape	B
-The sacroiliac joint is classified as compound: anteriorly it is __________ and posteriorly it is a syndesmosis.	Fibrocartilaginous	Gomphosis	Synovial	Cartilaginous	C
-Which two ligaments resist the anterior rotation tendency of the pelvis in standing?	Inguinal and iliofemoral	Sacrotuberous and sacrospinous	Pubofemoral and ischiofemoral	Pubic and iliolumbar	B
-The acetabulum is formed by contributions from all three hip bones: ilium, ischium, and __________.	FILL	pubis
-The sacrum is formed by __________ fused vertebrae.	FILL	5
-The lumbosacral trunk (L4 and L5) unites with S1, S2, and S3 to form the __________ nerve.	FILL	sciatic
-In anatomical standing position, the ASIS and the __________ lie in the same vertical plane.	FILL	pubic symphysis
+Each hip bone is formed by the fusion of which three bones?	Ilium, fibula, pubis	Ilium, ischium, pubis	Sacrum, ilium, ischium	Femur, ilium, pubis	B	The os coxae forms when ilium, ischium, and pubis fuse at the acetabulum during puberty.
+Compared to the male pelvis, the female pelvic inlet is:	Heart-shaped and narrow	Oval/rounded and wide	Triangular	Identical in shape	B	The female pelvis is wider and more oval to accommodate childbirth, unlike the narrow male inlet.
+The sacroiliac joint is classified as compound: anteriorly it is __________ and posteriorly it is a syndesmosis.	Fibrocartilaginous	Gomphosis	Synovial	Cartilaginous	C	The anterior SI joint has a synovial cavity, while the posterior part is held by strong interosseous ligaments.
+Which two ligaments resist the anterior rotation tendency of the pelvis in standing?	Inguinal and iliofemoral	Sacrotuberous and sacrospinous	Pubofemoral and ischiofemoral	Pubic and iliolumbar	B	Sacrotuberous and sacrospinous ligaments prevent anterior tilting of the sacrum under body weight.
+The acetabulum is formed by contributions from all three hip bones: ilium, ischium, and __________.	FILL	pubis	All three bones meet at the Y-shaped triradiate cartilage to form the acetabulum.
+The sacrum is formed by __________ fused vertebrae.	FILL	5	Five sacral vertebrae (S1–S5) fuse during development to form the triangular sacrum.
+The lumbosacral trunk (L4 and L5) unites with S1, S2, and S3 to form the __________ nerve.	FILL	sciatic	L4–S3 contributions converge to form the sciatic nerve, the largest nerve in the body.
+In anatomical standing position, the ASIS and the __________ lie in the same vertical plane.	FILL	pubic symphysis	In neutral pelvic alignment, ASIS and pubic symphysis are co-planar in a vertical plane.
 `.trim(),
 
 17: `
-The hip joint is classified as which type of synovial joint?	Hinge	Condyloid	Pivot	Ball and socket	D
-All three intrinsic ligaments of the hip joint tighten during which movement?	Hip flexion	Hip extension	Hip abduction	Hip medial rotation	B
-The thickened lateral band of fascia lata is known as the:	Crural fascia	Iliotibial band	Patellar ligament	Plantar fascia	B
-The great saphenous vein drains into which vessel?	Popliteal vein	External iliac vein	Femoral vein	Posterior tibial vein	C
-The deep fascia of the thigh is called __________ lata.	FILL	fascia
-The IT band attaches distally to Gerdy's tubercle on the __________ tibial condyle.	FILL	lateral
-The ligament of the head of the femur attaches to a depression on the femoral head called the __________.	FILL	fovea
-Varicose veins occur when the saphenous veins dilate so that the __________ no longer close properly.	FILL	valves
+The hip joint is classified as which type of synovial joint?	Hinge	Condyloid	Pivot	Ball and socket	D	The spherical femoral head fits into the deep acetabulum, forming a multiaxial ball and socket joint.
+All three intrinsic ligaments of the hip joint tighten during which movement?	Hip flexion	Hip extension	Hip abduction	Hip medial rotation	B	Extension winds all three capsular ligaments tight, providing passive stability in upright standing.
+The thickened lateral band of fascia lata is known as the:	Crural fascia	Iliotibial band	Patellar ligament	Plantar fascia	B	The IT band is a dense lateral thickening of fascia lata from iliac crest to Gerdy's tubercle.
+The great saphenous vein drains into which vessel?	Popliteal vein	External iliac vein	Femoral vein	Posterior tibial vein	C	The great saphenous vein ascends medially and drains into the femoral vein at the saphenous opening.
+The deep fascia of the thigh is called __________ lata.	FILL	fascia	Fascia lata is the thick deep fascia enveloping the thigh muscles like a stocking.
+The IT band attaches distally to Gerdy's tubercle on the __________ tibial condyle.	FILL	lateral	Gerdy's tubercle is a bony prominence on the anterolateral aspect of the lateral tibial condyle.
+The ligament of the head of the femur attaches to a depression on the femoral head called the __________.	FILL	fovea	The fovea capitis is a small pit on the femoral head where the ligamentum teres attaches.
+Varicose veins occur when the saphenous veins dilate so that the __________ no longer close properly.	FILL	valves	Venous valves prevent backflow; dilation separates their cusps causing incompetence and varices.
 `.trim(),
 
 18: `
-Which is the longest muscle in the body?	Gracilis	Rectus femoris	Adductor magnus	Sartorius	D
-The entire quadriceps femoris group is innervated by which nerve?	Obturator nerve	Sciatic nerve	Femoral nerve	Superior gluteal nerve	C
-The hamstring part of adductor magnus is innervated by which nerve?	Obturator nerve	Femoral nerve	Tibial branch of sciatic nerve	Superior gluteal nerve	C
-Obturator externus performs which action?	Hip adduction	Hip flexion	Hip medial rotation	Hip lateral rotation	D
-Rectus femoris originates from the __________ (AIIS).	FILL	anterior inferior iliac spine
-Sartorius originates from the ASIS and inserts onto the medial tibia at the __________.	FILL	pes anserinus
-Gracilis is innervated by the __________ nerve.	FILL	obturator
-The adductor part of adductor magnus inserts onto the linea aspera; the hamstring part inserts onto the __________ tubercle.	FILL	adductor
+Which is the longest muscle in the body?	Gracilis	Rectus femoris	Adductor magnus	Sartorius	D	Sartorius runs diagonally from ASIS to medial tibia, making it the longest muscle in the body.
+The entire quadriceps femoris group is innervated by which nerve?	Obturator nerve	Sciatic nerve	Femoral nerve	Superior gluteal nerve	C	The femoral nerve (L2–L4) innervates all four quadriceps muscles in the anterior compartment.
+The hamstring part of adductor magnus is innervated by which nerve?	Obturator nerve	Femoral nerve	Tibial branch of sciatic nerve	Superior gluteal nerve	C	The hamstring (ischiocondylar) part is innervated by the tibial division of the sciatic nerve.
+Obturator externus performs which action?	Hip adduction	Hip flexion	Hip medial rotation	Hip lateral rotation	D	Obturator externus is a short lateral rotator that inserts into the trochanteric fossa.
+Rectus femoris originates from the __________ (AIIS).	FILL	anterior inferior iliac spine	Rectus femoris is the only quadriceps muscle that crosses the hip, originating from the AIIS.
+Sartorius originates from the ASIS and inserts onto the medial tibia at the __________.	FILL	pes anserinus	The pes anserinus is where sartorius, gracilis, and semitendinosus tendons converge on the tibia.
+Gracilis is innervated by the __________ nerve.	FILL	obturator	Gracilis is a medial thigh adductor innervated by the obturator nerve (L2–L3).
+The adductor part of adductor magnus inserts onto the linea aspera; the hamstring part inserts onto the __________ tubercle.	FILL	adductor	The adductor tubercle on the medial femoral condyle is the distal insertion of the hamstring part.
 `.trim(),
 
 19: `
-Which structure forms the superior boundary of the femoral triangle?	Sartorius	Adductor longus	Inguinal ligament	Pectineus	C
-The contents of the femoral triangle from lateral to medial are:	Vein, artery, nerve, lymphatics	Nerve, artery, vein, lymphatics	Artery, vein, nerve, lymphatics	Lymphatics, vein, artery, nerve	B
-The adductor canal is also known as the:	Femoral canal	Obturator canal	Subsartorial canal	Adductor hiatus	C
-At the adductor hiatus, the femoral artery passes posterior to become the:	Tibial artery	Popliteal artery	Fibular artery	Obturator artery	B
-The medial border of the femoral triangle is formed by __________ longus.	FILL	adductor
-The floor of the femoral triangle is formed by iliopsoas and __________.	FILL	pectineus
-The adductor canal runs from the apex of the femoral triangle to the __________ hiatus.	FILL	adductor
-At the adductor hiatus, the popliteal vein passes anteriorly and becomes the __________ vein.	FILL	femoral
+Which structure forms the superior boundary of the femoral triangle?	Sartorius	Adductor longus	Inguinal ligament	Pectineus	C	The inguinal ligament forms the base (superior boundary) of the femoral triangle.
+The contents of the femoral triangle from lateral to medial are:	Vein, artery, nerve, lymphatics	Nerve, artery, vein, lymphatics	Artery, vein, nerve, lymphatics	Lymphatics, vein, artery, nerve	B	NAVeL mnemonic: Nerve, Artery, Vein, then empty space and Lymphatics from lateral to medial.
+The adductor canal is also known as the:	Femoral canal	Obturator canal	Subsartorial canal	Adductor hiatus	C	The adductor (subsartorial) canal runs deep to sartorius down the medial thigh.
+At the adductor hiatus, the femoral artery passes posterior to become the:	Tibial artery	Popliteal artery	Fibular artery	Obturator artery	B	The femoral artery passes through the adductor hiatus to reach the popliteal fossa as the popliteal artery.
+The medial border of the femoral triangle is formed by __________ longus.	FILL	adductor	Adductor longus forms the medial border of the femoral triangle.
+The floor of the femoral triangle is formed by iliopsoas and __________.	FILL	pectineus	The femoral triangle floor is formed by iliopsoas laterally and pectineus medially.
+The adductor canal runs from the apex of the femoral triangle to the __________ hiatus.	FILL	adductor	The adductor canal terminates at the adductor hiatus where the femoral artery exits posteriorly.
+At the adductor hiatus, the popliteal vein passes anteriorly and becomes the __________ vein.	FILL	femoral	Venous blood ascends: popliteal vein passes through the hiatus to become the femoral vein.
 `.trim(),
 
 20: `
-Gluteus maximus is innervated by which nerve?	Superior gluteal nerve	Inferior gluteal nerve	Nerve to piriformis	Sciatic nerve	B
-Which two muscles share the actions of hip abduction and medial rotation?	Gluteus maximus and piriformis	Gluteus medius and gluteus minimus	Tensor fascia lata and gluteus maximus	Obturator internus and quadratus femoris	B
-Piriformis inserts onto which structure?	Lesser trochanter	Ischial tuberosity	Greater trochanter	Trochanteric fossa	C
-Which of the following does NOT perform lateral rotation of the hip?	Piriformis	Quadratus femoris	Gluteus medius	Obturator internus	C
-Gluteus maximus inserts onto the gluteal tuberosity and onto Gerdy's tubercle via the __________ band.	FILL	iliotibial
-Superior gemellus originates from the ischial __________, while inferior gemellus originates from the ischial tuberosity.	FILL	spine
-Obturator internus and the gemelli all insert onto the __________ fossa.	FILL	trochanteric
-The sciatic nerve typically exits the gluteal region __________ to piriformis.	FILL	inferior
+Gluteus maximus is innervated by which nerve?	Superior gluteal nerve	Inferior gluteal nerve	Nerve to piriformis	Sciatic nerve	B	The inferior gluteal nerve (L5–S2) specifically innervates gluteus maximus.
+Which two muscles share the actions of hip abduction and medial rotation?	Gluteus maximus and piriformis	Gluteus medius and gluteus minimus	Tensor fascia lata and gluteus maximus	Obturator internus and quadratus femoris	B	Gluteus medius and minimus both abduct and medially rotate the hip, crucial for gait.
+Piriformis inserts onto which structure?	Lesser trochanter	Ischial tuberosity	Greater trochanter	Trochanteric fossa	C	Piriformis exits the greater sciatic foramen and inserts onto the greater trochanter.
+Which of the following does NOT perform lateral rotation of the hip?	Piriformis	Quadratus femoris	Gluteus medius	Obturator internus	C	Gluteus medius performs medial rotation and abduction, not lateral rotation.
+Gluteus maximus inserts onto the gluteal tuberosity and onto Gerdy's tubercle via the __________ band.	FILL	iliotibial	Gluteus maximus partially inserts via the IT band to transmit force distally to the lateral tibia.
+Superior gemellus originates from the ischial __________, while inferior gemellus originates from the ischial tuberosity.	FILL	spine	Superior gemellus arises from the ischial spine; inferior gemellus arises from the ischial tuberosity.
+Obturator internus and the gemelli all insert onto the __________ fossa.	FILL	trochanteric	Obturator internus and both gemelli insert together into the trochanteric fossa as a triceps coxae.
+The sciatic nerve typically exits the gluteal region __________ to piriformis.	FILL	inferior	In most people the sciatic nerve exits through the greater sciatic foramen below piriformis.
 `.trim(),
 
 21: `
