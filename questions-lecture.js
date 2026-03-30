@@ -6,91 +6,91 @@
 ========================================================= */
 const QUESTION_DATA_LECTURE = {
 1: `
-Which subdivision of anatomy studies structures visible to the naked eye?	Histology	Gross anatomy	Embryology	Neuroanatomy	B
-In the anatomical position, the palms face:	Backward	Forward	Medially	Laterally	B
-Which plane divides the body into equal left and right halves?	Sagittal	Midsagittal	Coronal	Transverse	B
-The term 'superior' means:	Away from the head	Toward the head	Toward the front	Toward the back	B
-Which directional term is synonymous with 'anterior'?	Dorsal	Ventral	Caudal	Medial	B
-The forearm region is located between the:	Shoulder and elbow	Elbow and wrist	Wrist and hand	Hip and knee	B
-Hyperextension refers to:	Normal extension	Additional extension beyond normal	Flexion movement	Lateral movement	B
-Which approach studies the body system by system?	Regional anatomy	Systemic anatomy	Surface anatomy	Clinical anatomy	B
+Which subdivision of anatomy studies structures visible to the naked eye?	Histology	Gross anatomy	Embryology	Neuroanatomy	B	Gross anatomy examines macroscopic structures without a microscope.
+In the anatomical position, the palms face:	Backward	Forward	Medially	Laterally	B	Standard anatomical position defines palms facing anteriorly (forward).
+Which plane divides the body into equal left and right halves?	Sagittal	Midsagittal	Coronal	Transverse	B	The midsagittal plane specifically bisects the body into equal halves.
+The term 'superior' means:	Away from the head	Toward the head	Toward the front	Toward the back	B	Superior describes structures closer to the head end of the body.
+Which directional term is synonymous with 'anterior'?	Dorsal	Ventral	Caudal	Medial	B	Ventral and anterior both refer to the front surface of the body.
+The forearm region is located between the:	Shoulder and elbow	Elbow and wrist	Wrist and hand	Hip and knee	B	The forearm (antebrachium) spans from elbow to wrist.
+Hyperextension refers to:	Normal extension	Additional extension beyond normal	Flexion movement	Lateral movement	B	Hyperextension is movement beyond the normal range of extension.
+Which approach studies the body system by system?	Regional anatomy	Systemic anatomy	Surface anatomy	Clinical anatomy	B	Systemic anatomy organizes the body by organ systems rather than regions.
 `.trim(),
 
 2: `
-Which bones are part of the axial skeleton?	Humerus and femur	Skull and vertebral column	Scapula and clavicle	Radius and ulna	B
-Long bones are described as:	Cube shaped	Tubular	Flat	Irregular	B
-A tubercle is:	A large roughened eminence	A small rounded eminence	A sharp process	An opening	B
-Which type of joint allows little to no movement?	Synovial	Fibrous	Condyloid	Ball and socket	B
-The pubic symphysis is an example of a:	Fibrous joint	Primary cartilaginous joint	Secondary cartilaginous joint	Synovial joint	C
-Which joint type permits movement in several axes?	Hinge	Pivot	Ball and socket	Plane	C
-A foramen is:	A ridge of bone	A rounded opening	A flat surface	A sharp process	B
-How many carpal bones are in the wrist?	5	7	8	14	C
+Which bones are part of the axial skeleton?	Humerus and femur	Skull and vertebral column	Scapula and clavicle	Radius and ulna	B	The axial skeleton includes the skull, vertebral column, and ribcage.
+Long bones are described as:	Cube shaped	Tubular	Flat	Irregular	B	Long bones have a tubular shaft (diaphysis) with expanded ends (epiphyses).
+A tubercle is:	A large roughened eminence	A small rounded eminence	A sharp process	An opening	B	A tubercle is a small rounded bony projection for muscle attachment.
+Which type of joint allows little to no movement?	Synovial	Fibrous	Condyloid	Ball and socket	B	Fibrous joints are united by fibrous tissue, permitting minimal movement.
+The pubic symphysis is an example of a:	Fibrous joint	Primary cartilaginous joint	Secondary cartilaginous joint	Synovial joint	C	The pubic symphysis has a fibrocartilaginous disc, defining it as secondary cartilaginous.
+Which joint type permits movement in several axes?	Hinge	Pivot	Ball and socket	Plane	C	Ball and socket joints allow multiaxial motion including rotation.
+A foramen is:	A ridge of bone	A rounded opening	A flat surface	A sharp process	B	A foramen is a hole or opening in bone through which structures pass.
+How many carpal bones are in the wrist?	5	7	8	14	C	Eight carpal bones form two rows in the wrist.
 `.trim(),
 
 3: `
-How many cervical vertebrae are there?	5	7	12	33	B
-Which vertebrae have bifid spinous processes?	Cervical	Thoracic	Lumbar	Sacral	A
-Thoracic vertebrae have articular facets for:	The skull	Ribs	The pelvis	The clavicle	B
-The atlanto-occipital joint permits:	Rotation	Flexion and extension	Lateral flexion	Circumduction	B
-Which joint allows you to shake your head 'no'?	Atlanto-occipital	Atlanto-axial	Zygapophyseal	Intervertebral	B
-Intervertebral discs are composed of an outer _______ and inner _______.	Nucleus pulposus; annulus fibrosus	Annulus fibrosus; nucleus pulposus	Synovial membrane; cartilage	Ligament; tendon	B
-An exaggerated thoracic curvature is called:	Lordosis	Scoliosis	Kyphosis	Rotation	C
-The erector spinae group includes all EXCEPT:	Iliocostalis	Longissimus	Spinalis	Trapezius	D
+How many cervical vertebrae are there?	5	7	12	33	B	There are 7 cervical vertebrae (C1–C7) in the neck.
+Which vertebrae have bifid spinous processes?	Cervical	Thoracic	Lumbar	Sacral	A	Cervical vertebrae C2–C6 have split (bifid) spinous processes.
+Thoracic vertebrae have articular facets for:	The skull	Ribs	The pelvis	The clavicle	B	Costal facets on thoracic vertebrae articulate with the ribs.
+The atlanto-occipital joint permits:	Rotation	Flexion and extension	Lateral flexion	Circumduction	B	This joint allows nodding (yes motion), i.e., flexion and extension.
+Which joint allows you to shake your head 'no'?	Atlanto-occipital	Atlanto-axial	Zygapophyseal	Intervertebral	B	The atlanto-axial joint (C1–C2) is a pivot joint allowing rotation.
+Intervertebral discs are composed of an outer _______ and inner _______.	Nucleus pulposus; annulus fibrosus	Annulus fibrosus; nucleus pulposus	Synovial membrane; cartilage	Ligament; tendon	B	The outer fibrous ring is the annulus fibrosus; the gel-like center is the nucleus pulposus.
+An exaggerated thoracic curvature is called:	Lordosis	Scoliosis	Kyphosis	Rotation	C	Kyphosis is excessive posterior (thoracic) curvature, a hunchback deformity.
+The erector spinae group includes all EXCEPT:	Iliocostalis	Longissimus	Spinalis	Trapezius	D	Trapezius is a superficial back muscle, not part of erector spinae.
 `.trim(),
 
 4: `
-The pectoral girdle consists of:	Humerus and radius	Scapula and clavicle	Sternum and ribs	Femur and tibia	B
-The sternoclavicular joint is structurally classified as:	Hinge	Saddle	Ball and socket	Plane	B
-Which ligament is an extrinsic ligament of the SC joint?	Anterior sternoclavicular	Posterior sternoclavicular	Costoclavicular	Glenohumeral	C
-The acromioclavicular joint is classified as a:	Saddle joint	Plane joint	Hinge joint	Pivot joint	B
-The glenohumeral joint is a:	Hinge joint	Pivot joint	Ball and socket joint	Condyloid joint	C
-The glenoid labrum serves to:	Increase joint stability by deepening the cavity	Produce synovial fluid	Connect bones together	Reduce friction	A
-Which is an intrinsic ligament of the glenohumeral joint?	Coracoacromial	Coracoclavicular	Coracohumeral	Costoclavicular	C
-Intrinsic ligaments are:	Located away from the joint	Thickenings of the joint capsule	Always extrinsic	Made of muscle tissue	B
+The pectoral girdle consists of:	Humerus and radius	Scapula and clavicle	Sternum and ribs	Femur and tibia	B	The pectoral girdle connects the upper limb to the axial skeleton via scapula and clavicle.
+The sternoclavicular joint is structurally classified as:	Hinge	Saddle	Ball and socket	Plane	B	The SC joint has a saddle-shaped articular surface allowing multiaxial movement.
+Which ligament is an extrinsic ligament of the SC joint?	Anterior sternoclavicular	Posterior sternoclavicular	Costoclavicular	Glenohumeral	C	The costoclavicular ligament lies outside the joint capsule, making it extrinsic.
+The acromioclavicular joint is classified as a:	Saddle joint	Plane joint	Hinge joint	Pivot joint	B	The AC joint has flat articular surfaces, classifying it as a plane synovial joint.
+The glenohumeral joint is a:	Hinge joint	Pivot joint	Ball and socket joint	Condyloid joint	C	The spherical humeral head fits into the glenoid fossa, forming a ball and socket joint.
+The glenoid labrum serves to:	Increase joint stability by deepening the cavity	Produce synovial fluid	Connect bones together	Reduce friction	A	The fibrocartilaginous labrum deepens the glenoid, improving shoulder stability.
+Which is an intrinsic ligament of the glenohumeral joint?	Coracoacromial	Coracoclavicular	Coracohumeral	Costoclavicular	C	The coracohumeral ligament is a thickening of the glenohumeral joint capsule itself.
+Intrinsic ligaments are:	Located away from the joint	Thickenings of the joint capsule	Always extrinsic	Made of muscle tissue	B	Intrinsic ligaments are formed by local thickenings within the fibrous joint capsule.
 `.trim(),
 
 5: `
-Which muscle is innervated by the accessory nerve (CN XI)?	Latissimus dorsi	Pectoralis major	Trapezius	Serratus anterior	C
-The serratus anterior is innervated by the:	Long thoracic nerve	Dorsal scapular nerve	Thoracodorsal nerve	Medial pectoral nerve	A
-Which muscle attaches to the floor of the bicipital groove?	Pectoralis major	Pectoralis minor	Latissimus dorsi	Trapezius	C
-The action of the upper fibers of trapezius is to:	Depress the scapula	Elevate the scapula	Protract the scapula	Rotate glenoid cavity downward	B
-Which muscle protracts the scapula?	Rhomboid major	Trapezius	Serratus anterior	Levator scapula	C
-The rhomboid muscles are innervated by:	Long thoracic nerve	Thoracodorsal nerve	Dorsal scapular nerve	Accessory nerve	C
-Which muscle attaches to the lateral lip of the bicipital groove?	Latissimus dorsi	Pectoralis major	Deltoid	Teres major	B
-Pectoralis minor attaches distally to the:	Bicipital groove	Coracoid process	Acromion	Spine of scapula	B
+Which muscle is innervated by the accessory nerve (CN XI)?	Latissimus dorsi	Pectoralis major	Trapezius	Serratus anterior	C	The trapezius is the only shoulder muscle innervated by cranial nerve XI.
+The serratus anterior is innervated by the:	Long thoracic nerve	Dorsal scapular nerve	Thoracodorsal nerve	Medial pectoral nerve	A	The long thoracic nerve (C5–C7) specifically innervates serratus anterior.
+Which muscle attaches to the floor of the bicipital groove?	Pectoralis major	Pectoralis minor	Latissimus dorsi	Trapezius	C	Latissimus dorsi inserts into the floor of the intertubercular (bicipital) groove.
+The action of the upper fibers of trapezius is to:	Depress the scapula	Elevate the scapula	Protract the scapula	Rotate glenoid cavity downward	B	The upper trapezius elevates the scapula and shoulder, as in shrugging.
+Which muscle protracts the scapula?	Rhomboid major	Trapezius	Serratus anterior	Levator scapula	C	Serratus anterior pulls the scapula forward (protraction) around the thorax.
+The rhomboid muscles are innervated by:	Long thoracic nerve	Thoracodorsal nerve	Dorsal scapular nerve	Accessory nerve	C	The dorsal scapular nerve (C4–C5) innervates both rhomboid major and minor.
+Which muscle attaches to the lateral lip of the bicipital groove?	Latissimus dorsi	Pectoralis major	Deltoid	Teres major	B	Pectoralis major inserts onto the lateral lip of the intertubercular groove.
+Pectoralis minor attaches distally to the:	Bicipital groove	Coracoid process	Acromion	Spine of scapula	B	Pectoralis minor inserts onto the medial border and tip of the coracoid process.
 `.trim(),
 
 6: `
-Which muscles make up the rotator cuff?	Deltoid, teres major, biceps, triceps	Supraspinatus, infraspinatus, teres minor, subscapularis	Pectoralis major, latissimus dorsi, trapezius, serratus anterior	Biceps, brachialis, coracobrachialis, triceps	B
-The deltoid is innervated by the:	Radial nerve	Axillary nerve	Musculocutaneous nerve	Suprascapular nerve	B
-Which muscle is responsible for the first 15 degrees of shoulder abduction?	Deltoid	Supraspinatus	Infraspinatus	Teres minor	B
-Subscapularis causes:	External rotation	Internal rotation	Abduction	Extension	B
-The middle fibers of deltoid cause:	Shoulder flexion	Shoulder extension	Shoulder abduction	Shoulder adduction	C
-Teres major attaches to the:	Greater tubercle	Lesser tubercle	Medial lip of bicipital groove	Deltoid tuberosity	C
-Which two rotator cuff muscles cause external rotation?	Supraspinatus and subscapularis	Infraspinatus and teres minor	Teres minor and subscapularis	Supraspinatus and infraspinatus	B
-Teres major is innervated by:	Axillary nerve	Suprascapular nerve	Lower subscapular nerve	Upper subscapular nerve	C
+Which muscles make up the rotator cuff?	Deltoid, teres major, biceps, triceps	Supraspinatus, infraspinatus, teres minor, subscapularis	Pectoralis major, latissimus dorsi, trapezius, serratus anterior	Biceps, brachialis, coracobrachialis, triceps	B	The SITS muscles (Supraspinatus, Infraspinatus, Teres minor, Subscapularis) form the rotator cuff.
+The deltoid is innervated by the:	Radial nerve	Axillary nerve	Musculocutaneous nerve	Suprascapular nerve	B	The axillary nerve (C5–C6) innervates both deltoid and teres minor.
+Which muscle is responsible for the first 15 degrees of shoulder abduction?	Deltoid	Supraspinatus	Infraspinatus	Teres minor	B	Supraspinatus initiates abduction before deltoid takes over beyond 15 degrees.
+Subscapularis causes:	External rotation	Internal rotation	Abduction	Extension	B	Subscapularis originates on the subscapular fossa and medially rotates the humerus.
+The middle fibers of deltoid cause:	Shoulder flexion	Shoulder extension	Shoulder abduction	Shoulder adduction	C	The middle deltoid lies lateral to the shoulder, pulling the arm away from the body.
+Teres major attaches to the:	Greater tubercle	Lesser tubercle	Medial lip of bicipital groove	Deltoid tuberosity	C	Teres major inserts onto the medial lip of the intertubercular groove alongside latissimus dorsi.
+Which two rotator cuff muscles cause external rotation?	Supraspinatus and subscapularis	Infraspinatus and teres minor	Teres minor and subscapularis	Supraspinatus and infraspinatus	B	Infraspinatus and teres minor both externally rotate the humerus at the shoulder.
+Teres major is innervated by:	Axillary nerve	Suprascapular nerve	Lower subscapular nerve	Upper subscapular nerve	C	The lower subscapular nerve (C5–C6) innervates teres major and subscapularis.
 `.trim(),
 
 7: `
-The axilla is shaped like a:	Cube	Cylinder	Pyramid	Sphere	C
-The anterior wall of the axilla is formed by:	Scapula and subscapularis	Pectoralis major, minor, and subclavius	Ribs and serratus anterior	Latissimus dorsi and teres major	B
-The brachial plexus is formed by anterior rami of:	C1-C5	C5-T1	T1-T5	C6-T2	B
-Which nerve supplies serratus anterior?	Dorsal scapular	Long thoracic	Thoracodorsal	Suprascapular	B
-The axillary artery is a continuation of the:	Brachial artery	Subclavian artery	Carotid artery	Radial artery	B
-Blood returns to the heart from the upper limb via the:	Brachial vein → axillary vein → subclavian vein	Radial vein → brachial vein → carotid vein	Cephalic vein → subclavian vein → superior vena cava	Basilic vein → brachial vein → inferior vena cava	A
-The lateral wall of the axilla is formed by:	Ribs	Scapula	Bicipital groove	Clavicle	C
-Which nerve supplies the rhomboid muscles?	Long thoracic	Dorsal scapular	Suprascapular	Thoracodorsal	B
+The axilla is shaped like a:	Cube	Cylinder	Pyramid	Sphere	C	The axilla has an apex, base, and four walls, forming a pyramid shape.
+The anterior wall of the axilla is formed by:	Scapula and subscapularis	Pectoralis major, minor, and subclavius	Ribs and serratus anterior	Latissimus dorsi and teres major	B	The anterior wall is composed of the pectoral muscles and subclavius.
+The brachial plexus is formed by anterior rami of:	C1-C5	C5-T1	T1-T5	C6-T2	B	The brachial plexus arises from C5 through T1 to supply the upper limb.
+Which nerve supplies serratus anterior?	Dorsal scapular	Long thoracic	Thoracodorsal	Suprascapular	B	The long thoracic nerve runs along the thorax to innervate serratus anterior.
+The axillary artery is a continuation of the:	Brachial artery	Subclavian artery	Carotid artery	Radial artery	B	The subclavian artery becomes the axillary artery at the lateral border of the first rib.
+Blood returns to the heart from the upper limb via the:	Brachial vein → axillary vein → subclavian vein	Radial vein → brachial vein → carotid vein	Cephalic vein → subclavian vein → superior vena cava	Basilic vein → brachial vein → inferior vena cava	A	Deep veins accompany the arteries: brachial → axillary → subclavian → heart.
+The lateral wall of the axilla is formed by:	Ribs	Scapula	Bicipital groove	Clavicle	C	The intertubercular (bicipital) groove of the humerus forms the narrow lateral wall.
+Which nerve supplies the rhomboid muscles?	Long thoracic	Dorsal scapular	Suprascapular	Thoracodorsal	B	The dorsal scapular nerve (C4–C5) innervates rhomboid major and minor.
 `.trim(),
 
 8: `
-The ulna is _______ to the radius.	Lateral	Medial	Superior	Inferior	B
-Biceps brachii is innervated by the:	Radial nerve	Median nerve	Musculocutaneous nerve	Ulnar nerve	C
-Which muscle is the primary elbow flexor?	Biceps brachii	Brachialis	Coracobrachialis	Triceps brachii	B
-The long head of biceps brachii attaches to the:	Infraglenoid tubercle	Supraglenoid tubercle	Coracoid process	Deltoid tuberosity	B
-Triceps brachii is innervated by the:	Musculocutaneous nerve	Median nerve	Radial nerve	Axillary nerve	C
-The cephalic vein drains into the:	Brachial vein	Basilic vein	Axillary vein	Subclavian vein	C
-Which nerve has no branches in the arm?	Radial	Musculocutaneous	Median	Axillary	C
-The profunda brachii artery travels with the:	Median nerve	Ulnar nerve	Radial nerve	Musculocutaneous nerve	C
+The ulna is _______ to the radius.	Lateral	Medial	Superior	Inferior	B	In anatomical position, the ulna lies on the medial (little finger) side of the forearm.
+Biceps brachii is innervated by the:	Radial nerve	Median nerve	Musculocutaneous nerve	Ulnar nerve	C	The musculocutaneous nerve (C5–C6) innervates all three anterior arm muscles.
+Which muscle is the primary elbow flexor?	Biceps brachii	Brachialis	Coracobrachialis	Triceps brachii	B	Brachialis acts solely as elbow flexor regardless of forearm pronation or supination.
+The long head of biceps brachii attaches to the:	Infraglenoid tubercle	Supraglenoid tubercle	Coracoid process	Deltoid tuberosity	B	The long head originates from the supraglenoid tubercle of the scapula.
+Triceps brachii is innervated by the:	Musculocutaneous nerve	Median nerve	Radial nerve	Axillary nerve	C	The radial nerve innervates all muscles of the posterior arm, including triceps.
+The cephalic vein drains into the:	Brachial vein	Basilic vein	Axillary vein	Subclavian vein	C	The cephalic vein travels laterally and empties into the axillary vein.
+Which nerve has no branches in the arm?	Radial	Musculocutaneous	Median	Axillary	C	The median nerve passes through the arm without giving off any muscular branches.
+The profunda brachii artery travels with the:	Median nerve	Ulnar nerve	Radial nerve	Musculocutaneous nerve	C	The profunda brachii accompanies the radial nerve in the radial groove of the humerus.
 `.trim(),
 
 9: `
