@@ -226,101 +226,101 @@ The sciatic nerve typically exits the gluteal region __________ to piriformis.	F
 `.trim(),
 
 21: `
-Which of the following muscles attaches distally to the medial tibia (pes anserinus)?	Semimembranosus	Semitendinosus	Biceps femoris	Plantaris	B
-The short head of biceps femoris originates from the ___.	FILL	linea aspera
-Which nerve innervates the short head of biceps femoris?	Tibial part of sciatic nerve	Femoral nerve	Common fibular part of sciatic nerve	Obturator nerve	C
-The popliteal fossa is described as ___ in shape.	FILL	diamond-shaped
-Which structure forms the superolateral border of the popliteal fossa?	Semimembranosus	Lateral head of gastrocnemius	Biceps femoris	Semitendinosus	C
-The ___ nerve and the ___ nerve are both contents of the popliteal fossa.	FILL	tibial; common fibular
-Which of the following actions is performed by ALL three hamstring muscles?	Hip flexion	Knee extension	Hip extension and knee flexion	Foot plantarflexion	C
-Semimembranosus inserts into the ___ aspect of the medial tibial condyle.	FILL	posterior
+Which of the following muscles attaches distally to the medial tibia (pes anserinus)?	Semimembranosus	Semitendinosus	Biceps femoris	Plantaris	B	Semitendinosus joins sartorius and gracilis at the pes anserinus on the medial tibia.
+The short head of biceps femoris originates from the ___.	FILL	linea aspera	The short head originates from the linea aspera, unlike the long head from the ischial tuberosity.
+Which nerve innervates the short head of biceps femoris?	Tibial part of sciatic nerve	Femoral nerve	Common fibular part of sciatic nerve	Obturator nerve	C	The short head is embryologically anterior, so it receives the common fibular (peroneal) branch.
+The popliteal fossa is described as ___ in shape.	FILL	diamond-shaped	The four muscle borders create a diamond (rhombus) shape when the knee is slightly flexed.
+Which structure forms the superolateral border of the popliteal fossa?	Semimembranosus	Lateral head of gastrocnemius	Biceps femoris	Semitendinosus	C	Biceps femoris tendon runs laterally and superiorly, forming the superolateral boundary.
+The ___ nerve and the ___ nerve are both contents of the popliteal fossa.	FILL	tibial; common fibular	Both terminal branches of the sciatic nerve pass through the popliteal fossa before diverging.
+Which of the following actions is performed by ALL three hamstring muscles?	Hip flexion	Knee extension	Hip extension and knee flexion	Foot plantarflexion	C	All three hamstrings cross both hip and knee, extending the hip and flexing the knee.
+Semimembranosus inserts into the ___ aspect of the medial tibial condyle.	FILL	posterior	Semimembranosus inserts posteriorly, distinguishing it from semitendinosus which goes to pes anserinus.
 `.trim(),
 
 22: `
-The knee joint is classified as which type of joint?	Ball and socket, synovial	Modified hinge, synovial	Plane, synovial	Pivot, fibrous	B
-The fibula _____ involved in the knee joint.	FILL	is not
-Which of the following is an EXTRINSIC ligament of the knee?	Patellar ligament	Oblique popliteal ligament	Anterior cruciate ligament	Arcuate popliteal ligament	C
-The ACL attaches to the ___ aspect of the intercondylar eminence and passes to the ___ femoral condyle.	FILL	anterior; lateral
-A valgus force to the knee refers to impact on which side?	Medial aspect	Posterior aspect	Lateral aspect	Anterior aspect	C
-The medial meniscus is ___ in shape, while the lateral meniscus is ___ in shape.	FILL	C-shaped; oval-shaped
-The posterior cruciate ligament prevents the tibia from moving in which direction?	Anteriorly under the femur	Posteriorly under the femur	Laterally under the femur	Rotating under the femur	B
-The proximal tibiofibular joint is classified as a ___ synovial joint.	FILL	plane
+The knee joint is classified as which type of joint?	Ball and socket, synovial	Modified hinge, synovial	Plane, synovial	Pivot, fibrous	B	The knee allows mainly flexion/extension but also slight rotation, making it a modified hinge.
+The fibula _____ involved in the knee joint.	FILL	is not	The fibula articulates at the proximal tibiofibular joint, not directly with the femur.
+Which of the following is an EXTRINSIC ligament of the knee?	Patellar ligament	Oblique popliteal ligament	Anterior cruciate ligament	Arcuate popliteal ligament	C	The ACL lies within the joint capsule (intracapsular), making it intrinsic, not extrinsic.
+The ACL attaches to the ___ aspect of the intercondylar eminence and passes to the ___ femoral condyle.	FILL	anterior; lateral	The ACL runs from the anterior tibial eminence up to the posterior lateral femoral condyle wall.
+A valgus force to the knee refers to impact on which side?	Medial aspect	Posterior aspect	Lateral aspect	Anterior aspect	C	Valgus stress comes from the lateral side, pushing the knee medially and stressing the MCL.
+The medial meniscus is ___ in shape, while the lateral meniscus is ___ in shape.	FILL	C-shaped; oval-shaped	The medial meniscus is open C-shaped; the lateral is a more closed oval or near-circle.
+The posterior cruciate ligament prevents the tibia from moving in which direction?	Anteriorly under the femur	Posteriorly under the femur	Laterally under the femur	Rotating under the femur	B	The PCL is taut when the tibia slides posteriorly, preventing posterior tibial displacement.
+The proximal tibiofibular joint is classified as a ___ synovial joint.	FILL	plane	Flat articular surfaces at the proximal tibiofibular joint allow only gliding movements.
 `.trim(),
 
 23: `
-How many tarsal bones are in the foot?	5	6	7	8	C
-In the foot, digit numbering begins on the ___ side.	FILL	medial
-Which tarsal bone transmits weight from the tibia to the calcaneus?	Navicular	Cuboid	Talus	Calcaneus	C
-The shelf of bone on the medial calcaneus that supports the talus is called the ___.	FILL	sustentaculum tali
-The talocrural joint is classified as which type of joint?	Plane, synovial	Hinge, synovial	Condyloid, synovial	Syndesmosis	B
-The medial collateral ligament of the talocrural joint is also called the ___ ligament.	FILL	deltoid
-Which ligament spans from the sustentaculum tali to the navicular and supports the head of the talus?	Long plantar ligament	Short plantar ligament	Plantar calcaneonavicular (spring) ligament	Calcaneofibular ligament	C
-The subtalar joint allows ___ and ___ of the foot.	FILL	inversion; eversion
+How many tarsal bones are in the foot?	5	6	7	8	C	The seven tarsals are: calcaneus, talus, navicular, cuboid, and three cuneiforms.
+In the foot, digit numbering begins on the ___ side.	FILL	medial	Digit 1 (hallux/big toe) is on the medial side, mirroring thumb numbering in the hand.
+Which tarsal bone transmits weight from the tibia to the calcaneus?	Navicular	Cuboid	Talus	Calcaneus	C	The talus sits atop the calcaneus and receives the entire body weight from the tibia.
+The shelf of bone on the medial calcaneus that supports the talus is called the ___.	FILL	sustentaculum tali	The sustentaculum tali is a medial calcaneal shelf that cradles and supports the talar head.
+The talocrural joint is classified as which type of joint?	Plane, synovial	Hinge, synovial	Condyloid, synovial	Syndesmosis	B	The mortise of tibia/fibula grips the talar trochlea, forming a hinge allowing dorsi/plantarflexion.
+The medial collateral ligament of the talocrural joint is also called the ___ ligament.	FILL	deltoid	The deltoid ligament is the strong fan-shaped medial collateral ligament of the ankle.
+Which ligament spans from the sustentaculum tali to the navicular and supports the head of the talus?	Long plantar ligament	Short plantar ligament	Plantar calcaneonavicular (spring) ligament	Calcaneofibular ligament	C	The spring ligament directly supports the talar head, maintaining the medial longitudinal arch.
+The subtalar joint allows ___ and ___ of the foot.	FILL	inversion; eversion	The subtalar (talocalcaneal) joint is the primary joint for foot inversion and eversion.
 `.trim(),
 
 24: `
-How many compartments are found in the leg?	2	3	4	5	B
-Tibialis anterior inserts into the medial cuneiform and ___.	FILL	base of 1st metatarsal
-Which muscle of the anterior compartment is not always present?	Tibialis anterior	Extensor hallucis longus	Extensor digitorum longus	Fibularis tertius	D
-All muscles of the anterior compartment are innervated by the ___ nerve.	FILL	deep fibular
-Extensor digitorum longus inserts into digits ___	1–4	2–5	1–5	3–5	B
-The anterior tibial artery continues onto the dorsum of the foot as the ___ artery.	FILL	dorsalis pedis
-The common fibular nerve winds around the neck of the fibula and divides into which two branches?	Medial and lateral plantar nerves	Tibial and sural nerves	Superficial and deep fibular nerves	Saphenous and sural nerves	C
-Retinacula at the ankle are thickenings of the ___ fascia that prevent tendons from bowstringing.	FILL	crural
+How many compartments are found in the leg?	2	3	4	5	B	The leg has anterior, lateral, superficial posterior, and deep posterior compartments — four total.
+Tibialis anterior inserts into the medial cuneiform and ___.	FILL	base of 1st metatarsal	Tibialis anterior inserts at the medial cuneiform and 1st metatarsal to dorsiflex and invert the foot.
+Which muscle of the anterior compartment is not always present?	Tibialis anterior	Extensor hallucis longus	Extensor digitorum longus	Fibularis tertius	D	Fibularis tertius is a variable slip of extensor digitorum longus, absent in some individuals.
+All muscles of the anterior compartment are innervated by the ___ nerve.	FILL	deep fibular	The deep fibular (peroneal) nerve enters the anterior compartment and supplies all four muscles.
+Extensor digitorum longus inserts into digits ___	1–4	2–5	1–5	3–5	B	EDL splits into four slips that insert onto the dorsal expansions of digits 2 through 5.
+The anterior tibial artery continues onto the dorsum of the foot as the ___ artery.	FILL	dorsalis pedis	At the ankle the anterior tibial artery is renamed the dorsalis pedis, supplying the dorsal foot.
+The common fibular nerve winds around the neck of the fibula and divides into which two branches?	Medial and lateral plantar nerves	Tibial and sural nerves	Superficial and deep fibular nerves	Saphenous and sural nerves	C	At the fibular neck the common fibular nerve divides into superficial (lateral compartment) and deep (anterior compartment) branches.
+Retinacula at the ankle are thickenings of the ___ fascia that prevent tendons from bowstringing.	FILL	crural	The crural (deep leg) fascia thickens into retinacula straps that hold tendons close to the ankle.
 `.trim(),
 
 25: `
-Which nerve supplies all muscles in the lateral compartment of the leg?	Deep fibular nerve	Tibial nerve	Superficial fibular nerve	Sural nerve	C
-Fibularis longus originates from the ___ of the fibula.	FILL	head
-Which of the following is an action shared by BOTH fibularis longus and brevis?	Foot inversion and dorsiflexion	Foot eversion and ankle plantarflexion	Knee flexion and ankle dorsiflexion	Hip extension and foot eversion	B
-Fibularis brevis inserts into the base of the ___ metatarsal.	FILL	5th
-The fibular artery is a branch of which artery?	Anterior tibial artery	Dorsalis pedis artery	Posterior tibial artery	Popliteal artery	C
-The fibular artery supplies the fibularis muscles via ___ branches.	FILL	perforating
-The tendons of fibularis longus and brevis pass behind which bony landmark at the ankle?	Medial malleolus	Calcaneal tuberosity	Lateral malleolus	Sustentaculum tali	C
-Fibularis longus shares the same distal attachment as tibialis anterior: the ___ and base of 1st metatarsal.	FILL	medial cuneiform
+Which nerve supplies all muscles in the lateral compartment of the leg?	Deep fibular nerve	Tibial nerve	Superficial fibular nerve	Sural nerve	C	The superficial fibular nerve enters the lateral compartment and innervates fibularis longus and brevis.
+Fibularis longus originates from the ___ of the fibula.	FILL	head	Fibularis longus arises from the head and upper lateral shaft of the fibula.
+Which of the following is an action shared by BOTH fibularis longus and brevis?	Foot inversion and dorsiflexion	Foot eversion and ankle plantarflexion	Knee flexion and ankle dorsiflexion	Hip extension and foot eversion	B	Both fibularis muscles run posterior to the lateral malleolus, everting the foot and plantarflexing the ankle.
+Fibularis brevis inserts into the base of the ___ metatarsal.	FILL	5th	Fibularis brevis inserts onto the styloid process at the base of the 5th metatarsal.
+The fibular artery is a branch of which artery?	Anterior tibial artery	Dorsalis pedis artery	Posterior tibial artery	Popliteal artery	C	The fibular (peroneal) artery branches off the posterior tibial artery just below the knee.
+The fibular artery supplies the fibularis muscles via ___ branches.	FILL	perforating	Perforating branches pierce the intermuscular septum to reach the lateral compartment muscles.
+The tendons of fibularis longus and brevis pass behind which bony landmark at the ankle?	Medial malleolus	Calcaneal tuberosity	Lateral malleolus	Sustentaculum tali	C	Both fibularis tendons curve posteriorly around the lateral malleolus held by the superior retinaculum.
+Fibularis longus shares the same distal attachment as tibialis anterior: the ___ and base of 1st metatarsal.	FILL	medial cuneiform	Fibularis longus crosses the plantar foot to insert with tibialis anterior, forming the "stirrup."
 `.trim(),
 
 26: `
-Which muscle unlocks the extended knee by rotating the femur laterally?	Plantaris	Soleus	Popliteus	Flexor hallucis longus	C
-Gastrocnemius originates from both the medial and lateral ___ condyles.	FILL	femoral
-Which superficial posterior leg muscle only performs ankle plantarflexion (NOT knee flexion)?	Gastrocnemius	Plantaris	Soleus	Tibialis posterior	C
-Tibialis posterior performs ankle plantarflexion and foot ___.	FILL	inversion
-From anterior to posterior behind the medial malleolus, which structure comes FIRST?	Tendon of flexor digitorum longus	Posterior tibial artery	Tendon of tibialis posterior	Tibial nerve	C
-Rupture of the calcaneal tendon usually occurs ___ cm proximal to the calcaneal attachment.	FILL	1–5
-The posterior tibial artery divides into which two arteries in the foot?	Anterior tibial and fibular arteries	Dorsalis pedis and fibular arteries	Medial and lateral plantar arteries	Superficial and deep plantar arteries	C
-The soleus originates from the soleal line of the tibia and the ___ of the fibula.	FILL	head
+Which muscle unlocks the extended knee by rotating the femur laterally?	Plantaris	Soleus	Popliteus	Flexor hallucis longus	C	Popliteus laterally rotates the femur on the fixed tibia to "unlock" the fully extended knee.
+Gastrocnemius originates from both the medial and lateral ___ condyles.	FILL	femoral	Gastrocnemius arises from the posterior surfaces of both femoral condyles, crossing the knee.
+Which superficial posterior leg muscle only performs ankle plantarflexion (NOT knee flexion)?	Gastrocnemius	Plantaris	Soleus	Tibialis posterior	C	Soleus originates below the knee so it only plantarflexes the ankle without acting on the knee.
+Tibialis posterior performs ankle plantarflexion and foot ___.	FILL	inversion	Tibialis posterior is the deepest posterior muscle; it inverts the foot and supports the medial arch.
+From anterior to posterior behind the medial malleolus, which structure comes FIRST?	Tendon of flexor digitorum longus	Posterior tibial artery	Tendon of tibialis posterior	Tibial nerve	C	The mnemonic Tom Dick And Harry: Tibialis posterior is the most anterior structure behind the malleolus.
+Rupture of the calcaneal tendon usually occurs ___ cm proximal to the calcaneal attachment.	FILL	1–5	The watershed zone of poor vascularity 2–6 cm above the heel is the most common rupture site.
+The posterior tibial artery divides into which two arteries in the foot?	Anterior tibial and fibular arteries	Dorsalis pedis and fibular arteries	Medial and lateral plantar arteries	Superficial and deep plantar arteries	C	Beneath the flexor retinaculum the posterior tibial artery splits into medial and lateral plantar arteries.
+The soleus originates from the soleal line of the tibia and the ___ of the fibula.	FILL	head	The soleus arises from the soleal line of tibia and the posterior head and upper fibula.
 `.trim(),
 
 27: `
-The plantar aponeurosis helps support the ___ arch of the foot.	FILL	longitudinal
-Which muscle in the 2nd layer of the foot realigns the pull of the flexor digitorum longus tendon?	Lumbricals	Quadratus plantae	Adductor hallucis	Flexor hallucis brevis	B
-The lumbricals of the foot originate from the tendons of ___.	FILL	flexor digitorum longus
-Which of the following 1st layer muscles is innervated by the LATERAL plantar nerve?	Abductor hallucis	Flexor digitorum brevis	Abductor digiti minimi	Flexor hallucis brevis	C
-In the foot, the reference digit for the midline is digit ___.	FILL	2
-Dorsal interossei ___ digits while plantar interossei ___ digits.	FILL	abduct; adduct
-The muscles on the dorsum of the foot are innervated by which nerve?	Medial plantar nerve	Lateral plantar nerve	Deep fibular nerve	Superficial fibular nerve	C
-There are ___ dorsal interossei and ___ plantar interossei in the foot.	FILL	4; 3
+The plantar aponeurosis helps support the ___ arch of the foot.	FILL	longitudinal	The plantar aponeurosis runs heel to toes, acting as a tie-beam to maintain the longitudinal arch.
+Which muscle in the 2nd layer of the foot realigns the pull of the flexor digitorum longus tendon?	Lumbricals	Quadratus plantae	Adductor hallucis	Flexor hallucis brevis	B	Quadratus plantae attaches to FDL and redirects its oblique pull to act straight toward the heel.
+The lumbricals of the foot originate from the tendons of ___.	FILL	flexor digitorum longus	Foot lumbricals arise from FDL tendons, enabling them to flex MTP and extend IP joints.
+Which of the following 1st layer muscles is innervated by the LATERAL plantar nerve?	Abductor hallucis	Flexor digitorum brevis	Abductor digiti minimi	Flexor hallucis brevis	C	Abductor digiti minimi on the lateral foot is innervated by the lateral plantar nerve.
+In the foot, the reference digit for the midline is digit ___.	FILL	2	Digit 2 is the axial reference in the foot; abduction and adduction are defined relative to it.
+Dorsal interossei ___ digits while plantar interossei ___ digits.	FILL	abduct; adduct	DAB-PAD: Dorsal interossei ABduct, Plantar interossei ADduct relative to the second digit axis.
+The muscles on the dorsum of the foot are innervated by which nerve?	Medial plantar nerve	Lateral plantar nerve	Deep fibular nerve	Superficial fibular nerve	C	The deep fibular nerve supplies extensor digitorum brevis and extensor hallucis brevis on the dorsum.
+There are ___ dorsal interossei and ___ plantar interossei in the foot.	FILL	4; 3	Four dorsal interossei (abductors) fill four spaces; three plantar interossei (adductors) for digits 3–5.
 `.trim(),
 
 28: `
-The brain is composed of the cerebrum, cerebellum, diencephalon, and ___.	FILL	brainstem
-Which sulcus divides the frontal lobe from the parietal lobe?	Lateral sulcus	Parieto-occipital sulcus	Central sulcus	Calcarine sulcus	C
-The subarachnoid space is located between the ___ mater and the ___ mater.	FILL	pia; arachnoid
-The tentorium cerebelli separates which two brain structures?	Left and right cerebral hemispheres	Midbrain and pons	Occipital lobe and cerebellum	Left and right hemispheres of the cerebellum	C
-The superior sagittal sinus is located along the ___ border of the falx cerebri.	FILL	superior
-The spinal cord tapers at which vertebral level?	T12/L1	L1/L2	L2/L3	L4/L5	B
-Blood supply to the brain comes from the internal carotid arteries and the ___ arteries.	FILL	vertebral
-The collection of spinal nerves below L1/L2 is called the ___.	FILL	cauda equina
+The brain is composed of the cerebrum, cerebellum, diencephalon, and ___.	FILL	brainstem	The brainstem (midbrain, pons, medulla) is the fourth main division of the brain.
+Which sulcus divides the frontal lobe from the parietal lobe?	Lateral sulcus	Parieto-occipital sulcus	Central sulcus	Calcarine sulcus	C	The central sulcus (fissure of Rolando) separates the frontal and parietal lobes.
+The subarachnoid space is located between the ___ mater and the ___ mater.	FILL	pia; arachnoid	CSF circulates in the subarachnoid space between the delicate pia mater and the arachnoid mater.
+The tentorium cerebelli separates which two brain structures?	Left and right cerebral hemispheres	Midbrain and pons	Occipital lobe and cerebellum	Left and right hemispheres of the cerebellum	C	The tentorium cerebelli is a dural fold that forms a tent separating occipital lobes from cerebellum.
+The superior sagittal sinus is located along the ___ border of the falx cerebri.	FILL	superior	The superior sagittal sinus runs in the superior (attached) margin of the falx cerebri.
+The spinal cord tapers at which vertebral level?	T12/L1	L1/L2	L2/L3	L4/L5	B	The spinal cord ends as the conus medullaris at the L1/L2 disc level in adults.
+Blood supply to the brain comes from the internal carotid arteries and the ___ arteries.	FILL	vertebral	Vertebral arteries join to form the basilar artery, together with carotid arteries supplying the brain.
+The collection of spinal nerves below L1/L2 is called the ___.	FILL	cauda equina	Below the conus, lumbar and sacral nerve roots descend as the cauda equina (horse's tail).
 `.trim(),
 
 29: `
-How many pairs of cranial nerves branch from the inferior surface of the brain?	10	11	12	13	C
-Unlike spinal nerves, cranial nerves may carry only ___ information, only ___ information, or both.	FILL	motor; sensory
-Cranial nerves are numbered using Roman Numerals ___ through ___.	FILL	I; XII
-Spinal nerves differ from cranial nerves in that each spinal nerve carries:	Only motor information	Only sensory information	A mixture of both sensory and motor information	Autonomic information only	C
-Cranial nerves branch from the ___ surface of the brain.	FILL	inferior
-There are ___ pairs of spinal nerves that branch from the spinal cord.	FILL	31
-Which of the following statements about cranial nerves is TRUE?	All cranial nerves carry both sensory and motor information	Cranial nerves are numbered using Arabic numerals	Some cranial nerves carry only motor or only sensory information	There are 10 pairs of cranial nerves	C
-The 12 cranial nerves branch from the inferior surface of the brain and are numbered ___ through ___.	FILL	I; XII
+How many pairs of cranial nerves branch from the inferior surface of the brain?	10	11	12	13	C	There are exactly 12 pairs of cranial nerves (CN I–XII) emerging from the brain's inferior surface.
+Unlike spinal nerves, cranial nerves may carry only ___ information, only ___ information, or both.	FILL	motor; sensory	Some CNs are purely motor (e.g., CN III), some purely sensory (e.g., CN I), some mixed.
+Cranial nerves are numbered using Roman Numerals ___ through ___.	FILL	I; XII	By convention, the 12 cranial nerves are numbered I (olfactory) through XII (hypoglossal).
+Spinal nerves differ from cranial nerves in that each spinal nerve carries:	Only motor information	Only sensory information	A mixture of both sensory and motor information	Autonomic information only	C	Every spinal nerve has dorsal (sensory) and ventral (motor) roots, making each one mixed.
+Cranial nerves branch from the ___ surface of the brain.	FILL	inferior	All 12 cranial nerves exit from the inferior (ventral) surface of the brain or brainstem.
+There are ___ pairs of spinal nerves that branch from the spinal cord.	FILL	31	31 pairs arise from cervical (8), thoracic (12), lumbar (5), sacral (5), and coccygeal (1) levels.
+Which of the following statements about cranial nerves is TRUE?	All cranial nerves carry both sensory and motor information	Cranial nerves are numbered using Arabic numerals	Some cranial nerves carry only motor or only sensory information	There are 10 pairs of cranial nerves	C	Unlike spinal nerves, individual cranial nerves can be purely motor, purely sensory, or mixed.
+The 12 cranial nerves branch from the inferior surface of the brain and are numbered ___ through ___.	FILL	I; XII	Cranial nerves span from CN I (olfactory) at the cerebrum to CN XII (hypoglossal) at the medulla.
 `.trim()
 };
