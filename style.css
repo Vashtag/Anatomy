@@ -54,9 +54,8 @@
     }
 
     .cardWrap{
-      width: min(440px, 92vw);
-      height: min(520px, 72vh);
-      height: min(520px, 72dvh);
+      width: min(680px, 96vw);
+      height: min(700px, 82dvh);
       perspective: 1100px;
     }
 
