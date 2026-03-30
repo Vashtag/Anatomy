@@ -94,25 +94,25 @@ The profunda brachii artery travels with the:	Median nerve	Ulnar nerve	Radial ne
 `.trim(),
 
 9: `
-The cubital fossa is bounded medially by:	Brachioradialis	Pronator teres	Biceps brachii	Brachialis	B
-The elbow joint is classified as a:	Ball and socket	Hinge	Pivot	Saddle	B
-The anular ligament encircles the:	Head of the ulna	Head of the radius	Capitulum	Trochlea	B
-The proximal radioulnar joint allows:	Flexion and extension	Abduction and adduction	Pronation and supination	Circumduction	C
-Tommy John surgery reconstructs the:	Radial collateral ligament	Ulnar collateral ligament	Anular ligament	Interosseous membrane	B
-The capitulum of the humerus articulates with:	Trochlear notch of ulna	Head of radius	Olecranon	Coronoid process	B
-A common cause of radial head dislocation in children is:	Falling on outstretched hand	Being lifted by the arm	Throwing a ball	Hitting the elbow	B
-During pronation and supination, the radius moves around the:	Humerus	Fixed ulna	Carpals	Scapula	B
+The cubital fossa is bounded medially by:	Brachioradialis	Pronator teres	Biceps brachii	Brachialis	B	Pronator teres forms the medial border of the cubital fossa.
+The elbow joint is classified as a:	Ball and socket	Hinge	Pivot	Saddle	B	The trochlea and capitulum create a hinge allowing only flexion and extension.
+The anular ligament encircles the:	Head of the ulna	Head of the radius	Capitulum	Trochlea	B	The anular ligament wraps around the radial head, securing it to the ulna.
+The proximal radioulnar joint allows:	Flexion and extension	Abduction and adduction	Pronation and supination	Circumduction	C	The pivot-type proximal radioulnar joint enables forearm rotation (pronation/supination).
+Tommy John surgery reconstructs the:	Radial collateral ligament	Ulnar collateral ligament	Anular ligament	Interosseous membrane	B	The ulnar collateral ligament stabilizes the medial elbow; its rupture requires reconstruction.
+The capitulum of the humerus articulates with:	Trochlear notch of ulna	Head of radius	Olecranon	Coronoid process	B	The capitulum is a rounded lateral condyle that articulates with the radial head.
+A common cause of radial head dislocation in children is:	Falling on outstretched hand	Being lifted by the arm	Throwing a ball	Hitting the elbow	B	Sudden axial traction (nursemaid's elbow) pulls the radial head out of the anular ligament.
+During pronation and supination, the radius moves around the:	Humerus	Fixed ulna	Carpals	Scapula	B	The ulna is stabilized while the radius rotates around it during forearm rotation.
 `.trim(),
 
 10: `
-How many carpal bones are there?	5	7	8	14	C
-Which carpal bone has a hook?	Hamate	Scaphoid	Trapezium	Capitate	A
-The radiocarpal joint is classified as:	Hinge	Pivot	Condyloid	Ball and socket	C
-Which bone does NOT contribute to the radiocarpal joint?	Radius	Scaphoid	Lunate	Ulna	D
-The thumb has how many phalanges?	1	2	3	4	B
-Metacarpophalangeal joints allow:	Only flexion and extension	Only rotation	Flexion, extension, abduction, and adduction	Only circumduction	C
-Interphalangeal joints are classified as:	Condyloid	Hinge	Pivot	Saddle	B
-The carpometacarpal joint of the thumb is:	A plane joint	A saddle joint	A hinge joint	A pivot joint	B
+How many carpal bones are there?	5	7	8	14	C	Eight carpal bones are arranged in two rows of four in the wrist.
+Which carpal bone has a hook?	Hamate	Scaphoid	Trapezium	Capitate	A	The hamate has a hook-shaped process (hamulus) on its palmar surface.
+The radiocarpal joint is classified as:	Hinge	Pivot	Condyloid	Ball and socket	C	The oval proximal carpal row fits the elliptical radius, forming a condyloid joint.
+Which bone does NOT contribute to the radiocarpal joint?	Radius	Scaphoid	Lunate	Ulna	D	The ulna is separated from the carpals by the articular disc and does not articulate directly.
+The thumb has how many phalanges?	1	2	3	4	B	The thumb (digit I) has only a proximal and distal phalanx, totaling two.
+Metacarpophalangeal joints allow:	Only flexion and extension	Only rotation	Flexion, extension, abduction, and adduction	Only circumduction	C	The condyloid MCP joints permit movement in two axes, enabling four directions of motion.
+Interphalangeal joints are classified as:	Condyloid	Hinge	Pivot	Saddle	B	IP joints have a pulley-shaped surface allowing only flexion and extension (hinge).
+The carpometacarpal joint of the thumb is:	A plane joint	A saddle joint	A hinge joint	A pivot joint	B	The saddle-shaped CMC joint of the thumb allows the wide range of thumb opposition.
 `.trim(),
 
 11: `
