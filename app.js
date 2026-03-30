@@ -393,6 +393,8 @@ function submitBlank(){
 /* =========================
    Matching Mode
 ========================= */
+const MATCH_COLORS = ["#69b3ff","#3ddc97","#ffd166","#ff6b6b","#c084fc"];
+
 function startMatchRound(){
   const pool = state.queue;
   if(pool.length < 5){
@@ -436,7 +438,6 @@ function renderMatchMode(){
   const ms = state.matchSet;
   if(!ms) return;
 
-  // Hide normal question header, repurpose qBody
   qLab.textContent = "Matching Mode";
   qText.textContent = "Tap a number, then tap its answer to link them.";
 
@@ -444,78 +445,134 @@ function renderMatchMode(){
   feedbackEl.className = "feedback";
   feedbackEl.textContent = "";
 
-  const container = document.createElement("div");
-  container.className = "match-container";
+  const layout = document.createElement("div");
+  layout.className = "match-layout";
 
+  const leftCol  = document.createElement("div");
+  leftCol.className = "match-left";
+  const rightCol = document.createElement("div");
+  rightCol.className = "match-right";
+
+  // SVG overlay for arrows
+  const svgWrap = document.createElement("div");
+  svgWrap.className = "match-svg-wrap";
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.className = "match-svg";
+  svgWrap.appendChild(svg);
+
+  // Left column: prompts in order
   ms.prompts.forEach((p, pi)=>{
-    const row = document.createElement("div");
-    row.className = "match-row";
-
-    // Prompt side
-    const promptEl = document.createElement("div");
-    promptEl.className = "match-prompt";
-    if(ms.selectedPrompt === pi) promptEl.style.borderColor = "rgba(105,179,255,.5)";
-    promptEl.innerHTML = `<span class="match-num">${pi+1}</span>${escapeHtml(p.text)}`;
-    promptEl.style.cursor = "pointer";
-    promptEl.addEventListener("click", ()=>{
+    const el = document.createElement("div");
+    el.className = "match-item match-prompt" + (ms.selectedPrompt === pi ? " selected" : "");
+    el.dataset.pi = String(pi);
+    el.innerHTML = `<span class="match-num">${pi+1}</span>${escapeHtml(p.text)}`;
+    el.addEventListener("click", ()=>{
       if(ms.submitted) return;
       ms.selectedPrompt = pi;
       renderMatchMode();
     });
+    leftCol.appendChild(el);
+  });
 
-    // Connector
-    const conn = document.createElement("div");
-    conn.className = "match-connector" + (ms.links[pi] !== undefined ? " linked" : "");
-
-    // Answer side
-    const ai = ms.shuffledAnswers[pi];
-    const ansEl = document.createElement("div");
-    ansEl.className = "match-answer";
+  // Right column: shuffled answers
+  ms.shuffledAnswers.forEach((a, si)=>{
+    const el = document.createElement("div");
+    el.className = "match-item match-answer";
+    el.dataset.si = String(si);
     if(ms.submitted){
-      // Check if this answer is correctly linked
-      const linkedPrompt = Object.entries(ms.links).find(([k,v])=>v===pi);
-      if(linkedPrompt){
-        const pIdx = Number(linkedPrompt[0]);
-        const isCorrect = ms.shuffledAnswers[pi].idx === pIdx;
-        ansEl.classList.add(isCorrect ? "match-correct" : "match-wrong");
+      const entry = Object.entries(ms.links).find(([,v])=>v===si);
+      if(entry){
+        const pIdx = Number(entry[0]);
+        el.classList.add(ms.shuffledAnswers[si].idx === pIdx ? "match-correct" : "match-wrong");
       }
     }
-    // Show which prompt it's linked to
-    const linkedBy = Object.entries(ms.links).find(([k,v])=>v===pi);
-    const tag = linkedBy ? String(Number(linkedBy[0])+1) : "?";
-    ansEl.innerHTML = `<span class="match-tag">${tag}</span>${escapeHtml(ai.text)}`;
-    ansEl.addEventListener("click", ()=>{
+    el.innerHTML = `${escapeHtml(a.text)}`;
+    el.addEventListener("click", ()=>{
       if(ms.submitted) return;
       if(ms.selectedPrompt === null){
         feedbackEl.className = "feedback show warn";
         feedbackEl.textContent = "Select a question number on the left first.";
         return;
       }
-      // Link selectedPrompt to this answer slot
-      // Remove any previous link to this answer slot
-      Object.keys(ms.links).forEach(k=>{
-        if(ms.links[k]===pi) delete ms.links[k];
-      });
-      ms.links[ms.selectedPrompt] = pi;
+      // Remove any existing link to this answer slot
+      Object.keys(ms.links).forEach(k=>{ if(ms.links[k]===si) delete ms.links[k]; });
+      ms.links[ms.selectedPrompt] = si;
       ms.selectedPrompt = null;
       sfxMatch();
       renderMatchMode();
     });
-
-    row.appendChild(promptEl);
-    row.appendChild(conn);
-    row.appendChild(ansEl);
-    container.appendChild(row);
+    rightCol.appendChild(el);
   });
 
-  choicesEl.appendChild(container);
+  layout.appendChild(leftCol);
+  layout.appendChild(svgWrap);
+  layout.appendChild(rightCol);
+  choicesEl.appendChild(layout);
 
-  // Show link count
+  // Draw arrows after layout is painted
+  requestAnimationFrame(()=> drawMatchArrows(ms, svg, layout));
+
   const linkCount = Object.keys(ms.links).length;
   if(linkCount > 0 && linkCount < 5 && !ms.submitted){
     feedbackEl.className = "feedback show";
     feedbackEl.textContent = `${linkCount}/5 paired. Link all 5, then submit.`;
   }
+}
+
+function drawMatchArrows(ms, svg, layout){
+  const lr = layout.getBoundingClientRect();
+  if(!lr.width) return;
+
+  svg.setAttribute("viewBox", `0 0 ${lr.width} ${lr.height}`);
+  svg.innerHTML = "";
+
+  // Arrow-head markers (one per prompt color)
+  const defs = document.createElementNS("http://www.w3.org/2000/svg","defs");
+  MATCH_COLORS.forEach((color, i)=>{
+    const m = document.createElementNS("http://www.w3.org/2000/svg","marker");
+    m.setAttribute("id",`mh-${i}`);
+    m.setAttribute("viewBox","0 0 10 10");
+    m.setAttribute("refX","9"); m.setAttribute("refY","5");
+    m.setAttribute("markerWidth","5"); m.setAttribute("markerHeight","5");
+    m.setAttribute("orient","auto-start-reverse");
+    const p = document.createElementNS("http://www.w3.org/2000/svg","path");
+    p.setAttribute("d","M 0 1 L 9 5 L 0 9 Z");
+    p.setAttribute("fill", color);
+    m.appendChild(p);
+    defs.appendChild(m);
+  });
+  svg.appendChild(defs);
+
+  Object.entries(ms.links).forEach(([piStr, si])=>{
+    const pi = Number(piStr);
+    const promptEl = layout.querySelector(`[data-pi="${pi}"]`);
+    const answerEl = layout.querySelector(`[data-si="${si}"]`);
+    if(!promptEl || !answerEl) return;
+
+    const pr = promptEl.getBoundingClientRect();
+    const ar = answerEl.getBoundingClientRect();
+    const color = MATCH_COLORS[pi];
+
+    // Start: right edge of prompt card, mid-height
+    const x1 = pr.right  - lr.left;
+    const y1 = pr.top    - lr.top + pr.height / 2;
+    // End: left edge of answer card, mid-height
+    const x2 = ar.left   - lr.left;
+    const y2 = ar.top    - lr.top + ar.height / 2;
+
+    // Cubic bezier with horizontal control points
+    const cp = (x2 - x1) * 0.55;
+    const d = `M${x1},${y1} C${x1+cp},${y1} ${x2-cp},${y2} ${x2},${y2}`;
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+    path.setAttribute("d", d);
+    path.setAttribute("stroke", color);
+    path.setAttribute("stroke-width","2.5");
+    path.setAttribute("fill","none");
+    path.setAttribute("stroke-linecap","round");
+    path.setAttribute("marker-end",`url(#mh-${pi})`);
+    svg.appendChild(path);
+  });
 }
 
 function submitMatch(){
