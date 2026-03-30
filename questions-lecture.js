@@ -116,14 +116,14 @@ The carpometacarpal joint of the thumb is:	A plane joint	A saddle joint	A hinge 
 `.trim(),
 
 11: `
-The forearm is divided into two muscle compartments by which structure?	Flexor retinaculum	Interosseous membrane	Palmar aponeurosis	Fascia lata	B
-Which muscle is found in the MIDDLE layer of the anterior forearm?	Pronator teres	Flexor carpi ulnaris	Flexor digitorum superficialis	Pronator quadratus	C
-Pronator Teres is innervated by which nerve?	Ulnar nerve	Radial nerve	Median nerve	Musculocutaneous nerve	C
-Flexor Carpi Radialis inserts onto the base of which metacarpal?	1st	2nd	4th	5th	B
-The 'common flexor origin' refers to the __________ epicondyle of the humerus.	FILL	medial
-Palmaris Longus is absent on one or both sides in approximately __________% of the population.	FILL	15
-Flexor Digitorum Profundus inserts onto the __________ phalanges of digits II–V.	FILL	distal
-The carpal tunnel is created deep to the __________ retinaculum.	FILL	flexor
+The forearm is divided into two muscle compartments by which structure?	Flexor retinaculum	Interosseous membrane	Palmar aponeurosis	Fascia lata	B	The interosseous membrane runs between radius and ulna, separating anterior and posterior compartments.
+Which muscle is found in the MIDDLE layer of the anterior forearm?	Pronator teres	Flexor carpi ulnaris	Flexor digitorum superficialis	Pronator quadratus	C	FDS forms its own middle layer, sandwiched between the superficial and deep muscle groups.
+Pronator Teres is innervated by which nerve?	Ulnar nerve	Radial nerve	Median nerve	Musculocutaneous nerve	C	The median nerve supplies all anterior forearm muscles except FCU and medial half of FDP.
+Flexor Carpi Radialis inserts onto the base of which metacarpal?	1st	2nd	4th	5th	B	FCR crosses to the radial side and inserts at the 2nd metacarpal base to flex and abduct the wrist.
+The 'common flexor origin' refers to the __________ epicondyle of the humerus.	FILL	medial	Most anterior forearm flexors originate from the medial epicondyle via a shared tendon.
+Palmaris Longus is absent on one or both sides in approximately __________% of the population.	FILL	15	Palmaris longus is a vestigial muscle, absent in about 15% of people with no functional loss.
+Flexor Digitorum Profundus inserts onto the __________ phalanges of digits II–V.	FILL	distal	FDP tendons pass through FDS splits to reach the distal phalanges for terminal finger flexion.
+The carpal tunnel is created deep to the __________ retinaculum.	FILL	flexor	The flexor retinaculum forms the roof of the carpal tunnel, enclosing the median nerve and tendons.
 `.trim(),
 
 12: `
