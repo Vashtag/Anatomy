@@ -167,7 +167,8 @@ function parseQuestionsForLab(labId){
     // Fill-in-the-blank: prompt<TAB>FILL<TAB>answer
     if(parts[1].trim().toUpperCase() === "FILL"){
       const answer = (parts[2] || "").trim();
-      return {labId, prompt, type:"fill", choices:[answer,"","",""], correctIndex:0, explanation:""};
+      const fillExp = (parts[3] || "").trim();
+      return {labId, prompt, type:"fill", choices:[answer,"","",""], correctIndex:0, explanation:fillExp};
     }
     if(parts.length < 6) return null;
     const choices = parts.slice(1,5).map(s=>s.trim());
