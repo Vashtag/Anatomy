@@ -526,23 +526,6 @@ function drawMatchArrows(ms, svg, layout){
   svg.setAttribute("viewBox", `0 0 ${lr.width} ${lr.height}`);
   svg.innerHTML = "";
 
-  // Arrow-head markers (one per prompt color)
-  const defs = document.createElementNS("http://www.w3.org/2000/svg","defs");
-  MATCH_COLORS.forEach((color, i)=>{
-    const m = document.createElementNS("http://www.w3.org/2000/svg","marker");
-    m.setAttribute("id",`mh-${i}`);
-    m.setAttribute("viewBox","0 0 10 10");
-    m.setAttribute("refX","9"); m.setAttribute("refY","5");
-    m.setAttribute("markerWidth","5"); m.setAttribute("markerHeight","5");
-    m.setAttribute("orient","auto-start-reverse");
-    const p = document.createElementNS("http://www.w3.org/2000/svg","path");
-    p.setAttribute("d","M 0 1 L 9 5 L 0 9 Z");
-    p.setAttribute("fill", color);
-    m.appendChild(p);
-    defs.appendChild(m);
-  });
-  svg.appendChild(defs);
-
   Object.entries(ms.links).forEach(([piStr, si])=>{
     const pi = Number(piStr);
     const promptEl = layout.querySelector(`[data-pi="${pi}"]`);
@@ -570,7 +553,6 @@ function drawMatchArrows(ms, svg, layout){
     path.setAttribute("stroke-width","2.5");
     path.setAttribute("fill","none");
     path.setAttribute("stroke-linecap","round");
-    path.setAttribute("marker-end",`url(#mh-${pi})`);
     svg.appendChild(path);
   });
 }
